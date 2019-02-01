@@ -1,10 +1,10 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from rtlcat.rtldev import rtl_sdr
+from rtlcat.rtldev import RTLSdr
 
 def main():
-    rtl_sdr().open_device()
+    RTLSdr().open_device()
     
 if __name__ == "__main__":
     main()

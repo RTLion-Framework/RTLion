@@ -3,7 +3,7 @@
 
 import sys
 
-class rtl_sdr:
+class RTLSdr:
     def __init__(self):
         self.import_rtlsdr()
     
