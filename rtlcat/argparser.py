@@ -30,6 +30,5 @@ def parse_cli_args():
     parser.add_argument("filename", nargs='?',
                         help="filename (a '-' dumps samples to stdout)")
 
-    args = vars(parser.parse_args())     
-    
+    args = vars(parser.parse_args())
     return args
