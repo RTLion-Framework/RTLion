@@ -12,12 +12,13 @@ class RTLSdr:
         self.dev_id = args['dev'] if args['dev'] else self.default_device_id
         self.sample_rate = args['samprate'] if args['samprate'] \
                                             else self.default_sample_rate
-        self.gain = str(args['gain']) if args['gain'] else self.default_gain
+        self.gain = int(args['gain']) if args['gain'] else self.default_gain
         self.center_freq = args['freq']
         self.no_colors = args['nocolors']
         self.filename = args['filename']
         self.dev = None
         self.open_device()
+        #self.initialize_device()
     
     def import_rtlsdr(self):
         try:
@@ -33,3 +34,11 @@ class RTLSdr:
         except IOError as e:
             print("Failed to open RTL-SDR device.\n" + str(e))
             sys.exit()
+
+    def initialize_device(self):
+        try:
+            self.dev.sample_rate = self.sample_rate
+            self.dev.center_freq = self.center_freq
+            self.dev.gain = self.gain
+        except Exception as e:
+            print("Failed to initialize RTL-SDR device.\n" + str(e))
