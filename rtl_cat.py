@@ -5,7 +5,12 @@ from rtlcat.rtldev import RTLSdr
 from rtlcat.argparser import parse_cli_args
 
 def main():
-    print(RTLSdr(**parse_cli_args()).read_samples())
     
+    rtl_sdr = RTLSdr(**parse_cli_args())
+    samples = rtl_sdr.read_samples()
+    rtl_sdr.close()
+
+    print(samples)
+
 if __name__ == "__main__":
     main()
