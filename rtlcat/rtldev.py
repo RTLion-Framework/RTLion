@@ -44,4 +44,9 @@ class RTLSdr:
             print("Failed to initialize RTL-SDR device.\n" + str(e))
             sys.exit()
 
+    def read_samples(self, n_read=512*512):
+        try:
+            return self.dev.read_samples(n_read)
+        except Exception as e:
+            print("Failed to read samples from RTL-SDR.\n" + str(e))
             
