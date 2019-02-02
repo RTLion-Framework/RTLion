@@ -18,7 +18,7 @@ class RTLSdr:
         self.filename = args['filename']
         self.dev = None
         self.open_device()
-        #self.initialize_device()
+        self.initialize_device()
     
     def import_rtlsdr(self):
         try:
@@ -42,3 +42,6 @@ class RTLSdr:
             self.dev.gain = self.gain
         except Exception as e:
             print("Failed to initialize RTL-SDR device.\n" + str(e))
+            sys.exit()
+
+            
