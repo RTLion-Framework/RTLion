@@ -57,4 +57,16 @@ class RTLSdr:
         except Exception as e:
             print("Failed to close RTL-SDR device.\n" + str(e))
             sys.exit()
+
+    def create_graph(self, continous=False, read_count=1, refresh_rate=0.05):
+        from pylab import psd, xlabel, ylabel, pause, clf, show
+        for i in range(read_count):
+            psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+                Fc=int(self.center_freq)/1e6)
+            xlabel('Frequency (MHz)')
+            ylabel('Relative power (dB)')
+            if continous:
+                pause(refresh_rate)
+                clf()
+            else: show()
             
