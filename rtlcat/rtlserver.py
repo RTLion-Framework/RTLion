@@ -5,7 +5,7 @@ import sys
 
 class FlaskServer:
     def __init__(self, server_host='0.0.0.0', server_port=8081):
-        self.server_addr = str(server_host) + ":" + str(server_port)
+        self.server_addr = (server_host, server_port)
         self.import_flask()
         self.initialize_flask()
 
@@ -20,8 +20,16 @@ class FlaskServer:
     def initialize_flask(self):
         try:
             self.flask_server = Flask(__name__)
-        except:
-            print("Could not initialize Flask server.")
+        except Exception as e:
+            print("Could not initialize Flask server.\n" + str(e))
+            sys.exit()
+    
+    def run(self):
+        try:
+            self.flask_server.run(host=self.server_addr[0], 
+                                port=self.server_addr[1])
+        except Exception as e:
+            print("Failed to run Flask server.\n" + str(e))
             sys.exit()
 
 
