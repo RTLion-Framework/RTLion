@@ -4,12 +4,6 @@
 from rtlcat.rtldev import RTLSdr
 from rtlcat.rtlserver import FlaskServer
 from rtlcat.argparser import parse_cli_args
-'''
-@app.route("/")
-def index():
-    return "~"
-'''
-
 
 def main():
 
