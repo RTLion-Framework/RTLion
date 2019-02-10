@@ -83,5 +83,5 @@ class RTLSdr:
         clf()
         #send_file('static/fft.png', mimetype='image/png')
         encoded = base64.b64encode(open("rtlcat/static/fft.png", "rb").read())
-        return "<html><body><center><img src='data:image/png;base64," \
+        return "<meta http-equiv='refresh' content='600'><html><body><center><img src='data:image/png;base64," \
                 + encoded + "'<center></body></html>"

@@ -11,8 +11,8 @@ class FlaskServer:
 
     def import_flask(self):
         try:
-            global Flask, request, jsonify
-            from flask import Flask, request, jsonify
+            global Flask
+            from flask import Flask
         except:
             print("Flask framework not found.")
             sys.exit()
