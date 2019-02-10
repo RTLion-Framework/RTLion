@@ -69,4 +69,6 @@ class RTLSdr:
                 pause(refresh_rate)
                 clf()
             else: show()
-            
+    
+    def page_graph(self):
+        return "rtl_cat graph"

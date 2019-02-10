@@ -17,13 +17,17 @@ class FlaskServer:
             print("Flask framework not found.")
             sys.exit()
 
-    def page_index(self):
-        return "rtl_cat"
+    def add_route(self, rule, func):
+        try:
+            self.flask_server.add_url_rule(rule, func.__name__, func)
+        except Exception as e:
+            print("Failed to add URL rule.\n" + str(e))
+            sys.exit()
 
     def initialize_flask(self):
         try:
             self.flask_server = Flask(__name__)
-            self.flask_server.add_url_rule("/", "page_index", self.page_index)
+            self.add_route("/", self.page_index)
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
             sys.exit()
@@ -31,10 +35,10 @@ class FlaskServer:
     def run(self):
         try:
             self.flask_server.run(host=self.server_addr[0], 
-                                port=self.server_addr[1],
-                                debug = True)
+                                port=self.server_addr[1])
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
 
-
+    def page_index(self):
+        return "rtl_cat"
