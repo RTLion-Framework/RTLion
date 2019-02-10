@@ -31,7 +31,8 @@ class FlaskServer:
     def run(self):
         try:
             self.flask_server.run(host=self.server_addr[0], 
-                                port=self.server_addr[1])
+                                port=self.server_addr[1],
+                                debug = True)
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
