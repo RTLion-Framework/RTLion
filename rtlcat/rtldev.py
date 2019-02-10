@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 
 class RTLSdr:
     def __init__(self, **args):
@@ -71,4 +72,14 @@ class RTLSdr:
             else: show()
     
     def page_graph(self):
-        return "rtl_cat graph"
+        from flask import send_file
+        from pylab import psd, xlabel, ylabel, title, clf, savefig
+        fft_plot = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+                Fc=int(self.center_freq)/1e6)
+        title("rtl_cat")
+        xlabel('Frequency (MHz)')
+        ylabel('Relative power (dB)')
+        savefig('rtlcat/static/fft.png')
+        clf()
+        send_file('static/fft.png', mimetype='image/png')
+        return "<html><body><center><img src='static/fft.png'><center></body></html>"
