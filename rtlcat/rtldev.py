@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import os
+import base64
 
 class RTLSdr:
     def __init__(self, **args):
@@ -81,5 +81,7 @@ class RTLSdr:
         ylabel('Relative power (dB)')
         savefig('rtlcat/static/fft.png')
         clf()
-        send_file('static/fft.png', mimetype='image/png')
-        return "<html><body><center><img src='static/fft.png'><center></body></html>"
+        #send_file('static/fft.png', mimetype='image/png')
+        encoded = base64.b64encode(open("rtlcat/static/fft.png", "rb").read())
+        return "<html><body><center><img src='data:image/png;base64," \
+                + encoded + "'<center></body></html>"

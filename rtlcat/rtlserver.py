@@ -41,4 +41,5 @@ class FlaskServer:
             sys.exit()
 
     def page_index(self):
+
         return "rtl_cat"
