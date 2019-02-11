@@ -89,7 +89,7 @@ class FlaskServer:
             namespace=self.server_namespace)
 
     def ping_pong(self):
-        emit('my_pong')
+        emit('server_pong')
 
     def rtlsdr_thread(self):
         while True:
