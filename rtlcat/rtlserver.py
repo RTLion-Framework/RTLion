@@ -34,13 +34,14 @@ class FlaskServer:
         try:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            #self.add_route('/', self.page_index)
+            self.add_route('/', self.page_index)
             self.flask_server.route('/graph')(self.page_graph)     
             self.socketio.on('connect', namespace=self.server_namespace)(self.server_connect)
             self.socketio.on('disconnect', namespace=self.server_namespace)(self.server_disconnect)
             self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
             self.socketio.on('disconnect_request', namespace=self.server_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.server_namespace)(self.create_fft_graph)
+            self.socketio.on('my_ping', namespace=self.server_namespace)(self.ping_pong)
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
             sys.exit()
@@ -87,6 +88,9 @@ class FlaskServer:
             {'data': msg, 'count': count}, 
             namespace=self.server_namespace)
 
+    def ping_pong(self):
+        emit('my_pong')
+
     def rtlsdr_thread(self):
         while True:
             fft_data = self.rtl_sdr.get_fft_data()
@@ -94,5 +98,5 @@ class FlaskServer:
             'fft_data', 
             {'data': fft_data}, 
             namespace=self.server_namespace)
-            self.socketio.sleep(1)
+            self.socketio.sleep(0.4)
 
