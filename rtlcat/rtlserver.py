@@ -2,17 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from threading import Lock
 
 class FlaskServer:
     def __init__(self, server_host='0.0.0.0', server_port=8081):
         self.server_addr = (server_host, server_port)
+        self.thread = None
+        self.thread_lock = Lock()
+        self.server_namespace = '/graph'
         self.import_flask()
         self.initialize_flask()
 
     def import_flask(self):
         try:
-            global Flask
-            from flask import Flask
+            global Flask, render_template, session, request, SocketIO, emit, disconnect
+            from flask import Flask, render_template, session, request
+            from flask_socketio import SocketIO, emit, disconnect
         except:
             print("Flask framework not found.")
             sys.exit()
@@ -27,19 +32,57 @@ class FlaskServer:
     def initialize_flask(self):
         try:
             self.flask_server = Flask(__name__)
-            self.add_route("/", self.page_index)
+            self.socketio = SocketIO(self.flask_server, async_mode=None)
+            self.flask_server.route('/')(self.page_index)
+            self.socketio.on('connect', namespace=self.server_namespace)(self.server_connect)
+            self.socketio.on('disconnect', namespace=self.server_namespace)(self.server_disconnect)
+            self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
+            self.socketio.on('disconnect_request', namespace=self.server_namespace)(self.disconnect_request)
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
             sys.exit()
 
     def run(self):
         try:
-            self.flask_server.run(host=self.server_addr[0], 
-                                port=self.server_addr[1])
+            self.socketio.run(self.flask_server, 
+                host=self.server_addr[0], 
+                port=self.server_addr[1])
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
 
     def page_index(self):
+        return render_template('index.html', async_mode=self.socketio.async_mode)
 
-        return "rtl_cat"
+    def server_connect(self):
+        with self.thread_lock:
+            if self.thread is None:
+                self.thread = self.socketio.start_background_task(self.background_thread)
+        self.send_to_server("Connected")
+
+    def disconnect_request(self):
+        session['receive_count'] = session.get('receive_count', 0) + 1
+        self.send_to_server("Disconnected!", session['receive_count'])
+        disconnect()
+
+    def server_disconnect(self):
+        print('Client disconnected', request.sid)
+
+    def server_response(self, message):
+        print(message)
+        session['receive_count'] = session.get('receive_count', 0) + 1
+        self.send_to_server(message['data'], session['receive_count'])
+
+    def send_to_server(self, msg, count=0):
+        self.socketio.emit(
+            'client_message', 
+            {'data': msg, 'count': count}, 
+            namespace=self.server_namespace)
+
+    def background_thread(self):
+        count = 0
+        while True:
+            self.socketio.sleep(2)
+            count += 1
+            self.send_to_server("Server generated event", count)
+
