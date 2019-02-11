@@ -5,7 +5,8 @@ import sys
 from threading import Lock
 
 class FlaskServer:
-    def __init__(self, server_host='0.0.0.0', server_port=8081):
+    def __init__(self, rtl_sdr, server_host='0.0.0.0', server_port=8081):
+        self.rtl_sdr = rtl_sdr
         self.server_addr = (server_host, server_port)
         self.thread = None
         self.thread_lock = Lock()
@@ -39,6 +40,7 @@ class FlaskServer:
             self.socketio.on('disconnect', namespace=self.server_namespace)(self.server_disconnect)
             self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
             self.socketio.on('disconnect_request', namespace=self.server_namespace)(self.disconnect_request)
+            self.socketio.on('create_fft_graph', namespace=self.server_namespace)(self.create_fft_graph)
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
             sys.exit()
@@ -59,9 +61,6 @@ class FlaskServer:
         return render_template('index.html', async_mode=self.socketio.async_mode)
 
     def server_connect(self):
-        with self.thread_lock:
-            if self.thread is None:
-                self.thread = self.socketio.start_background_task(self.background_thread)
         self.send_to_server("Connected")
 
     def disconnect_request(self):
@@ -73,9 +72,14 @@ class FlaskServer:
         print('Client disconnected', request.sid)
 
     def server_response(self, message):
-        print(message)
         session['receive_count'] = session.get('receive_count', 0) + 1
         self.send_to_server(message['data'], session['receive_count'])
+
+    def create_fft_graph(self):
+        self.send_to_server("Creating FFT graph from samples...")
+        with self.thread_lock:
+            if self.thread is None:
+                self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
 
     def send_to_server(self, msg, count=0):
         self.socketio.emit(
@@ -83,10 +87,12 @@ class FlaskServer:
             {'data': msg, 'count': count}, 
             namespace=self.server_namespace)
 
-    def background_thread(self):
-        count = 0
+    def rtlsdr_thread(self):
         while True:
-            self.socketio.sleep(10)
-            count += 1
-            self.send_to_server("Server generated event", count)
+            fft_data = self.rtl_sdr.get_fft_data()
+            self.socketio.emit(
+            'fft_data', 
+            {'data': fft_data}, 
+            namespace=self.server_namespace)
+            self.socketio.sleep(1)
 

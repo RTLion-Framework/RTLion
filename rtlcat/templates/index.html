@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Flask-SocketIO</title>
+    <title>rtl_cat FFT graph</title>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -28,27 +28,33 @@
                 return false;
             });
 
-            $('form#startsdr').submit(function(event) {
-                socket.emit('server_response', {data: 'start_rtl_sdr'});
+            $('form#create_graph').submit(function(event) {
+                socket.emit('create_fft_graph');
                 return false;
+            });
+
+            socket.on('fft_data', function(msg) {
+                document.getElementById("fft_graph").src = "data:image/png;base64," + msg.data;
             });
         });
     </script>
 </head>
 <body>
-    <h1>Flask-SocketIO</h1>
-    <h2>Send:</h2>
-    <form id="emit" method="POST" action='#'>
-        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
-        <input type="submit" value="Echo">
-    </form>
-    <form id="startsdr" method="POST" action="#">
-        <input type="submit" value="Start RTL-SDR">
-    </form>
-    <form id="disconnect" method="POST" action="#">
-        <input type="submit" value="Disconnect">
-    </form>
-    <h2>Receive:</h2>
-    <div id="log"></div>
+    <center>
+        <!--<form id="emit" method="POST" action='#'>
+            <input type="text" name="emit_data" id="emit_data" placeholder="Message">
+            <input type="submit" value="Echo">
+        </form>-->
+        <img id="fft_graph" alt="FFT graph">
+        <br>
+        <form id="create_graph" method="POST" action="#">
+            <input type="submit" value="Create FFT graph">
+        </form>
+        <br>
+        <form id="disconnect" method="POST" action="#">
+            <input type="submit" value="Disconnect">
+        </form>
+        <div id="log"></div>
+    </center>
 </body>
 </html>

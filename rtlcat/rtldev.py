@@ -71,17 +71,15 @@ class RTLSdr:
                 clf()
             else: show()
     
-    def page_graph(self):
-        from flask import send_file
+    def get_fft_data(self):
         from pylab import psd, xlabel, ylabel, title, clf, savefig
         fft_plot = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                 Fc=int(self.center_freq)/1e6)
         title("rtl_cat")
         xlabel('Frequency (MHz)')
         ylabel('Relative power (dB)')
-        savefig('rtlcat/static/fft.png')
+        savefig('rtlcat/static/fft.png', bbox_inches='tight')
         clf()
         #send_file('static/fft.png', mimetype='image/png')
         encoded = base64.b64encode(open("rtlcat/static/fft.png", "rb").read())
-        return "<meta http-equiv='refresh' content='600'><html><body><center><img src='data:image/png;base64," \
-                + encoded + "'<center></body></html>"
+        return encoded
