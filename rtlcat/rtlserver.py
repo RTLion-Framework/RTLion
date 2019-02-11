@@ -41,7 +41,7 @@ class FlaskServer:
             self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
             self.socketio.on('disconnect_request', namespace=self.server_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.server_namespace)(self.create_fft_graph)
-            self.socketio.on('my_ping', namespace=self.server_namespace)(self.ping_pong)
+            self.socketio.on('server_ping', namespace=self.server_namespace)(self.ping_pong)
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
             sys.exit()
