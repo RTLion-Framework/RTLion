@@ -80,6 +80,5 @@ class RTLSdr:
         ylabel('Relative power (dB)')
         savefig('rtlcat/static/fft.png', bbox_inches='tight')
         clf()
-        #send_file('static/fft.png', mimetype='image/png')
         encoded = base64.b64encode(open("rtlcat/static/fft.png", "rb").read())
         return encoded

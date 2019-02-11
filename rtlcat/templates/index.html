@@ -37,7 +37,6 @@
                 document.getElementById("fft_graph").src = "data:image/png;base64," + msg.data;
             });
 
-
             var ping_pong_times = [];
             var start_time;
             window.setInterval(function() {
@@ -59,10 +58,6 @@
 </head>
 <body>
     <center>
-        <!--<form id="emit" method="POST" action='#'>
-            <input type="text" name="emit_data" id="emit_data" placeholder="Message">
-            <input type="submit" value="Echo">
-        </form>-->
         <img id="fft_graph" alt="FFT graph">
         <br>
         <form id="create_graph" method="POST" action="#">
