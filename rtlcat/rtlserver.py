@@ -33,7 +33,8 @@ class FlaskServer:
         try:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            self.flask_server.route('/')(self.page_index)
+            #self.add_route('/', self.page_index)
+            self.flask_server.route('/graph')(self.page_graph)     
             self.socketio.on('connect', namespace=self.server_namespace)(self.server_connect)
             self.socketio.on('disconnect', namespace=self.server_namespace)(self.server_disconnect)
             self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
@@ -52,6 +53,9 @@ class FlaskServer:
             sys.exit()
 
     def page_index(self):
+        return "rtl_cat"
+
+    def page_graph(self):
         return render_template('index.html', async_mode=self.socketio.async_mode)
 
     def server_connect(self):
@@ -82,7 +86,7 @@ class FlaskServer:
     def background_thread(self):
         count = 0
         while True:
-            self.socketio.sleep(2)
+            self.socketio.sleep(10)
             count += 1
             self.send_to_server("Server generated event", count)
 

@@ -10,7 +10,7 @@
             var socket = io.connect(location.protocol + '//' + document.domain + 
                          ':' + location.port + namespace);
 
-            socket.on('server_connect', function() {
+            socket.on('connect', function() {
                 socket.emit('server_response', {data: 'I\'m connected!'});
             });
 
@@ -27,6 +27,11 @@
                 socket.emit('disconnect_request');
                 return false;
             });
+
+            $('form#startsdr').submit(function(event) {
+                socket.emit('server_response', {data: 'start_rtl_sdr'});
+                return false;
+            });
         });
     </script>
 </head>
@@ -36,6 +41,9 @@
     <form id="emit" method="POST" action='#'>
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
         <input type="submit" value="Echo">
+    </form>
+    <form id="startsdr" method="POST" action="#">
+        <input type="submit" value="Start RTL-SDR">
     </form>
     <form id="disconnect" method="POST" action="#">
         <input type="submit" value="Disconnect">

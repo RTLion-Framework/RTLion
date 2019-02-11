@@ -9,7 +9,7 @@ def main():
 
     rtl_sdr = RTLSdr(**parse_cli_args())
     flask_server = FlaskServer()
-    flask_server.add_route("/graph", rtl_sdr.page_graph)
+    #flask_server.add_route("/graph", rtl_sdr.page_graph)
     flask_server.run()
     
     #rtl_sdr.create_graph(True, 100)
