@@ -34,7 +34,7 @@
             });
 
             socket.on('fft_data', function(msg) {
-                document.getElementById("fft_graph").src = "data:image/png;base64," + msg.data;
+                $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
             });
 
             var ping_pong_times = [];
