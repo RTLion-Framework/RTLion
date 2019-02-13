@@ -11,7 +11,7 @@
                          ':' + location.port + namespace);
 
             socket.on('connect', function() {
-                socket.emit('server_response', {data: 'I\'m connected!'});
+                socket.emit('server_response', {data: 'Connected!'});
             });
 
             socket.on('client_message', function(msg) {
