@@ -78,6 +78,7 @@ class FlaskServer:
         self.send_to_server("Creating FFT graph from samples... [>]")
         with self.thread_lock:
             if self.thread is None:
+                self.c_read = True
                 self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
 
     def send_to_server(self, msg, count=0):
@@ -87,7 +88,7 @@ class FlaskServer:
             namespace=self.server_namespace)
 
     def rtlsdr_thread(self):
-        while True:
+        while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
             'fft_data', 
