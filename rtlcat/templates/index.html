@@ -11,11 +11,11 @@
                          ':' + location.port + namespace);
 
             socket.on('connect', function() {
-                socket.emit('server_response', {data: 'Connected!'});
+                socket.emit('server_response', {data: 'Server [<]'});
             });
 
             socket.on('client_message', function(msg) {
-                $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+                $('#log').append('<br>' + $('<div/>').text(msg.data).html());
             });
 
             $('form#emit').submit(function(event) {
@@ -23,7 +23,7 @@
                 return false;
             });
 
-            $('form#disconnect').submit(function(event) {
+            $('form#stop_sdr').submit(function(event) {
                 socket.emit('disconnect_request');
                 return false;
             });
@@ -58,14 +58,14 @@
 </head>
 <body>
     <center>
-        <img id="fft_graph" alt="FFT graph">
+        <img id="fft_graph">
         <br>
         <form id="create_graph" method="POST" action="#">
             <input type="submit" value="Create FFT graph">
         </form>
         <br>
-        <form id="disconnect" method="POST" action="#">
-            <input type="submit" value="Disconnect">
+        <form id="stop_sdr" method="POST" action="#">
+            <input type="submit" value="Stop RTL-SDR">
         </form>
         <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
         <div id="log"></div>

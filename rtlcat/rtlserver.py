@@ -35,8 +35,8 @@ class FlaskServer:
         try:
             def page_graph(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def ping_pong(): emit('server_pong')
-            def server_connect(): self.send_to_server("Connected")
-            def server_disconnect(): print('Client disconnected', request.sid)
+            def server_connect(): self.send_to_server("Socket [>]")
+            def server_disconnect(): print('Socket disconnected.', request.sid)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
@@ -67,7 +67,7 @@ class FlaskServer:
 
     def disconnect_request(self):
         session['receive_count'] = session.get('receive_count', 0) + 1
-        self.send_to_server("Disconnected!", session['receive_count'])
+        self.send_to_server("Socket disconnected. [>]", session['receive_count'])
         disconnect()
 
     def server_response(self, message):
@@ -75,7 +75,7 @@ class FlaskServer:
         self.send_to_server(message['data'], session['receive_count'])
 
     def create_fft_graph(self):
-        self.send_to_server("Creating FFT graph from samples...")
+        self.send_to_server("Creating FFT graph from samples... [>]")
         with self.thread_lock:
             if self.thread is None:
                 self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
