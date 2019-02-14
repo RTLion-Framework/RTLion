@@ -33,14 +33,15 @@ class FlaskServer:
 
     def initialize_flask(self):
         try:
-            def page_graph(): return render_template('index.html', async_mode=self.socketio.async_mode)
+            def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
+            def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
             def ping_pong(): emit('server_pong')
             def server_connect(): self.send_to_server("Socket [>]")
             def server_disconnect(): print('Socket disconnected.', request.sid)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            self.add_route('/', self.page_index)
+            self.flask_server.route('/')(page_index)
             self.flask_server.route('/graph')(page_graph)     
             self.socketio.on('connect', namespace=self.server_namespace)(server_connect)
             self.socketio.on('disconnect', namespace=self.server_namespace)(server_disconnect)
@@ -61,9 +62,6 @@ class FlaskServer:
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
-
-    def page_index(self):
-        return "rtl_cat"
 
     def disconnect_request(self):
         session['receive_count'] = session.get('receive_count', 0) + 1

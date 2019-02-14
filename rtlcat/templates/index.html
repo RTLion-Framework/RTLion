@@ -1,76 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>rtl_cat FFT graph</title>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            namespace = '/graph';
-            var socket = io.connect(location.protocol + '//' + document.domain + 
-                         ':' + location.port + namespace);
-
-            socket.on('connect', function() {
-                socket.emit('server_response', {data: 'Server [<]'});
-            });
-
-            socket.on('client_message', function(msg) {
-                $('#log').append('<br>' + $('<div/>').text(msg.data).html());
-            });
-
-            $('form#emit').submit(function(event) {
-                socket.emit('server_response', {data: $('#emit_data').val()});
-                return false;
-            });
-
-            $('form#stop_sdr').submit(function(event) {
-                socket.emit('disconnect_request');
-                return false;
-            });
-
-            $('form#create_graph').submit(function(event) {
-                socket.emit('create_fft_graph');
-                $("form#stop_sdr").css("visibility", "visible")
-                $("form#create_graph").css("visibility", "hidden")
-                return false;
-            });
-
-            socket.on('fft_data', function(msg) {
-                $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
-            });
-
-            var ping_pong_times = [];
-            var start_time;
-            window.setInterval(function() {
-                start_time = (new Date).getTime();
-                socket.emit('server_ping');
-            }, 1000);
-            socket.on('server_pong', function() {
-                var latency = (new Date).getTime() - start_time;
-                ping_pong_times.push(latency);
-                ping_pong_times = ping_pong_times.slice(-30);11
-                var sum = 0;
-                for (var i = 0; i < ping_pong_times.length; i++)
-                    sum += ping_pong_times[i];
-                $('#ping-pong').text(Math.round(10 * sum / ping_pong_times.length) / 10 + "ms");
-            });
-            
-        });
-    </script>
+<b>rtl_cat</b>
 </head>
 <body>
-    <center>
-        <img id="fft_graph">
-        <br>
-        <form id="create_graph" method="POST" action="#">
-            <input type="submit" value="Create FFT graph">
-        </form>
-        <br>
-        <form id="stop_sdr" method="POST" action="#" style="visibility: hidden">
-            <input type="submit" value="Stop RTL-SDR">
-        </form>
-        <b><span id="ping-pong"></span></b>
-        <div id="log"></div>
-    </center>
 </body>
 </html>
