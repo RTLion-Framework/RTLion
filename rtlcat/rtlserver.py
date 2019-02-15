@@ -3,11 +3,11 @@
 
 import sys
 from threading import Lock
-from rtlcat.rtldev import RTLSdr
+
 
 class FlaskServer:
-    def __init__(self, server_host='0.0.0.0', server_port=8081, **args):
-        self.rtl_sdr = RTLSdr(**args)
+    def __init__(self, rtl_sdr, server_host='0.0.0.0', server_port=8081):
+        self.rtl_sdr = rtl_sdr
         self.server_addr = (server_host, server_port)
         self.thread = None
         self.thread_lock = Lock()
@@ -86,6 +86,7 @@ class FlaskServer:
             namespace=self.server_namespace)
 
     def rtlsdr_thread(self):
+        self.rtl_sdr.init_device()
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(

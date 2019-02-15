@@ -18,8 +18,6 @@ class RTLSdr:
         self.no_colors = args['nocolors']
         self.filename = args['filename']
         self.dev = None
-        self.open_device()
-        self.initialize_device()
     
     def import_rtlsdr(self):
         try:
@@ -29,18 +27,15 @@ class RTLSdr:
             print("rtlsdr module not found.")
             sys.exit()
 
-    def open_device(self):
+    def init_device(self):
         try:
             self.dev = RtlSdr(self.dev_id)
-        except IOError as e:
-            print("Failed to open RTL-SDR device.\n" + str(e))
-            sys.exit()
-
-    def initialize_device(self):
-        try:
             self.dev.sample_rate = self.sample_rate
             self.dev.center_freq = self.center_freq
             self.dev.gain = self.gain
+        except IOError as e:
+            print("Failed to open RTL-SDR device.\n" + str(e))
+            sys.exit()
         except Exception as e:
             print("Failed to initialize RTL-SDR device.\n" + str(e))
             sys.exit()

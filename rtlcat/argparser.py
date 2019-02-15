@@ -15,8 +15,7 @@ def parse_cli_args():
 
     parser.add_argument("-f",
                         "--freq",
-                        help="center frequency (Hz)",
-                        required=True)
+                        help="center frequency (Hz)")
 
     parser.add_argument("-g",
                         "--gain",
