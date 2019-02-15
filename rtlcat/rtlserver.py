@@ -42,7 +42,7 @@ class FlaskServer:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route('/')(page_index)
-            self.flask_server.route('/graph')(page_graph)     
+            self.flask_server.route('/graph', methods=['GET', 'POST'])(page_graph)     
             self.socketio.on('connect', namespace=self.server_namespace)(server_connect)
             self.socketio.on('disconnect', namespace=self.server_namespace)(server_disconnect)
             self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
