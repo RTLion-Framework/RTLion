@@ -11,7 +11,8 @@ class FlaskServer:
         self.server_addr = (server_host, server_port)
         self.thread = None
         self.thread_lock = Lock()
-        self.server_namespace = '/graph'
+        self.index_namespace = '/'
+        self.graph_namespace = '/graph'
         self.import_flask()
         self.initialize_flask()
 
@@ -38,17 +39,21 @@ class FlaskServer:
             def ping_pong(): emit('server_pong')
             def server_connect(): self.send_to_server("Socket [>]")
             def server_disconnect(): print('Socket disconnected.', request.sid)
+            def index_connect(): self.socketio.emit('client_message', self.rtl_sdr.args, \
+                                namespace=self.index_namespace)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route('/')(page_index)
+            self.socketio.on('index_connect', namespace=self.index_namespace)(index_connect)
+            
             self.flask_server.route('/graph', methods=['GET', 'POST'])(page_graph)     
-            self.socketio.on('connect', namespace=self.server_namespace)(server_connect)
-            self.socketio.on('disconnect', namespace=self.server_namespace)(server_disconnect)
-            self.socketio.on('server_response', namespace=self.server_namespace)(self.server_response)
-            self.socketio.on('disconnect_request', namespace=self.server_namespace)(self.disconnect_request)
-            self.socketio.on('create_fft_graph', namespace=self.server_namespace)(self.create_fft_graph)
-            self.socketio.on('server_ping', namespace=self.server_namespace)(ping_pong)
+            self.socketio.on('connect', namespace=self.graph_namespace)(server_connect)
+            self.socketio.on('disconnect', namespace=self.graph_namespace)(server_disconnect)
+            self.socketio.on('server_response', namespace=self.graph_namespace)(self.server_response)
+            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
+            self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
+            self.socketio.on('server_ping', namespace=self.graph_namespace)(ping_pong)
             
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
@@ -83,7 +88,7 @@ class FlaskServer:
         self.socketio.emit(
             'client_message', 
             {'data': msg, 'count': count}, 
-            namespace=self.server_namespace)
+            namespace=self.graph_namespace)
 
     def rtlsdr_thread(self):
         self.rtl_sdr.init_device()
@@ -92,6 +97,6 @@ class FlaskServer:
             self.socketio.emit(
             'fft_data', 
             {'data': fft_data}, 
-            namespace=self.server_namespace)
+            namespace=self.graph_namespace)
             self.socketio.sleep(0.4)
 

@@ -5,12 +5,29 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <b>rtl_cat</b>
-    
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            namespace = '/';
+            var socket = io.connect(location.protocol + '//' + document.domain + 
+                         ':' + location.port + namespace);
+
+            socket.on('connect', function() {
+                socket.emit('index_connect');
+            });
+
+            socket.on('client_message', function(args) {
+                if (args.freq == null){
+                    $('#graph_page_btn').attr("disabled", true);
+                }
+            });
+
+        });
+    </script>
 </head>
 <body>
     <br><br>
-    <form id="fft_graph" method="POST" action="/graph">
-        <input type="submit" value="FFT graph">
+    <form id="graph_page" method="POST" action="/graph">
+        <input type="submit" id="graph_page_btn" value="FFT graph">
     </form>
     <br>
     <form id="settings" method="POST" action="#">
