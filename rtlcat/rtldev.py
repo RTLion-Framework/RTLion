@@ -16,8 +16,6 @@ class RTLSdr:
                                             else self.default_sample_rate
         self.gain = int(args['gain']) if args['gain'] else self.default_gain
         self.center_freq = args['freq']
-        self.no_colors = args['nocolors']
-        self.filename = args['filename']
         self.dev = None
     
     def import_rtlsdr(self):
