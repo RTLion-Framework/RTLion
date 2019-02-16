@@ -24,13 +24,21 @@
                 }else{
                     $("#center_freq").val(args.freq);
                 }
-
+            });
+            $('form#save_settings').submit(function(event) {
+                // Check arguments here
+                socket.emit('update_settings', 'x');
+                /*{'dev': $('#dev_index').val(), 
+                'samprate': $('#samp_rate').val(), 
+                'gain': $('#dev_gain').val(), 
+                'freq': $('#center_freq').val()}*/
+                return false;
             });
         });
     </script>
 </head>
 <body>
-    <form action="/action_page.php">
+    <form id="save_settings" method="POST" action="#">
         Device index: <input type="text" id="dev_index"><br>
         Sample rate: <input type="text" id="samp_rate"><br>
         Center frequency: <input type="text" id="center_freq"><br>

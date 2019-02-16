@@ -18,11 +18,6 @@
                 $('#log').append('<br>' + $('<div/>').text(msg.data).html());
             });
 
-            $('form#emit').submit(function(event) {
-                socket.emit('server_response', {data: $('#emit_data').val()});
-                return false;
-            });
-
             $('form#stop_sdr').submit(function(event) {
                 socket.emit('disconnect_request');
                 return false;

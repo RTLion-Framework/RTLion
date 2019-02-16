@@ -42,14 +42,16 @@ class FlaskServer:
             def ping_pong(): emit('server_pong')
             def server_connect(): self.send_to_server("Socket [>]")
             def server_disconnect(): print('Socket disconnected.', request.sid)
-            def send_args(): self.socketio.emit('client_message', self.rtl_sdr.args, \
+            def send_args_index(): self.socketio.emit('client_message', self.rtl_sdr.args, \
                                 namespace=self.index_namespace)
+            def send_args_settings(): self.socketio.emit('client_message', self.rtl_sdr.args, \
+                                namespace=self.settings_namespace)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
     
             self.flask_server.route(self.index_namespace)(page_index)
-            self.socketio.on('send_args', namespace=self.index_namespace)(send_args)
+            self.socketio.on('send_args', namespace=self.index_namespace)(send_args_index)
             
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)     
             self.socketio.on('connect', namespace=self.graph_namespace)(server_connect)
@@ -60,7 +62,9 @@ class FlaskServer:
             self.socketio.on('server_ping', namespace=self.graph_namespace)(ping_pong)
 
             self.flask_server.route(self.settings_namespace, methods=['GET', 'POST'])(page_settings)
-            self.socketio.on('send_args', namespace=self.settings_namespace)(send_args)
+            self.socketio.on('send_args', namespace=self.settings_namespace)(send_args_settings)
+            self.socketio.on('update_settings', namespace=self.settings_namespace)(send_args_settings)
+
             
         except Exception as e:
             print("Could not initialize Flask server.\n" + str(e))
@@ -106,4 +110,8 @@ class FlaskServer:
             {'data': fft_data}, 
             namespace=self.graph_namespace)
             self.socketio.sleep(0.4)
+
+    def update_settings(self, args):
+
+        print(args)
 
