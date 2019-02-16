@@ -21,13 +21,5 @@ def parse_cli_args():
                         "--gain",
                         help="gain (0 for auto) (default: ~1-3)")
 
-    parser.add_argument("-T",
-                        "--nocolors",
-                        action="store_true",
-                        help="turn off log colors (default: on)")
-
-    parser.add_argument("filename", nargs='?',
-                        help="filename (a '-' dumps samples to stdout)")
-
     args = vars(parser.parse_args())
     return args
