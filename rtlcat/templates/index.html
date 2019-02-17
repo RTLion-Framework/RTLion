@@ -12,14 +12,7 @@
                          ':' + location.port + namespace);
 
             socket.on('connect', function() {
-                socket.emit('send_args');
-            });
-
-            socket.on('client_message', function(args) {
-                if (args.freq == null){
-                    // Alert user
-                    $('#graph_page_btn').attr("disabled", true);
-                }
+                //    
             });
         });
     </script>
