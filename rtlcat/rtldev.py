@@ -18,6 +18,7 @@ class RTLSdr:
         self.sample_rate = args['samprate']
         self.gain = args['gain']
         self.center_freq = args['freq']
+        self.num_read = args['n']
         self.args = args
 
     def create_static_dir(self):

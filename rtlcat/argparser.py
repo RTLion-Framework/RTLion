@@ -24,6 +24,11 @@ def parse_cli_args():
                         help="gain (0 for auto) (default: ~1-3)",
                         default="auto")
 
+    parser.add_argument("-n",
+                        "-num",
+                        help="number of the reads (default: -1, inf.)]",
+                        default=-1)
+
     parser.add_argument("host:port", nargs='?',
                         help="IP address/hostname and port number " 
                         "for server to listen on (default: 0.0.0.0:8081)",

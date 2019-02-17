@@ -25,23 +25,24 @@
 
             $('form#create_graph').submit(function(event) {
                 // Check arguments
+                read_count = 0;
                 socket.emit('create_fft_graph');
                 return false;
             });
 
             socket.on('fft_data', function(msg) {
                 $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
+                read_count++;
+                $('#read_count').text(read_count)
             });
 
             socket.on('cli_args', function(args) {
                 $("#dev_index").val(args.dev);
                 $("#samp_rate").val(args.samprate);
                 $("#dev_gain").val(args.gain);
-                if (args.freq == null){
-                    $("#center_freq").val("");
-                }else{
-                    $("#center_freq").val(args.freq);
-                }
+                $("#n_read").val(args.n)
+                $("#center_freq").val(args.freq);
+                read_count = args.n
             });
             $('form#save_settings').submit(function(event) {
                 // Check arguments here
@@ -49,13 +50,15 @@
                 {'dev': parseInt($('#dev_index').val()), 
                 'samprate': parseInt($('#samp_rate').val()), 
                 'gain': $('#dev_gain').val(), 
-                'freq': parseInt($('#center_freq').val())});
+                'freq': parseInt($('#center_freq').val()),
+                'n': parseInt($('#n_read').val())});
                 socket.emit('send_cli_args');
                 return false;
             });
 
             var ping_pong_times = [];
             var start_time;
+            var read_count;
             window.setInterval(function() {
                 start_time = (new Date).getTime();
                 socket.emit('server_ping');
@@ -95,6 +98,8 @@
                 Sample rate: <input type="text" id="samp_rate"><br>
                 Center frequency: <input type="text" id="center_freq"><br>
                 Gain: <input type="text" id="dev_gain"><br>
+                Reads: <input type="text" id="n_read"><br>
+                <span id="read_count"></span><br>
                 <input type="submit" value="Save">
         </form>
     </center>
