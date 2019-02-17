@@ -19,6 +19,7 @@ class RTLSdr:
         self.gain = args['gain']
         self.center_freq = args['freq']
         self.num_read = args['n']
+        self.interval = args['i']
         self.args = args
 
     def create_static_dir(self):
