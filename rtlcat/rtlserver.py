@@ -46,6 +46,8 @@ class FlaskServer:
                                 namespace=self.index_namespace)
             def send_args_settings(): self.socketio.emit('client_message', self.rtl_sdr.args, \
                                 namespace=self.settings_namespace)
+            def send_args_graph(): self.socketio.emit('cli_args', self.rtl_sdr.args, \
+                                namespace=self.graph_namespace)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
@@ -59,6 +61,8 @@ class FlaskServer:
             self.socketio.on('server_response', namespace=self.graph_namespace)(self.server_response)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
+            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(send_args_graph)
+            self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(ping_pong)
 
             self.flask_server.route(self.settings_namespace, methods=['GET', 'POST'])(page_settings)
