@@ -8,9 +8,8 @@ from threading import Lock
 class FlaskServer:
     def __init__(self, rtl_sdr, server_host='0.0.0.0', server_port=8081):
         self.rtl_sdr = rtl_sdr
+        self.rtl_sdr.init_device()
         self.server_addr = (server_host, server_port)
-        self.thread = None
-        self.thread_lock = Lock()
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
         self.import_flask()
@@ -71,24 +70,20 @@ class FlaskServer:
         self.socketio.stop()
 
     def stop_sdr(self):
-        self.rtl_sdr.close()
-        print('x')
+        self.c_read = False
 
     def create_fft_graph(self):
         self.socketio.emit(
             'client_message', 
             {'data': 'Creating FFT graph from samples...'}, 
             namespace=self.graph_namespace)
-        with self.thread_lock:
-            if self.thread is None:
-                self.c_read = True
-                self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
+        self.c_read = True
+        self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
 
     def update_settings(self, args):
         self.rtl_sdr.set_args(args)
 
     def rtlsdr_thread(self):
-        self.rtl_sdr.init_device()
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(

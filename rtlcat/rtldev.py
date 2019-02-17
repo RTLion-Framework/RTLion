@@ -51,8 +51,8 @@ class RTLSdr:
             self.dev.center_freq = self.center_freq
             self.dev.gain = self.gain
         except IOError as e:
-            print("Failed to open RTL-SDR device.\n" + str(e))
-            sys.exit()
+            # Warning
+            print("Failed to open RTL-SDR device!\n" + str(e))
         except Exception as e:
             print("Failed to initialize RTL-SDR device.\n" + str(e))
             sys.exit()

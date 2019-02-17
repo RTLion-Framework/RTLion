@@ -25,8 +25,6 @@
 
             $('form#create_graph').submit(function(event) {
                 socket.emit('create_fft_graph');
-                $("form#stop_sdr").css("visibility", "visible")
-                $("form#create_graph").css("visibility", "hidden")
                 return false;
             });
 
@@ -80,7 +78,7 @@
             <input type="submit" value="Create FFT graph">
         </form>
         <br>
-        <form id="stop_sdr" method="POST" action="#" style="visibility: hidden">
+        <form id="stop_sdr" method="POST" action="#">
             <input type="submit" value="Stop RTL-SDR">
         </form>
         <b><span id="ping-pong"></span></b>
