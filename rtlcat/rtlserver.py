@@ -40,7 +40,6 @@ class FlaskServer:
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-    
             self.flask_server.route(self.index_namespace)(page_index)
 
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)

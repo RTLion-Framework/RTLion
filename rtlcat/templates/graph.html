@@ -24,6 +24,7 @@
             });
 
             $('form#create_graph').submit(function(event) {
+                // Check arguments
                 socket.emit('create_fft_graph');
                 return false;
             });

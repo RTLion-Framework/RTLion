@@ -63,35 +63,39 @@ class RTLSdr:
             return self.dev.read_samples(n_read)
         except Exception as e:
             print("Failed to read samples from RTL-SDR.\n" + str(e))
-            sys.exit()
 
     def close(self):
         try:
             self.dev.close()
         except Exception as e:
             print("Failed to close RTL-SDR device.\n" + str(e))
-            sys.exit()
 
     def create_graph(self, continous=False, read_count=1, refresh_rate=0.05):
-        from pylab import psd, xlabel, ylabel, pause, clf, show
-        for i in range(read_count):
-            psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                Fc=int(self.center_freq)/1e6)
-            xlabel('Frequency (MHz)')
-            ylabel('Relative power (dB)')
-            if continous:
-                pause(refresh_rate)
-                clf()
-            else: show()
+        try:
+            from pylab import psd, xlabel, ylabel, pause, clf, show
+            for i in range(read_count):
+                psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+                    Fc=int(self.center_freq)/1e6)
+                xlabel('Frequency (MHz)')
+                ylabel('Relative power (dB)')
+                if continous:
+                    pause(refresh_rate)
+                    clf()
+                else: show()
+        except Exception e:
+                    print("Failed to create graph.\n" + str(e))
     
     def get_fft_data(self):
-        from pylab import psd, xlabel, ylabel, title, clf, savefig
-        fft_plot = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                Fc=int(self.center_freq)/1e6)
-        title("rtl_cat")
-        xlabel('Frequency (MHz)')
-        ylabel('Relative power (dB)')
-        savefig(self.static_dir + '/fft.png', bbox_inches='tight')
-        clf()
-        encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
-        return encoded
+        try:
+            from pylab import psd, xlabel, ylabel, title, clf, savefig
+            fft_plot = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+                    Fc=int(self.center_freq)/1e6)
+            title("rtl_cat")
+            xlabel('Frequency (MHz)')
+            ylabel('Relative power (dB)')
+            savefig(self.static_dir + '/fft.png', bbox_inches='tight')
+            clf()
+            encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
+            return encoded
+        except Exception e:
+            print("Failed to get graph data.\n" + str(e))
