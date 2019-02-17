@@ -6,7 +6,7 @@ import sys
 class FlaskServer:
     def __init__(self, rtl_sdr, server_host='0.0.0.0', server_port=8081):
         self.rtl_sdr = rtl_sdr
-        self.rtl_sdr.init_device()
+        #self.rtl_sdr.init_device()
         self.server_addr = (server_host, server_port)
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
@@ -44,6 +44,7 @@ class FlaskServer:
             self.flask_server.route(self.index_namespace)(page_index)
 
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
+            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(send_args_graph)
@@ -64,6 +65,9 @@ class FlaskServer:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
 
+    def socketio_on_connect(self):
+        self.thread = self.socketio.start_background_task(self.open_device)
+
     def disconnect_request(self):
         self.socketio.stop()
 
@@ -71,12 +75,22 @@ class FlaskServer:
         self.c_read = False
 
     def create_fft_graph(self):
-        self.socketio.emit(
+        if self.rtl_sdr.dev == None:
+            self.socketio.emit(
             'client_message', 
-            {'data': 'Creating FFT graph from samples...'}, 
+            {'data': 'Failed to open & initialize RTL-SDR device.'}, 
             namespace=self.graph_namespace)
-        self.c_read = True
-        self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
+            self.socketio_on_connect()
+        else:
+            self.socketio.emit(
+                'client_message', 
+                {'data': 'Creating FFT graph from samples...'}, 
+                namespace=self.graph_namespace)
+            self.c_read = True
+            self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
+
+    def open_device(self):
+        self.rtl_sdr.init_device()
 
     def update_settings(self, args):
         self.rtl_sdr.set_args(args)

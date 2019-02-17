@@ -47,15 +47,16 @@ class RTLSdr:
     def init_device(self):
         try:
             self.dev = RtlSdr(self.dev_id)
-            self.dev.sample_rate = self.sample_rate
-            self.dev.center_freq = self.center_freq
-            self.dev.gain = self.gain
         except IOError as e:
             # Warning
             print("Failed to open RTL-SDR device!\n" + str(e))
+        try:
+            self.dev.center_freq = self.center_freq
+            self.dev.sample_rate = self.sample_rate
+            self.dev.gain = self.gain
         except Exception as e:
+            # Warning
             print("Failed to initialize RTL-SDR device.\n" + str(e))
-            sys.exit()
 
     def read_samples(self, n_read=512*512):
         try:
