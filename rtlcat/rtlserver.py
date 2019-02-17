@@ -80,6 +80,7 @@ class FlaskServer:
         session['receive_count'] = session.get('receive_count', 0) + 1
         self.send_to_server("Socket disconnected. [>]", session['receive_count'])
         disconnect()
+        self.socketio.stop()
 
     def server_response(self, message):
         session['receive_count'] = session.get('receive_count', 0) + 1
@@ -109,5 +110,5 @@ class FlaskServer:
             self.socketio.sleep(0.4)
 
     def update_settings(self, args):
-        self.rtl_sdr.args = args
+        self.rtl_sdr.set_args(args)
 

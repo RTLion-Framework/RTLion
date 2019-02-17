@@ -48,10 +48,10 @@
             $('form#save_settings').submit(function(event) {
                 // Check arguments here
                 socket.emit('update_settings',
-                {'dev': $('#dev_index').val(), 
-                'samprate': $('#samp_rate').val(), 
+                {'dev': parseInt($('#dev_index').val()), 
+                'samprate': parseInt($('#samp_rate').val()), 
                 'gain': $('#dev_gain').val(), 
-                'freq': $('#center_freq').val()});
+                'freq': parseInt($('#center_freq').val())});
             });
 
             var ping_pong_times = [];
@@ -86,6 +86,7 @@
         </form>
         <b><span id="ping-pong"></span></b>
         <div id="log"></div>
+        <br>
         <form id="save_settings" method="POST" action="#">
                 Device index: <input type="text" id="dev_index"><br>
                 Sample rate: <input type="text" id="samp_rate"><br>

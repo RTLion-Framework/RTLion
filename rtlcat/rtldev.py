@@ -10,17 +10,20 @@ class RTLSdr:
         self.default_device_id = 0
         self.default_sample_rate = 2.048e6
         self.default_gain = 'auto'
+        self.set_args(args)
+        self.dev = None
+
+    def set_args(self, args):
         self.dev_id = args['dev'] if args['dev'] else self.default_device_id
         self.sample_rate = args['samprate'] if args['samprate'] \
                                             else self.default_sample_rate
-        self.gain = int(args['gain']) if args['gain'] else self.default_gain
+        self.gain = args['gain'] if args['gain'] else self.default_gain
         self.center_freq = args['freq']
         self.args = {
             'freq': self.center_freq, 
             'samprate': self.sample_rate, 
             'dev': self.dev_id, 
             'gain': self.gain}
-        self.dev = None
     
     def import_rtlsdr(self):
         try:
