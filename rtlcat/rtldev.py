@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import base64
 
 class RTLSdr:
@@ -12,6 +13,8 @@ class RTLSdr:
         self.default_gain = 'auto'
         self.set_args(args)
         self.dev = None
+        self.static_dir = 'rtlcat/static/'
+        self.create_static_dir()
 
     def set_args(self, args):
         self.dev_id = args['dev'] if args['dev'] else self.default_device_id
@@ -24,6 +27,14 @@ class RTLSdr:
             'samprate': self.sample_rate, 
             'dev': self.dev_id, 
             'gain': self.gain}
+
+    def create_static_dir(self):
+        try:
+            if not os.path.exists(self.static_dir):
+                os.makedirs(self.static_dir)
+        except Exception as e:
+            print("Failed to create static directory.\n" + str(e))
+            sys.exit()
     
     def import_rtlsdr(self):
         try:
@@ -79,7 +90,7 @@ class RTLSdr:
         title("rtl_cat")
         xlabel('Frequency (MHz)')
         ylabel('Relative power (dB)')
-        savefig('rtlcat/static/fft.png', bbox_inches='tight')
+        savefig(self.static_dir + '/fft.png', bbox_inches='tight')
         clf()
-        encoded = base64.b64encode(open("rtlcat/static/fft.png", "rb").read())
+        encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
         return encoded
