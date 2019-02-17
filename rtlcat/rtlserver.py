@@ -63,7 +63,7 @@ class FlaskServer:
 
             self.flask_server.route(self.settings_namespace, methods=['GET', 'POST'])(page_settings)
             self.socketio.on('send_args', namespace=self.settings_namespace)(send_args_settings)
-            self.socketio.on('update_settings', namespace=self.settings_namespace)(send_args_settings)
+            self.socketio.on('update_settings', namespace=self.settings_namespace)(self.update_settings)
 
             
         except Exception as e:
@@ -112,6 +112,5 @@ class FlaskServer:
             self.socketio.sleep(0.4)
 
     def update_settings(self, args):
-
-        print(args)
+        self.rtl_sdr.args = args
 

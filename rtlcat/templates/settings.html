@@ -7,7 +7,7 @@
     <b>Settings</b>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            namespace = '/';
+            namespace = '/settings';
             var socket = io.connect(location.protocol + '//' + document.domain + 
                          ':' + location.port + namespace);
 
@@ -27,12 +27,11 @@
             });
             $('form#save_settings').submit(function(event) {
                 // Check arguments here
-                socket.emit('update_settings', 'x');
-                /*{'dev': $('#dev_index').val(), 
+                socket.emit('update_settings',
+                {'dev': $('#dev_index').val(), 
                 'samprate': $('#samp_rate').val(), 
                 'gain': $('#dev_gain').val(), 
-                'freq': $('#center_freq').val()}*/
-                return false;
+                'freq': $('#center_freq').val()});3
             });
         });
     </script>
