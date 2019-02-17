@@ -56,7 +56,7 @@ class RTLSdr:
             self.dev.gain = self.gain
         except Exception as e:
             # Warning
-            print("Failed to initialize RTL-SDR device.\n" + str(e))
+            print("Failed to initialize RTL-SDR device.")
 
     def read_samples(self, n_read=512*512):
         try:
@@ -82,8 +82,8 @@ class RTLSdr:
                     pause(refresh_rate)
                     clf()
                 else: show()
-        except Exception e:
-                    print("Failed to create graph.\n" + str(e))
+        except Exception as e:
+            print("Failed to create graph.\n" + str(e))
     
     def get_fft_data(self):
         try:
@@ -97,5 +97,5 @@ class RTLSdr:
             clf()
             encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
             return encoded
-        except Exception e:
+        except Exception as e:
             print("Failed to get graph data.\n" + str(e))
