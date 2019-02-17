@@ -7,8 +7,9 @@ from rtlcat.argparser import parse_cli_args
 
 def main():
 
-    rtl_sdr = RTLSdr(**parse_cli_args())
-    flask_server = FlaskServer(rtl_sdr)
+    cli_args = parse_cli_args()
+    rtl_sdr = RTLSdr(**cli_args)
+    flask_server = FlaskServer(rtl_sdr, cli_args['host:port'].split(':'))
     flask_server.run()
 
 if __name__ == "__main__":

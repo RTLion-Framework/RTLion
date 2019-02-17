@@ -4,10 +4,10 @@
 import sys
 
 class FlaskServer:
-    def __init__(self, rtl_sdr, server_host='0.0.0.0', server_port=8081):
+    def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):
         self.rtl_sdr = rtl_sdr
         #self.rtl_sdr.init_device()
-        self.server_addr = (server_host, server_port)
+        self.server_addr = server_addr
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
         self.import_flask()
@@ -59,7 +59,7 @@ class FlaskServer:
         try:
             self.socketio.run(self.flask_server, 
                 host=self.server_addr[0], 
-                port=self.server_addr[1])
+                port=int(self.server_addr[1]))
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
