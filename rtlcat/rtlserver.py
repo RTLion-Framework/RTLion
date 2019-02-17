@@ -72,7 +72,6 @@ class FlaskServer:
             sys.exit()
 
     def disconnect_request(self):
-        disconnect()
         self.socketio.stop()
 
     def create_fft_graph(self):
