@@ -49,6 +49,8 @@
                 'samprate': parseInt($('#samp_rate').val()), 
                 'gain': $('#dev_gain').val(), 
                 'freq': parseInt($('#center_freq').val())});
+                socket.emit('send_cli_args');
+                return false;
             });
 
             var ping_pong_times = [];
