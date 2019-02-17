@@ -19,7 +19,7 @@
             });
 
             $('form#stop_sdr').submit(function(event) {
-                socket.emit('disconnect_request');
+                socket.emit('stop_sdr');
                 return false;
             });
 
