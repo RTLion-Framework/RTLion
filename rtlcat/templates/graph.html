@@ -11,7 +11,6 @@
                          ':' + location.port + graph_namespace);
 
             socket.on('connect', function() {
-                socket.emit('server_response', {data: 'Server [<]'});
                 socket.emit('send_cli_args');
             });
 

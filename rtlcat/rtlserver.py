@@ -18,8 +18,8 @@ class FlaskServer:
 
     def import_flask(self):
         try:
-            global Flask, render_template, session, request, SocketIO, emit, disconnect
-            from flask import Flask, render_template, session, request
+            global Flask, render_template, request, SocketIO, emit, disconnect
+            from flask import Flask, render_template, request
             from flask_socketio import SocketIO, emit, disconnect
         except:
             print("Flask framework not found.")
@@ -38,7 +38,6 @@ class FlaskServer:
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
 
             def ping_pong(): emit('server_pong')
-            def server_connect(): self.send_to_server("Socket [>]")
             def server_disconnect(): print('Socket disconnected.', request.sid)
             def send_args_index(): self.socketio.emit('client_message', self.rtl_sdr.args, \
                                 namespace=self.index_namespace)
@@ -54,9 +53,7 @@ class FlaskServer:
             self.socketio.on('send_args', namespace=self.index_namespace)(send_args_index)
             
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)     
-            self.socketio.on('connect', namespace=self.graph_namespace)(server_connect)
             self.socketio.on('disconnect', namespace=self.graph_namespace)(server_disconnect)
-            self.socketio.on('server_response', namespace=self.graph_namespace)(self.server_response)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(send_args_graph)
@@ -77,14 +74,8 @@ class FlaskServer:
             sys.exit()
 
     def disconnect_request(self):
-        session['receive_count'] = session.get('receive_count', 0) + 1
-        self.send_to_server("Socket disconnected. [>]", session['receive_count'])
         disconnect()
         self.socketio.stop()
-
-    def server_response(self, message):
-        session['receive_count'] = session.get('receive_count', 0) + 1
-        self.send_to_server(message['data'], session['receive_count'])
 
     def create_fft_graph(self):
         self.send_to_server("Creating FFT graph from samples... [>]")
