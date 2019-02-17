@@ -34,7 +34,7 @@ class FlaskServer:
             def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
 
-            def ping_pong(): emit('server_pong', '~')
+            def ping_pong(): emit('server_pong')
             def send_args_graph(): self.socketio.emit('cli_args', self.rtl_sdr.args, \
                                 namespace=self.graph_namespace)
 
