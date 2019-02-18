@@ -103,5 +103,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# static files
-rtlcat/static/
+# static file
+rtlcat/static/fft.png
