@@ -72,6 +72,7 @@ class FlaskServer:
 
     def stop_sdr(self):
         self.c_read = False
+        self.n_read = 0
 
     def create_fft_graph(self):
         if self.rtl_sdr.dev == None:
@@ -95,7 +96,7 @@ class FlaskServer:
         self.rtl_sdr.set_args(args)
 
     def rtlsdr_thread(self):
-        n_read = self.rtl_sdr.num_read
+        self.n_read = self.rtl_sdr.num_read
         interval = int(self.rtl_sdr.interval) / 1000
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
@@ -104,7 +105,7 @@ class FlaskServer:
             {'data': fft_data}, 
             namespace=self.graph_namespace)
             self.socketio.sleep(interval)
-            n_read-=1
-            if n_read == 0: break
+            self.n_read-=1
+            if self.n_read == 0: break
 
 
