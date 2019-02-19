@@ -97,7 +97,7 @@ class FlaskServer:
 
     def rtlsdr_thread(self):
         self.n_read = self.rtl_sdr.num_read
-        interval = int(self.rtl_sdr.interval) / 1000
+        interval = int(self.rtl_sdr.interval) / 1000.03
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
