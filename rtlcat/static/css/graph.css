@@ -1,7 +1,6 @@
 body {
     font-family: monospace;
     font-size: 14px;
-    font-weight: bold;
     background-color: #fff;
 }
 .left {
@@ -43,7 +42,9 @@ fieldset {
   border-image-outset: initial;
   border-image-repeat: initial;
   min-width: -webkit-min-content;
-  padding: 30px;
+  padding: 10px;
+  font-weight: bold;
+  color: #2F2E2E;
 }
 .ghost-input {
   display: block;
@@ -56,7 +57,7 @@ fieldset {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #000;
+  color: #2F2E2E;
   background: #f4f4f4;
   font-family: Open Sans,Verdana;
   padding: 10px 15px;
