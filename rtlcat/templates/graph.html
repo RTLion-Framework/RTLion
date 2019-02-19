@@ -2,7 +2,42 @@
 <html>
 <head>
     <title>FFT graph</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css') }}">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css') }}">-->
+    <style type="text/css">
+    body,td,th {
+      font-family: Consolas;
+      font-size: 14px;
+      color: #636161;
+    }
+    body {
+
+    }
+    .left {
+      float: left;
+      width: auto;
+
+    }
+    .right {
+      float: left;
+      width: auto;
+      text-align: left;
+      margin-top: 10px;
+      margin-left: 50px;
+    }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .respimg {
+      width: 100%;
+      height: auto;
+      max-width: 640px;
+      max-height: 480px;
+      padding:1px;
+      border:2px solid #021a40;
+    }
+    </style>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -80,29 +115,34 @@
     </script>
 </head>
 <body>
-    <center>
-        <img id="fft_graph">
-        <br>
-        <form id="create_graph" method="POST" action="#">
-            <input type="submit" value="Create FFT graph">
-        </form>
-        <br>
-        <form id="stop_sdr" method="POST" action="#">
-            <input type="submit" value="Stop RTL-SDR">
-        </form>
-        <b><span id="ping_pong"></span></b>
-        <div id="log"></div>
-        <br>
-        <form id="save_settings" method="POST" action="#">
-                Device index: <input type="text" id="dev_index"><br>
-                Sample rate: <input type="text" id="samp_rate"><br>
-                Center frequency: <input type="text" id="center_freq"><br>
-                Gain: <input type="text" id="dev_gain"><br>
-                Reads: <input type="text" id="n_read"><br>
-                Interval: <input type="text" id="interval"><br>
-                <i><span id="read_count"></span></i><br>
-                <input type="submit" value="Save">
-        </form>
-    </center>
+        <div class="row">
+            <div class="left">
+                <img class="respimg" src="../static/fft.png" id="fft_graph">
+            </div>
+            <div class="right">
+
+                <form id="create_graph" method="POST" action="#">
+                    <input type="submit" value="Create FFT graph">
+                </form>
+                <br>
+                <form id="stop_sdr" method="POST" action="#">
+                    <input type="submit" value="Stop RTL-SDR">
+                </form>
+                <b><span id="ping_pong"></span></b>
+                <div id="log"></div>
+                <br>
+                <form id="save_settings" method="POST" action="#">
+                        Device index: <input type="text" id="dev_index"><br>
+                        Sample rate: <input type="text" id="samp_rate"><br>
+                        Center frequency: <input type="text" id="center_freq"><br>
+                        Gain: <input type="text" id="dev_gain"><br>
+                        Reads: <input type="text" id="n_read"><br>
+                        Interval: <input type="text" id="interval"><br>
+                        <i><span id="read_count"></span></i><br>
+                        <input type="submit" value="Save">
+                </form>
+
+            </div>
+        </div>
 </body>
 </html>
