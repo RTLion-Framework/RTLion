@@ -8,6 +8,7 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             graph_namespace = '/graph';
+            create_graph = true;
             var socket = io.connect(location.protocol + '//' + document.domain + 
                          ':' + location.port + graph_namespace);
 
@@ -18,16 +19,18 @@
             socket.on('client_message', function(msg) {
                 $('#log').append('<br>' + $('<div/>').text(msg.data).html());
             });
-
-            $('form#stop_sdr').submit(function(event) {
-                socket.emit('stop_sdr');
-                return false;
-            });
-
             $('form#create_graph').submit(function(event) {
-                // Check arguments
-                read_count = 0;
-                socket.emit('create_fft_graph');
+                if (create_graph){
+                    // Check arguments
+                    create_graph = false;
+                    $('#btn_graph').val("Stop");
+                    read_count = 0;
+                    socket.emit('create_fft_graph');
+                }else{
+                    create_graph = true;
+                    $('#btn_graph').val("Create FFT graph");
+                    socket.emit('stop_sdr');
+                }
                 return false;
             });
 
@@ -87,12 +90,9 @@
             <div class="right">
                 <fieldset>
                 <form id="create_graph" method="POST" action="#">
-                    <input class="ghost-button" type="submit" value="Create FFT graph">
+                    <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
                 </form>
                 <br>
-                <form id="stop_sdr" method="POST" action="#">
-                    <input class="ghost-button" type="submit" value="Stop RTL-SDR">
-                </form>
                 <div id="log"></div>
                 <form id="save_settings" method="POST" action="#">
                     Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
