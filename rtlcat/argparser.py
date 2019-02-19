@@ -31,8 +31,8 @@ def parse_cli_args():
     
     parser.add_argument("-i",
                         "-interval",
-                        help="interval between reads (default: 400ms)",
-                        default=400)
+                        help="interval between reads (default: 500ms)",
+                        default=500)
 
     parser.add_argument("host:port", nargs='?',
                         help="IP address/hostname and port number " 
