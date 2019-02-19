@@ -7,6 +7,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
+            $('#fft_graph').hide();   
             graph_namespace = '/graph';
             create_graph = true;
             var socket = io.connect(location.protocol + '//' + document.domain + 
@@ -38,6 +39,7 @@
                 $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
                 read_count++;
                 $('#read_count').text(read_count)
+                $('#fft_graph').show();
             });
 
             socket.on('cli_args', function(args) {
@@ -84,16 +86,15 @@
 </head>
 <body>
         <div class="row">
-            <div class="left">
+            <div class="startcolumn">
                 <img class="respimg" id="fft_graph">
             </div>
-            <div class="right">
+            <div class="midcolumn">
                 <fieldset>
                 <form id="create_graph" method="POST" action="#">
                     <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
                 </form>
                 <br>
-                <div id="log"></div>
                 <form id="save_settings" method="POST" action="#">
                     Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
                     Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
@@ -106,6 +107,9 @@
                 </form>
                 </fieldset>
                 <center><span id="ping_pong"></span></center>
+            </div>
+            <div class="endcolumn">
+                <div id="log"></div>
             </div>
         </div>
 
