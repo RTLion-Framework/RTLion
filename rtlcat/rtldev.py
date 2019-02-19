@@ -84,7 +84,6 @@ class RTLSdr:
             from pylab import psd, xlabel, ylabel, title, clf, savefig
             fft_plot = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6)
-            title("rtl_cat")
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
             savefig(self.static_dir + '/fft.png', bbox_inches='tight')

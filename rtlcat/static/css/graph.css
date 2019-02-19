@@ -2,6 +2,7 @@ body {
     font-family: monospace;
     font-size: 16px;
     font-weight: bold;
+    background-color: #fff;
 }
 .left {
     float: left;
@@ -55,8 +56,8 @@ fieldset {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  color: #4b545f;
-  background: #fff;
+  color: #000;
+  background: #f4f4f4;
   font-family: Open Sans,Verdana;
   padding: 10px 15px;
   margin: 10px 0px;
@@ -67,11 +68,11 @@ fieldset {
   transition: all 0.1s ease-in-out;
 }
 .ghost-input:focus {
-  border-bottom:1px solid #ddd;
+  border-bottom:1px solid #000;
 }
 .ghost-button {
   background-color: transparent;
-  border:2px solid #ddd;
+  border:2px solid #c1c1c1;
   padding:10px 30px; 
   min-width: 200px;
   -webkit-transition: all 0.1s ease-in-out;
@@ -79,7 +80,12 @@ fieldset {
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
+  font-weight: bold;
+  outline: none;
 }
 .ghost-button:hover {
   border:2px solid #515151;
+}
+.ghost-button:focus {
+    outline:0;
 }
