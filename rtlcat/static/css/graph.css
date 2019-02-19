@@ -22,8 +22,8 @@ body {
 .respimg {
     width: 100%;
     height: auto;
-    max-width: 640px;
-    max-height: 480px;
+    max-width: 578px;
+    max-height: 455px;
     padding:1px;
     border:2px solid #FFF;
 }
