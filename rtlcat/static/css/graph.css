@@ -5,8 +5,7 @@ body {
 }
 fieldset {
     display: block;
-    border:1px solid #c1c1c1;   
-   
+    border:1px solid #c1c1c1;
     color: #2F2E2E;
 }
 legend {
@@ -59,6 +58,11 @@ legend {
     padding: 10px;
     font-weight: bold;
     color: #2F2E2E;
+}
+.logtext {
+    float:left;
+    overflow-y: auto;
+    height: 400px;
 }
 .ghost-input {
     display: block;

@@ -19,6 +19,7 @@
 
             socket.on('client_message', function(msg) {
                 $('#log').append(msg.data + '<br>');
+                $('#log').scrollTop($('#log').height());
             });
             $('form#create_graph').submit(function(event) {
                 if (create_graph){
@@ -113,9 +114,10 @@
         <div class="endcolumn">
             <fieldset>
                 <legend>Log</legend>
-                <div id="log"></div>
+                <div class="logtext" id="log"></div>
             </fieldset>
         </div>
     </div>
+
 </body>
 </html>
