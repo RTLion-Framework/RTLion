@@ -87,36 +87,35 @@
     </script>
 </head>
 <body>
-        <div class="row">
-            <div class="startcolumn" id="fft_graph_column">
-                <img class="respimg" id="fft_graph">
-            </div>
-            <div class="midcolumn">
-                <div class="formfield">
-                <form id="create_graph" method="POST" action="#">
-                    <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
-                </form>
-                <br>
-                <form id="save_settings" method="POST" action="#">
-                    Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
-                    Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
-                    Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
-                    Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
-                    Reads<input class="ghost-input" type="text" placeholder="-1" id="n_read">
-                    Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
-                    <i><span id="read_count"></span></i><br>
-                    <input class="ghost-button" type="submit" value="Save">
-                </form>
-                </div>
-                <center><span id="ping_pong"></span></center>
-            </div>
-            <div class="endcolumn">
-                <fieldset>
-                    <legend>Log</legend>
-                    <div id="log"></div>
-                </fieldset>
-            </div>
+    <div class="row">
+        <div class="startcolumn" id="fft_graph_column">
+            <img class="respimg" id="fft_graph">
         </div>
-
+        <div class="midcolumn">
+            <div class="formfield">
+            <form id="create_graph" method="POST" action="#">
+                <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
+            </form>
+            <br>
+            <form id="save_settings" method="POST" action="#">
+                Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
+                Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
+                Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
+                Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
+                Reads<input class="ghost-input" type="text" placeholder="-1" id="n_read">
+                Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
+                <i><span id="read_count"></span></i><br>
+                <input class="ghost-button" type="submit" value="Save">
+            </form>
+            </div>
+            <center><span id="ping_pong"></span></center>
+        </div>
+        <div class="endcolumn">
+            <fieldset>
+                <legend>Log</legend>
+                <div id="log"></div>
+            </fieldset>
+        </div>
+    </div>
 </body>
 </html>
