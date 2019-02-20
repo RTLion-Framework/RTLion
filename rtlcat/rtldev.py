@@ -86,7 +86,7 @@ class RTLSdr:
                     Fc=int(self.center_freq)/1e6)
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
-            savefig(self.static_dir + '/fft.png', bbox_inches='tight')
+            savefig(self.static_dir + '/fft.png', bbox_inches='tight', pad_inches = 0)
             clf()
             encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
             return encoded

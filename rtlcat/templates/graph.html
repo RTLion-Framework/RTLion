@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
-            $('#fft_graph').hide();   
+            $('#fft_graph_column').hide();
             graph_namespace = '/graph';
             create_graph = true;
             var socket = io.connect(location.protocol + '//' + document.domain + 
@@ -39,7 +39,9 @@
                 $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
                 read_count++;
                 $('#read_count').text(read_count)
-                $('#fft_graph').show();
+                if(!$('#fft_graph_column').is(':visible')){
+                    $('#fft_graph_column').show();
+                }
             });
 
             socket.on('cli_args', function(args) {
@@ -86,7 +88,7 @@
 </head>
 <body>
         <div class="row">
-            <div class="startcolumn">
+            <div class="startcolumn" id="fft_graph_column">
                 <img class="respimg" id="fft_graph">
             </div>
             <div class="midcolumn">

@@ -5,9 +5,10 @@ body {
 }
 .startcolumn {
     float: left;
-    width: 50%;
+    width: 44%;
     text-align: left;
     margin-left: 10px;
+    margin-top: 5px;
 }
 .midcolumn {
     float: left;
@@ -26,10 +27,10 @@ body {
 .respimg {
     width: 100%;
     height: auto;
-    max-width: 578px;
-    max-height: 455px;
+    max-width: 558px;
+    max-height: 418px;
     padding:1px;
-    border:2px solid #000;
+    border:2px solid #fff;
 }
 fieldset {
   display: block;
