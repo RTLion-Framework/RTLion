@@ -18,7 +18,7 @@
             });
 
             socket.on('client_message', function(msg) {
-                $('#log').append('<br>' + $('<div/>').text(msg.data).html());
+                $('#log').append(msg.data + '<br>');
             });
             $('form#create_graph').submit(function(event) {
                 if (create_graph){
@@ -40,7 +40,7 @@
                 read_count++;
                 $('#read_count').text(read_count)
                 if(!$('#fft_graph_column').is(':visible')){
-                    $('#fft_graph_column').show();
+                    $('#fft_graph_column').show()
                 }
             });
 
@@ -92,7 +92,7 @@
                 <img class="respimg" id="fft_graph">
             </div>
             <div class="midcolumn">
-                <fieldset>
+                <div class="formfield">
                 <form id="create_graph" method="POST" action="#">
                     <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
                 </form>
@@ -107,11 +107,14 @@
                     <i><span id="read_count"></span></i><br>
                     <input class="ghost-button" type="submit" value="Save">
                 </form>
-                </fieldset>
+                </div>
                 <center><span id="ping_pong"></span></center>
             </div>
             <div class="endcolumn">
-                <div id="log"></div>
+                <fieldset>
+                    <legend>Log</legend>
+                    <div id="log"></div>
+                </fieldset>
             </div>
         </div>
 

@@ -3,6 +3,15 @@ body {
     font-size: 14px;
     background-color: #fff;
 }
+fieldset {
+    display: block;
+    border:1px solid #c1c1c1;   
+   
+    color: #2F2E2E;
+}
+legend {
+    font-weight: bold;
+}
 .startcolumn {
     float: left;
     width: 44%;
@@ -32,7 +41,7 @@ body {
     padding:1px;
     border:2px solid #fff;
 }
-fieldset {
+.formfield {
   display: block;
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
