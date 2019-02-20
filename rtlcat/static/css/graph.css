@@ -1,5 +1,5 @@
 body {
-    font-family: monospace;
+    font-family: monospace, monospace;
     font-size: 14px;
     background-color: #fff;
 }
@@ -60,9 +60,14 @@ legend {
     color: #2F2E2E;
 }
 .logtext {
-    float:left;
+    float: left;
     overflow-y: auto;
     height: 400px;
+}
+.pingtext {
+    float: right;
+    margin-right: 5px;
+    color: #686868;
 }
 .ghost-input {
     display: block;
