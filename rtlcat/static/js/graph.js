@@ -101,7 +101,7 @@ function graphSocket() {
         var sum = 0;
         for (var i = 0; i < ping_pong_times.length; i++)
             sum += ping_pong_times[i];
-        $('#spnPingPongs').text(Math.round(10 * sum / ping_pong_times.length) / 10 + "ms");
+        $('#spnPingPong').text(Math.round(10 * sum / ping_pong_times.length) / 10 + "ms");
     });
     
     window.setInterval(function() {
