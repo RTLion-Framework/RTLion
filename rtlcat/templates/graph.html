@@ -39,9 +39,13 @@
             socket.on('fft_data', function(msg) {
                 $('#fft_graph').attr("src", "data:image/png;base64," + msg.data);
                 read_count++;
-                $('#read_count').text(read_count)
+                if($('#n_read').val() == "-1"){
+                    $('#read_count').text('(' + read_count + '/∞)');
+                }else{
+                    $('#read_count').text('('+ read_count+ '/' + $('#n_read').val() + ')');
+                }
                 if(!$('#fft_graph_column').is(':visible')){
-                    $('#fft_graph_column').show()
+                    $('#fft_graph_column').show();
                 }
             });
 
@@ -103,9 +107,9 @@
                 Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
                 Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
                 Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
-                Reads<input class="ghost-input" type="text" placeholder="-1" id="n_read">
+                Reads <i><span id="read_count"></span></i>
+                <input class="ghost-input" type="text" placeholder="-1" id="n_read">
                 Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
-                <i><span id="read_count"></span></i><br>
                 <input class="ghost-button" type="submit" value="Save">
             </form>
             </div>
