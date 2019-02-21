@@ -44,6 +44,7 @@ legend {
     float: left;
     overflow-y: auto;
     height: 400px;
+    width: 100%;
 }
 .pingtext {
     float: right;
