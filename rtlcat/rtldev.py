@@ -10,7 +10,7 @@ class RTLSdr:
         self.import_rtlsdr()
         self.set_args(args)
         self.dev = None
-        self.static_dir = 'rtlcat/static/'
+        self.dev_open = False
         self.create_static_dir()
 
     def set_args(self, args):
@@ -23,6 +23,7 @@ class RTLSdr:
         self.args = args
 
     def create_static_dir(self):
+        self.static_dir = 'rtlcat/static/'
         try:
             if not os.path.exists(self.static_dir):
                 os.makedirs(self.static_dir)
@@ -41,8 +42,10 @@ class RTLSdr:
     def init_device(self):
         try:
             self.dev = RtlSdr(self.dev_id)
+            self.dev_open = True
         except IOError as e:
             # Warning
+            self.dev_open = False
             print("Failed to open RTL-SDR device!\n" + str(e))
         try:
             self.dev.center_freq = self.center_freq

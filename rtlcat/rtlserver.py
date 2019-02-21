@@ -6,7 +6,6 @@ import sys
 class FlaskServer:
     def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):
         self.rtl_sdr = rtl_sdr
-        #self.rtl_sdr.init_device()
         self.server_addr = server_addr
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
@@ -66,7 +65,8 @@ class FlaskServer:
             sys.exit()
 
     def socketio_on_connect(self):
-        self.thread = self.socketio.start_background_task(self.rtl_sdr.init_device)
+        if not self.rtl_sdr.dev_open:
+            self.socketio.start_background_task(self.rtl_sdr.init_device)
 
     def disconnect_request(self):
         self.socketio.stop()
@@ -88,7 +88,7 @@ class FlaskServer:
                 {'data': 'Creating FFT graph from samples...'}, 
                 namespace=self.graph_namespace)
             self.c_read = True
-            self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
+            self.socketio.start_background_task(self.rtlsdr_thread)
 
 
     def update_settings(self, args):
