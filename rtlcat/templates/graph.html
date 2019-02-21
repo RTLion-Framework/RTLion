@@ -15,6 +15,7 @@
         <div class="midcolumn">
             <fieldset>
                 <legend>Graph & Settings</legend>
+                <span class="settingstext" id="spnSettingsLog"></span>
                 <form id="formSaveSettings" class="graphform" method="POST" action="#">
                     Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
                     Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
@@ -27,7 +28,6 @@
                 <form id="formCreateGraph" method="POST" action="#">
                     <input class="ghost-button" type="submit" id="btnCreateGraph" value="Create FFT graph">
                 </form>
-                <span class="settingstext" id="spnSettingsLog"></span>
         </fieldset>
         </div>
         <div class="endcolumn">
