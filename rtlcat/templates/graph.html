@@ -13,10 +13,8 @@
             <img class="respimg" id="imgFFTGraph">
         </div>
         <div class="midcolumn">
-            <div class="formfield">
-                <form id="formCreateGraph" method="POST" action="#">
-                    <input class="ghost-button" type="submit" id="btnCreateGraph" value="Create FFT graph">
-                </form>
+            <fieldset>
+                <legend>Graph & Settings</legend>
                 <form id="formSaveSettings" class="graphform" method="POST" action="#">
                     Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
                     Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
@@ -26,8 +24,11 @@
                     <input class="ghost-input" type="text" placeholder="-1" id="inpNumRead">
                     Interval<input class="ghost-input" type="text" placeholder="500" id="inpInterval">
                 </form>
+                <form id="formCreateGraph" method="POST" action="#">
+                        <input class="ghost-button" type="submit" id="btnCreateGraph" value="Create FFT graph">
+                </form>
                 <span class="settingstext" id="spnSettingsLog"></span>
-            </div>
+        </fieldset>
         </div>
         <div class="endcolumn">
             <fieldset>

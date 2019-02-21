@@ -40,24 +40,6 @@ legend {
     padding:1px;
     border:2px solid #fff;
 }
-.formfield {
-    display: block;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-before: 0em;
-    -webkit-padding-start: 0em;
-    -webkit-padding-end: 0em;
-    -webkit-padding-after: 0em;
-    border: 0px;
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial;
-    min-width: -webkit-min-content;
-    padding: 10px;
-    color: #2F2E2E;
-}
 .logtext {
     float: left;
     overflow-y: auto;
@@ -106,7 +88,6 @@ legend {
     background-color: transparent;
     border:2px solid #c1c1c1;
     padding:7px 7px; 
-    min-width: 200px;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -ms-transition: all 0.1s ease-in-out;
