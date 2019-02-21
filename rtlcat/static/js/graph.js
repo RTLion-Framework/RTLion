@@ -14,7 +14,6 @@ function pageInit(){
 }
 function formCreateGraph_submit(event){
     if (create_graph){
-        // Check arguments
         create_graph = false;
         $('#btnCreateGraph').val("Stop");
         read_count = 0;
@@ -27,16 +26,27 @@ function formCreateGraph_submit(event){
     return false;
 }
 function formSaveSettings_change(){
-    // Check arguments here
-    socket.emit('update_settings',
-    {'dev': parseInt($('#inpDevIndex').val()), 
-    'samprate': parseInt($('#inpSampRate').val()), 
-    'gain': $('#inpDevGain').val(), 
-    'freq': parseInt($('#inpCenterFreq').val()),
-    'n': parseInt($('#inpNumRead').val()),
-    'i': parseInt($('#inpInterval').val())});
+    args = {
+        'dev': parseInt($('#inpDevIndex').val()), 
+        'samprate': parseInt($('#inpSampRate').val()), 
+        'gain': $('#inpDevGain').val(), 
+        'freq': parseInt($('#inpCenterFreq').val()),
+        'n': parseInt($('#inpNumRead').val()),
+        'i': parseInt($('#inpInterval').val())
+    };
+    if(checkArgs(args)){
+        socket.emit('update_settings', args);
+    }else{
+        $('#spnSettingsLog').text('Invalid settings detected.');
+        socket.emit('send_cli_args');
+    }
 }
-
+function checkArgs(args){
+    if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
+     args['gain'] < 0 || args['freq'] < 0 || args['i'] < 0 || args['n'] < -1)
+        return false;
+    return true;
+}
 function graphSocket() {
     pageInit();
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -66,6 +76,9 @@ function graphSocket() {
 
     socket.on('cli_args', function(cliargs) {
         args = cliargs.args;
+        for (var i in args){
+            args[i] = args[i] || 0;
+        }
         $("#inpDevIndex").val(args.dev);
         $("#inpSampRate").val(args.samprate);
         $("#inpDevGain").val(args.gain);
