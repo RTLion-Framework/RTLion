@@ -56,7 +56,6 @@ legend {
     border-image-repeat: initial;
     min-width: -webkit-min-content;
     padding: 10px;
-    font-weight: bold;
     color: #2F2E2E;
 }
 .logtext {
@@ -68,6 +67,11 @@ legend {
     float: right;
     margin-right: 5px;
     color: #686868;
+}
+.settingstext {
+    float: left;
+    color: #686868;
+    margin-left: 5px;
 }
 .ghost-input {
     display: block;

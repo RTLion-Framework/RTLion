@@ -58,7 +58,7 @@
                 $("#interval").val(args.i);
                 read_count = args.n
             });
-            $('form#save_settings').submit(function(event) {
+            $('#save_settings *').filter(':input').change(function() {
                 // Check arguments here
                 socket.emit('update_settings',
                 {'dev': parseInt($('#dev_index').val()), 
@@ -68,9 +68,7 @@
                 'n': parseInt($('#n_read').val()),
                 'i': parseInt($('#interval').val())});
                 socket.emit('send_cli_args');
-                return false;
             });
-
             var ping_pong_times = [];
             var start_time;
             var read_count;
@@ -98,20 +96,19 @@
         </div>
         <div class="midcolumn">
             <div class="formfield">
-            <form id="create_graph" method="POST" action="#">
-                <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
-            </form>
-            <br>
-            <form id="save_settings" method="POST" action="#">
-                Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
-                Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
-                Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
-                Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
-                Reads <i><span id="read_count"></span></i>
-                <input class="ghost-input" type="text" placeholder="-1" id="n_read">
-                Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
-                <input class="ghost-button" type="submit" value="Save">
-            </form>
+                <form id="create_graph" method="POST" action="#">
+                    <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
+                </form>
+                <form id="save_settings" method="POST" action="#">
+                    Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
+                    Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
+                    Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
+                    Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
+                    Reads <i><span id="read_count"></span></i>
+                    <input class="ghost-input" type="text" placeholder="-1" id="n_read">
+                    Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
+                </form>
+                <span class="settingstext" id="settings_log">XX</span>
             </div>
         </div>
         <div class="endcolumn">

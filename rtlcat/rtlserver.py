@@ -65,7 +65,7 @@ class FlaskServer:
             sys.exit()
 
     def socketio_on_connect(self):
-        self.thread = self.socketio.start_background_task(self.open_device)
+        self.thread = self.socketio.start_background_task(self.rtl_sdr.init_device)
 
     def disconnect_request(self):
         self.socketio.stop()
@@ -89,8 +89,6 @@ class FlaskServer:
             self.c_read = True
             self.thread = self.socketio.start_background_task(self.rtlsdr_thread)
 
-    def open_device(self):
-        self.rtl_sdr.init_device()
 
     def update_settings(self, args):
         self.rtl_sdr.set_args(args)
