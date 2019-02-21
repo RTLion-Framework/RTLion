@@ -35,7 +35,8 @@ class FlaskServer:
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
 
             def ping_pong(): emit('server_pong')
-            def send_args_graph(): self.socketio.emit('cli_args', self.rtl_sdr.args, \
+            def send_args_graph(): self.socketio.emit('cli_args', 
+                                {'args': self.rtl_sdr.args, 'status': 0},
                                 namespace=self.graph_namespace)
 
             self.flask_server = Flask(__name__)
@@ -92,6 +93,8 @@ class FlaskServer:
 
     def update_settings(self, args):
         self.rtl_sdr.set_args(args)
+        self.socketio.emit('cli_args', {'args': self.rtl_sdr.args, 'status': 1}, \
+                                namespace=self.graph_namespace)
 
     def rtlsdr_thread(self):
         self.n_read = self.rtl_sdr.num_read

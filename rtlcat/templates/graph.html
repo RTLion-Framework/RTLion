@@ -49,14 +49,21 @@
                 }
             });
 
-            socket.on('cli_args', function(args) {
+            socket.on('cli_args', function(cliargs) {
+                args = cliargs.args;
                 $("#dev_index").val(args.dev);
                 $("#samp_rate").val(args.samprate);
                 $("#dev_gain").val(args.gain);
                 $("#center_freq").val(args.freq);
                 $("#n_read").val(args.n)
                 $("#interval").val(args.i);
-                read_count = args.n
+                read_count = args.n;
+                if (cliargs.status == 1){
+                    $('#settings_log').text('Settings saved.');
+                    setTimeout(function() {
+                        $('#settings_log').text('');
+                    }, 1000);
+                }
             });
             $('#save_settings *').filter(':input').change(function() {
                 // Check arguments here
@@ -67,7 +74,6 @@
                 'freq': parseInt($('#center_freq').val()),
                 'n': parseInt($('#n_read').val()),
                 'i': parseInt($('#interval').val())});
-                socket.emit('send_cli_args');
             });
             var ping_pong_times = [];
             var start_time;
@@ -108,7 +114,7 @@
                     <input class="ghost-input" type="text" placeholder="-1" id="n_read">
                     Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
                 </form>
-                <span class="settingstext" id="settings_log">XX</span>
+                <span class="settingstext" id="settings_log"></span>
             </div>
         </div>
         <div class="endcolumn">
