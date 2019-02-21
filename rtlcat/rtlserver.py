@@ -37,13 +37,16 @@ class FlaskServer:
             def send_args_graph(): self.socketio.emit('cli_args', 
                                 {'args': self.rtl_sdr.args, 'status': 0},
                                 namespace=self.graph_namespace)
+            def socketio_on_connect():
+                if not self.rtl_sdr.dev_open:
+                    self.socketio.start_background_task(self.rtl_sdr.init_device)
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace)(page_index)
 
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
-            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
+            self.socketio.on('connect', namespace=self.graph_namespace)(socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(send_args_graph)
@@ -63,10 +66,6 @@ class FlaskServer:
         except Exception as e:
             print("Failed to run Flask server.\n" + str(e))
             sys.exit()
-
-    def socketio_on_connect(self):
-        if not self.rtl_sdr.dev_open:
-            self.socketio.start_background_task(self.rtl_sdr.init_device)
 
     def disconnect_request(self):
         self.socketio.stop()
@@ -89,7 +88,6 @@ class FlaskServer:
                 namespace=self.graph_namespace)
             self.c_read = True
             self.socketio.start_background_task(self.rtlsdr_thread)
-
 
     def update_settings(self, args):
         self.rtl_sdr.set_args(args)
