@@ -9,32 +9,32 @@
 </head>
 <body>
     <div class="row">
-        <div class="startcolumn" id="fft_graph_column">
-            <img class="respimg" id="fft_graph">
+        <div class="startcolumn" id="colFFTGraph">
+            <img class="respimg" id="imgFFTGraph">
         </div>
         <div class="midcolumn">
             <div class="formfield">
-                <form id="create_graph" method="POST" action="#">
-                    <input class="ghost-button" type="submit" id="btn_graph" value="Create FFT graph">
+                <form id="formCreateGraph" method="POST" action="#">
+                    <input class="ghost-button" type="submit" id="btnCreateGraph" value="Create FFT graph">
                 </form>
-                <form id="save_settings" method="POST" action="#">
-                    Device Index<input class="ghost-input" type="text" placeholder="0" id="dev_index">
-                    Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="samp_rate">
-                    Center Frequency<input class="ghost-input" type="text" placeholder="" id="center_freq">
-                    Gain<input class="ghost-input" type="text" placeholder="auto" id="dev_gain">
-                    Reads <i><span id="read_count"></span></i>
-                    <input class="ghost-input" type="text" placeholder="-1" id="n_read">
-                    Interval<input class="ghost-input" type="text" placeholder="500" id="interval">
+                <form id="formSaveSettings" method="POST" action="#">
+                    Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
+                    Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
+                    Center Frequency<input class="ghost-input" type="text" placeholder="" id="inpCenterFreq">
+                    Gain<input class="ghost-input" type="text" placeholder="auto" id="inpDevGain">
+                    Reads <i><span id="spnReads"></span></i>
+                    <input class="ghost-input" type="text" placeholder="-1" id="inpNumRead">
+                    Interval<input class="ghost-input" type="text" placeholder="500" id="inpInterval">
                 </form>
-                <span class="settingstext" id="settings_log"></span>
+                <span class="settingstext" id="spnSettingsLog"></span>
             </div>
         </div>
         <div class="endcolumn">
             <fieldset>
                 <legend>Log</legend>
-                <div class="logtext" id="log"></div>
+                <div class="logtext" id="divLog"></div>
             </fieldset>
-            <span class="pingtext" id="ping_pong"></span>
+            <span class="pingtext" id="spnPingPong"></span>
         </div>
     </div>
 
