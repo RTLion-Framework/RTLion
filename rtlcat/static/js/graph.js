@@ -39,6 +39,9 @@ function formSaveSettings_change(){
     }else{
         $('#spnSettingsLog').text('Invalid settings detected.');
         socket.emit('send_cli_args');
+        setTimeout(function() {
+            $('#spnSettingsLog').text('');
+        }, 1000);
     }
 }
 function checkArgs(args){
