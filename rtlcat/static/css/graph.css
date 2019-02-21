@@ -73,6 +73,10 @@ legend {
     color: #686868;
     margin-left: 5px;
 }
+.graphform {
+    font-weight: bold;
+    font-size: 13px;
+}
 .ghost-input {
     display: block;
     font-weight:300;
