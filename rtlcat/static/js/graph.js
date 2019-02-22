@@ -15,6 +15,7 @@ function pageInit(){
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpCenterFreq').keypress(inputKeyPress);
+    $('#inpNumRead').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
 }
 function formCreateGraph_submit(event){
@@ -67,8 +68,9 @@ function inputKeyPress(evt){
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
      args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
-     isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1)
+     isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1){
         return false;
+     }
     return true;
 }
 function graphSocket() {
@@ -113,10 +115,13 @@ function graphSocket() {
         $("#inpInterval").val(args.i);
         read_count = args.n;
         if(!checkArgs(args)){
+            $('#btnCreateGraph').prop("disabled", true);
             $('#spnSettingsLog').text('Invalid settings detected.');
             setTimeout(function() {
                 $('#spnSettingsLog').text('');
             }, 1000);
+        }else{
+            $('#btnCreateGraph').prop("disabled", false);
         }
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');

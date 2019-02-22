@@ -83,17 +83,16 @@ class FlaskServer:
         self.c_read = False
         self.n_read = 0
 
-    def send_args_graph(self): 
+    def send_args_graph(self, status=0): 
         self.socketio.emit(
             'cli_args', 
-            {'args': self.rtl_sdr.args, 'status': 0},
+            {'args': self.rtl_sdr.args, 'status': status},
             namespace=self.graph_namespace)
 
     def update_settings(self, args):
         try:
             self.rtl_sdr.set_args(args)
-            self.socketio.emit('cli_args', {'args': self.rtl_sdr.args, 'status': 1}, \
-                                    namespace=self.graph_namespace)
+            self.send_args_graph(1)
             self.logcl.log("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
