@@ -80,9 +80,9 @@ function graphSocket() {
         socket.emit('send_cli_args');
     });
 
-    socket.on('client_message', function(msg) {
+    socket.on('log_message', function(log) {
         current_time = new Date().toLocaleTimeString().split(' ')[0];
-        $('#divLog').append("<b>[" + current_time + "]</b> " + msg.data + "<br>");
+        $('#divLog').append("<b>[" + current_time + "]</b> " + log.msg + "<br>");
         $('#divLog').scrollTop($('#divLog').height());
     });
 

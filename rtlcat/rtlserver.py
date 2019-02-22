@@ -85,17 +85,9 @@ class FlaskServer:
 
     def create_fft_graph(self):
         if self.rtl_sdr.dev == None:
-            self.socketio.emit(
-            'client_message', 
-            {'data': 'Failed to open & initialize RTL-SDR device.'}, 
-            namespace=self.graph_namespace)
             self.start_sdr()
         else:
             self.logcl.log("Creating FFT graph from samples...")
-            self.socketio.emit(
-                'client_message', 
-                {'data': 'Creating FFT graph from samples...'}, 
-                namespace=self.graph_namespace)
             self.c_read = True
             self.socketio.start_background_task(self.rtlsdr_thread)
 
@@ -122,5 +114,8 @@ class FlaskServer:
             self.socketio.sleep(interval)
             self.n_read-=1
             if self.n_read == 0: break
+    
+    def socket_log(self, msg, ns=1):
+        self.socketio.emit('log_message', {'msg': msg}, namespace=self.routes[ns])
 
 
