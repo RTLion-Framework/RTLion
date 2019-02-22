@@ -12,6 +12,10 @@ function pageInit(){
     $('form#formCreateGraph').submit(formCreateGraph_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
+    $('#inpDevIndex').keypress(inputKeyPress);
+    $('#inpSampRate').keypress(inputKeyPress);
+    $('#inpCenterFreq').keypress(inputKeyPress);
+    $('#inpInterval').keypress(inputKeyPress);
 }
 function formCreateGraph_submit(event){
     if (create_graph){
@@ -54,9 +58,16 @@ function formSaveSettings_change(){
         }, 1000);
     }
 }
+function inputKeyPress(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
-     args['gain'] < 0 || args['freq'] < 0 || args['i'] < 0 || args['n'] < -1)
+     args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
+     isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1)
         return false;
     return true;
 }
@@ -90,7 +101,8 @@ function graphSocket() {
     socket.on('cli_args', function(cliargs) {
         args = cliargs.args;
         for (var i in args){
-            args[i] = args[i] || 0;
+            if (i != 'freq')
+                args[i] = args[i] || 0;
         }
         $("#inpDevIndex").val(args.dev);
         $("#inpSampRate").val(args.samprate);
@@ -99,6 +111,12 @@ function graphSocket() {
         $("#inpNumRead").val(args.n)
         $("#inpInterval").val(args.i);
         read_count = args.n;
+        if(!checkArgs(args)){
+            $('#spnSettingsLog').text('Invalid settings detected.');
+            setTimeout(function() {
+                $('#spnSettingsLog').text('');
+            }, 1000);
+        }
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {

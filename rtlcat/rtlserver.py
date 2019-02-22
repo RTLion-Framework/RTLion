@@ -38,8 +38,7 @@ class FlaskServer:
                                 {'args': self.rtl_sdr.args, 'status': 0},
                                 namespace=self.graph_namespace)
             def socketio_on_connect():
-                if not self.rtl_sdr.dev_open:
-                    self.socketio.start_background_task(self.rtl_sdr.init_device)
+                self.start_sdr()
             def socketio_on_disconnect():
                 self.socketio.stop()
 
@@ -72,6 +71,10 @@ class FlaskServer:
     def stop_sdr(self):
         self.c_read = False
         self.n_read = 0
+    
+    def start_sdr(self):
+        if not self.rtl_sdr.dev_open:
+            self.socketio.start_background_task(self.rtl_sdr.init_device)
 
     def create_fft_graph(self):
         if self.rtl_sdr.dev == None:
@@ -79,7 +82,7 @@ class FlaskServer:
             'client_message', 
             {'data': 'Failed to open & initialize RTL-SDR device.'}, 
             namespace=self.graph_namespace)
-            self.socketio_on_connect()
+            self.start_sdr()
         else:
             self.socketio.emit(
                 'client_message', 

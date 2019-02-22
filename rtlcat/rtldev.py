@@ -14,13 +14,17 @@ class RTLSdr:
         self.create_static_dir()
 
     def set_args(self, args):
-        self.dev_id = args['dev']
-        self.sample_rate = args['samprate']
-        self.gain = args['gain']
-        self.center_freq = args['freq']
-        self.num_read = args['n']
-        self.interval = args['i']
-        self.args = args
+        try:
+            self.dev_id = int(args['dev'])
+            self.sample_rate = int(args['samprate'])
+            self.gain = args['gain']
+            self.center_freq = args['freq']
+            self.num_read = int(args['n'])
+            self.interval = int(args['i'])
+            self.args = args
+        except Exception as e:
+            print("Invalid argument detected.\n" + str(e))
+            sys.exit()
 
     def create_static_dir(self):
         self.static_dir = 'rtlcat/static/'
