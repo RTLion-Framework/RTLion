@@ -2,33 +2,38 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from logcl import LogCL
 
 class FlaskServer:
     def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):
+        self.logcl = LogCL()
         self.rtl_sdr = rtl_sdr
         self.server_addr = server_addr
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
+        self.routes = (self.index_namespace, self.graph_namespace)
         self.import_flask()
         self.initialize_flask()
 
     def import_flask(self):
         try:
+            self.logcl.log("Importing Flask & SocketIO...")
             global Flask, render_template, SocketIO, emit
             from flask import Flask, render_template
             from flask_socketio import SocketIO, emit
-        except:
-            print("Flask framework not found.")
+        except Exception as e:
+            self.logcl.log("Flask & SocketIO not found.\n" + str(e), 'error')
             sys.exit()
 
     def add_route(self, rule, func):
         try:
             self.flask_server.add_url_rule(rule, func.__name__, func)
         except Exception as e:
-            print("Failed to add URL rule.\n" + str(e))
+            self.logcl.log("Failed to add URL rule.\n" + str(e), 'error')
             sys.exit()
 
     def initialize_flask(self):
+        self.logcl.log("Initializing Flask server with routes: " + str(self.routes))
         try:
             def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
@@ -56,19 +61,21 @@ class FlaskServer:
             self.socketio.on('server_ping', namespace=self.graph_namespace)(ping_pong)
             
         except Exception as e:
-            print("Could not initialize Flask server.\n" + str(e))
+            self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
 
     def run(self):
+        self.logcl.log("Running server: http://" + self.server_addr[0] + ":" + self.server_addr[1])
         try:
             self.socketio.run(self.flask_server, 
                 host=self.server_addr[0], 
                 port=int(self.server_addr[1]))
         except Exception as e:
-            print("Failed to run Flask server.\n" + str(e))
+            self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
 
     def stop_sdr(self):
+        self.logcl.log("Stop reading samples from RTL-SDR...")
         self.c_read = False
         self.n_read = 0
     
@@ -84,6 +91,7 @@ class FlaskServer:
             namespace=self.graph_namespace)
             self.start_sdr()
         else:
+            self.logcl.log("Creating FFT graph from samples...")
             self.socketio.emit(
                 'client_message', 
                 {'data': 'Creating FFT graph from samples...'}, 
@@ -92,13 +100,19 @@ class FlaskServer:
             self.socketio.start_background_task(self.rtlsdr_thread)
 
     def update_settings(self, args):
-        self.rtl_sdr.set_args(args)
-        self.socketio.emit('cli_args', {'args': self.rtl_sdr.args, 'status': 1}, \
-                                namespace=self.graph_namespace)
+        try:
+            self.rtl_sdr.set_args(args)
+            self.socketio.emit('cli_args', {'args': self.rtl_sdr.args, 'status': 1}, \
+                                    namespace=self.graph_namespace)
+            self.logcl.log("Settings/arguments updated.")
+        except:
+            self.logcl.log("Failed to update settings.", 'error')
 
     def rtlsdr_thread(self):
         self.n_read = self.rtl_sdr.num_read
         interval = int(self.rtl_sdr.interval) / 1000.0
+        self.logcl.log("Getting graph data with interval " + 
+        str(interval) + " (" + str(self.n_read) + "x)")
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(

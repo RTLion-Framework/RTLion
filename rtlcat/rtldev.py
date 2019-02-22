@@ -4,15 +4,16 @@
 import sys
 import os
 import base64
-
+from logcl import LogCL
 
 class RTLSdr:
     def __init__(self, **args):
+        self.logcl = LogCL()
         self.import_rtlsdr()
         self.set_args(args)
         self.dev = None
         self.dev_open = False
-        self.create_static_dir()
+        self.static_dir = 'rtlcat/static/'
 
     def set_args(self, args):
         try:
@@ -24,55 +25,47 @@ class RTLSdr:
             self.interval = int(args['i'])
             self.args = args
         except Exception as e:
-            print("Invalid argument detected.\n" + str(e))
-            sys.exit()
-
-    def create_static_dir(self):
-        self.static_dir = 'rtlcat/static/'
-        try:
-            if not os.path.exists(self.static_dir):
-                os.makedirs(self.static_dir)
-        except Exception as e:
-            print("Failed to create static directory.\n" + str(e))
+            self.logcl.log("Invalid argument detected.\n" + str(e), 'error')
             sys.exit()
     
     def import_rtlsdr(self):
         try:
+            self.logcl.log("Importing rtlsdr module...")
             global RtlSdr
             from rtlsdr import RtlSdr
         except:
-            print("rtlsdr module not found.")
+            self.logcl.log("rtlsdr module not found.", "error")
             sys.exit()
 
     def init_device(self):
+        self.logcl.log("Trying to open & initialize device #" + str(self.dev_id))
         try:
             self.dev = RtlSdr(self.dev_id)
             self.dev_open = True
-        except IOError as e:
-            # Warning
-            self.dev_open = False
-            print("Failed to open RTL-SDR device!\n" + str(e))
-        try:
             self.dev.center_freq = self.center_freq
             self.dev.sample_rate = self.sample_rate
             self.dev.gain = self.gain
+        except IOError as e:
+            self.dev_open = False
+            self.logcl.log("Failed to open RTL-SDR device!\n" + str(e), 'error')
         except Exception as e:
-            # Warning
-            print("Failed to initialize RTL-SDR device.")
+            self.logcl.log("Failed to initialize RTL-SDR device.\n" + str(e), 'fatal')
 
     def read_samples(self, n_read=512*512):
         try:
             return self.dev.read_samples(n_read)
         except Exception as e:
-            print("Failed to read samples from RTL-SDR.\n" + str(e))
+            self.logcl.log("Failed to read samples from RTL-SDR.\n" + str(e), 'error')
 
     def close(self):
         try:
+            self.logcl.log("Closing RTL-SDR device #" + str(self.dev_id))
             self.dev.close()
         except Exception as e:
-            print("Failed to close RTL-SDR device.\n" + str(e))
+            self.logcl.log("Failed to close RTL-SDR device.\n" + str(e), 'error')
 
     def create_graph(self, continous=False, read_count=1, refresh_rate=0.05):
+        self.logcl.log("Creating graph...")
         try:
             from pylab import psd, xlabel, ylabel, pause, clf, show
             for i in range(read_count):
@@ -85,7 +78,7 @@ class RTLSdr:
                     clf()
                 else: show()
         except Exception as e:
-            print("Failed to create graph.\n" + str(e))
+            self.logcl.log("Failed to create graph.\n" + str(e), 'error')
     
     def get_fft_data(self):
         try:
@@ -99,4 +92,4 @@ class RTLSdr:
             encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
             return encoded
         except Exception as e:
-            print("Failed to get graph data.\n" + str(e))
+            self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
