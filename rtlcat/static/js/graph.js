@@ -28,8 +28,7 @@ function formCreateGraph_submit(event){
 }
 function formDisconnect_submit(event){
     socket.emit('disconnect_request');
-    $('#divLog').append('Disconnecting...<br>');
-    $('#divLog').scrollTop($('#divLog').height());
+    on_log_message("Disconnecting...")
     setTimeout(function() {
         location.reload();
     }, 2000);

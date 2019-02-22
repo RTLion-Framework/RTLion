@@ -68,6 +68,7 @@ class FlaskServer:
         self.socket_log("rtl_cat connected.")
 
     def socketio_on_disconnect(self):
+        self.logcl.log("Stopping server...")
         self.socketio.stop()
 
     def ping_pong(self): 
