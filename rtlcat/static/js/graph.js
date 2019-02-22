@@ -81,7 +81,8 @@ function graphSocket() {
     });
 
     socket.on('client_message', function(msg) {
-        $('#divLog').append(msg.data + '<br>');
+        current_time = new Date().toLocaleTimeString().split(' ')[0];
+        $('#divLog').append("<b>[" + current_time + "]</b> " + msg.data + "<br>");
         $('#divLog').scrollTop($('#divLog').height());
     });
 
