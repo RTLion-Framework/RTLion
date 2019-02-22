@@ -50,6 +50,7 @@ class RTLSdr:
             self.logcl.log("Failed to open RTL-SDR device!\n" + str(e), 'error')
         except Exception as e:
             self.logcl.log("Failed to initialize RTL-SDR device.\n" + str(e), 'fatal')
+        return self.dev_open
 
     def read_samples(self, n_read=512*512):
         try:

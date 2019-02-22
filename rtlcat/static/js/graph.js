@@ -23,7 +23,7 @@ function formCreateGraph_submit(event){
         create_graph = false;
         $('#btnCreateGraph').val("Stop");
         read_count = 0;
-        socket.emit('create_fft_graph');
+        socket.emit('start_sdr');
     }else{
         create_graph = true;
         $('#btnCreateGraph').val("Create FFT graph");
@@ -52,11 +52,7 @@ function formSaveSettings_change(){
     if(checkArgs(args)){
         socket.emit('update_settings', args);
     }else{
-        $('#spnSettingsLog').text('Invalid settings detected.');
         socket.emit('send_cli_args');
-        setTimeout(function() {
-            $('#spnSettingsLog').text('');
-        }, 1000);
     }
 }
 function inputKeyPress(evt){
@@ -69,9 +65,21 @@ function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
      args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
      isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1){
+        on_log_message("Invalid settings detected.");
+        $('#spnSettingsLog').text('Invalid settings detected.');
+        setTimeout(function() {
+            $('#spnSettingsLog').text('');
+        }, 1000);
+        $('#btnCreateGraph').prop("disabled", true);
         return false;
-     }
+    }
+    $('#btnCreateGraph').prop("disabled", false);
     return true;
+}
+function on_log_message(msg){
+    current_time = new Date().toLocaleTimeString().split(' ')[0];
+    $('#divLog').append("<b>[" + current_time + "]</b> " + msg + "<br>");
+    $('#divLog').scrollTop($('#divLog').height());
 }
 function graphSocket() {
     pageInit();
@@ -83,9 +91,7 @@ function graphSocket() {
     });
 
     socket.on('log_message', function(log) {
-        current_time = new Date().toLocaleTimeString().split(' ')[0];
-        $('#divLog').append("<b>[" + current_time + "]</b> " + log.msg + "<br>");
-        $('#divLog').scrollTop($('#divLog').height());
+        on_log_message(log.msg);   
     });
 
     socket.on('fft_data', function(msg) {
@@ -107,6 +113,7 @@ function graphSocket() {
             if (i != 'freq')
                 args[i] = args[i] || 0;
         }
+        checkArgs(args);
         $("#inpDevIndex").val(args.dev);
         $("#inpSampRate").val(args.samprate);
         $("#inpDevGain").val(args.gain);
@@ -114,15 +121,6 @@ function graphSocket() {
         $("#inpNumRead").val(args.n)
         $("#inpInterval").val(args.i);
         read_count = args.n;
-        if(!checkArgs(args)){
-            $('#btnCreateGraph').prop("disabled", true);
-            $('#spnSettingsLog').text('Invalid settings detected.');
-            setTimeout(function() {
-                $('#spnSettingsLog').text('');
-            }, 1000);
-        }else{
-            $('#btnCreateGraph').prop("disabled", false);
-        }
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {

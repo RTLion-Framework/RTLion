@@ -44,10 +44,10 @@ class FlaskServer:
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
             self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
-            self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
+            self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
+            self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
-            self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             
         except Exception as e:
@@ -66,7 +66,6 @@ class FlaskServer:
 
     def socketio_on_connect(self):
         self.socket_log("rtl_cat connected.")
-        pass#self.start_sdr()
 
     def socketio_on_disconnect(self):
         self.socketio.stop()
@@ -76,7 +75,14 @@ class FlaskServer:
 
     def start_sdr(self):
         if not self.rtl_sdr.dev_open:
-            self.socketio.start_background_task(self.rtl_sdr.init_device)
+            if(self.rtl_sdr.init_device()):
+                self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.create_fft_graph()
+            else:
+                self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
+        else:
+            self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
+            self.create_fft_graph()
 
     def stop_sdr(self):
         self.logcl.log("Stop reading samples from RTL-SDR...")
@@ -94,6 +100,7 @@ class FlaskServer:
             self.rtl_sdr.set_args(args)
             self.send_args_graph(1)
             self.logcl.log("Settings/arguments updated.")
+            self.socket_log("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
