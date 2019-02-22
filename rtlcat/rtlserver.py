@@ -80,12 +80,14 @@ class FlaskServer:
                 self.create_fft_graph()
             else:
                 self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
-            self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
             self.create_fft_graph()
 
     def stop_sdr(self):
         self.logcl.log("Stop reading samples from RTL-SDR...")
+        self.socket_log("Stop reading samples from RTL-SDR...")
+        self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         self.c_read = False
         self.n_read = 0
 
@@ -105,6 +107,8 @@ class FlaskServer:
             self.logcl.log("Failed to update settings.", 'error')
 
     def create_fft_graph(self):
+        self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
+        self.socket_log("Creating FFT graph from samples...")
         self.logcl.log("Creating FFT graph from samples...")
         self.c_read = True
         self.socketio.start_background_task(self.rtlsdr_thread)

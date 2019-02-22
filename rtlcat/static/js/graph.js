@@ -1,7 +1,7 @@
 $(document).ready(graphSocket);
 
 var graph_namespace = '/graph';
-var create_graph = true;
+var graph_active = true;
 var ping_pong_times = [];
 var start_time;
 var read_count;
@@ -19,14 +19,9 @@ function pageInit(){
     $('#inpInterval').keypress(inputKeyPress);
 }
 function formCreateGraph_submit(event){
-    if (create_graph){
-        create_graph = false;
-        $('#btnCreateGraph').val("Stop");
-        read_count = 0;
+    if (graph_active){
         socket.emit('start_sdr');
     }else{
-        create_graph = true;
-        $('#btnCreateGraph').val("Create FFT graph");
         socket.emit('stop_sdr');
     }
     return false;
@@ -92,6 +87,21 @@ function graphSocket() {
 
     socket.on('log_message', function(log) {
         on_log_message(log.msg);   
+    });
+
+    socket.on('dev_status', function(status) {
+        if(parseInt(status) == 1){
+            $('#formSaveSettings :input').prop('disabled', true);
+            $('#formDisconnect :input').prop('disabled', true);
+            graph_active = false;
+            $('#btnCreateGraph').val("Stop");
+            read_count = 0;
+        }else{
+            $('#formSaveSettings :input').prop('disabled', false);
+            $('#formDisconnect :input').prop('disabled', false);
+            graph_active = true;
+            $('#btnCreateGraph').val("Create FFT graph");
+        }
     });
 
     socket.on('fft_data', function(msg) {
