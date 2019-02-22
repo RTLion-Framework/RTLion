@@ -5,6 +5,7 @@ import sys
 import os
 import base64
 
+
 class RTLSdr:
     def __init__(self, **args):
         self.import_rtlsdr()
