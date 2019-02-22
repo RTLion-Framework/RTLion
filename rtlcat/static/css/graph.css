@@ -96,6 +96,13 @@ legend {
     transition: all 0.1s ease-in-out;
     font-weight: bold;
     outline: none;
+    min-width: 150px;
+}
+.right-float {
+    float: right;
+}
+.left-float {
+    float: left;
 }
 .ghost-button:hover {
     border:2px solid #515151;

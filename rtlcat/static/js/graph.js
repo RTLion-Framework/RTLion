@@ -10,6 +10,7 @@ var socket;
 function pageInit(){
     $('#colFFTGraph').hide();
     $('form#formCreateGraph').submit(formCreateGraph_submit);
+    $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
 }
 function formCreateGraph_submit(event){
@@ -23,6 +24,15 @@ function formCreateGraph_submit(event){
         $('#btnCreateGraph').val("Create FFT graph");
         socket.emit('stop_sdr');
     }
+    return false;
+}
+function formDisconnect_submit(event){
+    socket.emit('disconnect_request');
+    $('#divLog').append('Disconnecting...<br>');
+    $('#divLog').scrollTop($('#divLog').height());
+    setTimeout(function() {
+        location.reload();
+    }, 2000);
     return false;
 }
 function formSaveSettings_change(){
