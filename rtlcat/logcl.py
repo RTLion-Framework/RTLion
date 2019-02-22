@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import time
 
-class Log:
+class LogCL:
     def __init__(self):
         self.levels = {
             'info': ('INFO', '\x1b[92m'),
@@ -11,9 +11,9 @@ class Log:
         self.all_attr_off = '\x1b[0m'
         self.bold_attr = "\x1b[1m"
         
-    def log(self, msg, state='info'):
+    def log(self, msg, level='info'):
         content = self.bold_attr + \
         "[" + time.strftime('%X') + "] " + \
-        self.levels[state][1] + self.levels[state][0] + \
+        self.levels[level][1] + self.levels[level][0] + \
         self.all_attr_off + " " + msg
         print(content)
