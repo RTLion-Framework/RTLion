@@ -38,27 +38,17 @@ class FlaskServer:
             def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
 
-            def ping_pong(): emit('server_pong')
-            def send_args_graph(): self.socketio.emit('cli_args', 
-                                {'args': self.rtl_sdr.args, 'status': 0},
-                                namespace=self.graph_namespace)
-            def socketio_on_connect():
-                self.start_sdr()
-            def socketio_on_disconnect():
-                self.socketio.stop()
-
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace)(page_index)
-
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
-            self.socketio.on('connect', namespace=self.graph_namespace)(socketio_on_connect)
-            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(socketio_on_disconnect)
+            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
+            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
             self.socketio.on('create_fft_graph', namespace=self.graph_namespace)(self.create_fft_graph)
-            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(send_args_graph)
+            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
-            self.socketio.on('server_ping', namespace=self.graph_namespace)(ping_pong)
+            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -74,22 +64,30 @@ class FlaskServer:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
 
-    def stop_sdr(self):
-        self.logcl.log("Stop reading samples from RTL-SDR...")
-        self.c_read = False
-        self.n_read = 0
-    
+    def socketio_on_connect(self):
+        self.socket_log("rtl_cat connected.")
+        pass#self.start_sdr()
+
+    def socketio_on_disconnect(self):
+        self.socketio.stop()
+
+    def ping_pong(self): 
+        self.socketio.emit('server_pong')
+
     def start_sdr(self):
         if not self.rtl_sdr.dev_open:
             self.socketio.start_background_task(self.rtl_sdr.init_device)
 
-    def create_fft_graph(self):
-        if self.rtl_sdr.dev == None:
-            self.start_sdr()
-        else:
-            self.logcl.log("Creating FFT graph from samples...")
-            self.c_read = True
-            self.socketio.start_background_task(self.rtlsdr_thread)
+    def stop_sdr(self):
+        self.logcl.log("Stop reading samples from RTL-SDR...")
+        self.c_read = False
+        self.n_read = 0
+
+    def send_args_graph(self): 
+        self.socketio.emit(
+            'cli_args', 
+            {'args': self.rtl_sdr.args, 'status': 0},
+            namespace=self.graph_namespace)
 
     def update_settings(self, args):
         try:
@@ -99,6 +97,11 @@ class FlaskServer:
             self.logcl.log("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
+
+    def create_fft_graph(self):
+        self.logcl.log("Creating FFT graph from samples...")
+        self.c_read = True
+        self.socketio.start_background_task(self.rtlsdr_thread)
 
     def rtlsdr_thread(self):
         self.n_read = self.rtl_sdr.num_read
