@@ -11,18 +11,18 @@ fieldset {
 legend {
     font-weight: bold;
 }
-.startcolumn {
+.start-column {
     float: left;
     width: 44%;
     text-align: left;
     margin-left: 10px;
     margin-top: 5px;
 }
-.midcolumn {
+.mid-column {
     float: left;
     width: 25%;
 }
-.endcolumn {
+.end-column {
     float: left;
     width: 20%;
     margin-left: 10px;
@@ -32,7 +32,7 @@ legend {
     display: table;
     clear: both;
 }
-.respimg {
+.resp-img {
     width: 100%;
     height: auto;
     max-width: 558px;
@@ -40,26 +40,26 @@ legend {
     padding:1px;
     border:2px solid #fff;
 }
-.logtext {
+.log-text {
     float: left;
     overflow-y: auto;
     height: 400px;
     width: 100%;
 }
-.pingtext {
+.ping-text {
     float: right;
     margin-right: 5px;
     color: #686868;
 }
-.settingstext {
+.settings-text {
     float: right;
     color: #686868;
     margin-left: 5px;
 }
-.graphform {
+.graph-form {
     font-weight: bold;
     font-size: 13px;
-}
+}    
 .ghost-input {
     display: block;
     font-weight:300;
