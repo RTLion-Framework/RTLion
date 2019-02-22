@@ -86,8 +86,8 @@ class FlaskServer:
             self.create_fft_graph()
 
     def stop_sdr(self):
-        self.logcl.log("Stop reading samples from RTL-SDR...")
-        self.socket_log("Stop reading samples from RTL-SDR...")
+        self.logcl.log("Stop reading samples from RTL-SDR.")
+        self.socket_log("Stop reading samples from RTL-SDR.")
         self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         self.c_read = False
         self.n_read = 0
