@@ -65,7 +65,7 @@ class FlaskServer:
             sys.exit()
 
     def socketio_on_connect(self):
-        self.socket_log("rtl_cat connected.")
+        self.socket_log("RTLion started.")
 
     def socketio_on_disconnect(self):
         self.logcl.log("Stopping server...")

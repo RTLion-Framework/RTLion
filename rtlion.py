@@ -1,13 +1,13 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 
-from rtlcat.rtlserver import FlaskServer
-from rtlcat.rtldev import RTLSdr
-from rtlcat.argparser import parse_cli_args
-from rtlcat.logcl import LogCL
+from scripts.rtlserver import FlaskServer
+from scripts.rtldev import RTLSdr
+from scripts.argparser import parse_cli_args
+from scripts.logcl import LogCL
 
 def start_message():
-    print("rtl_cat project")
+    print("RTLion")
     LogCL().log("Starting...")
 
 def main():

@@ -13,7 +13,7 @@ class RTLSdr:
         self.set_args(args)
         self.dev = None
         self.dev_open = False
-        self.static_dir = 'rtlcat/static/'
+        self.static_dir = 'scripts/static/'
 
     def set_args(self, args):
         try:
