@@ -88,9 +88,9 @@ class RTLSdr:
                     Fc=int(self.center_freq)/1e6)
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
-            savefig(self.static_dir + '/fft.png', bbox_inches='tight', pad_inches = 0)
+            savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
             clf()
-            encoded = base64.b64encode(open(self.static_dir + '/fft.png', "rb").read())
+            encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb").read())
             return encoded
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
