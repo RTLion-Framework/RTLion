@@ -40,10 +40,16 @@ legend {
     padding:1px;
     border:2px solid #fff;
 }
+.logo-img {
+    width: 100%;
+    height: auto;
+    max-width: 214px; 
+    max-height: 81px;
+}
 .log-text {
     float: left;
     overflow-y: auto;
-    height: 400px;
+    height: 501px;
     width: 100%;
 }
 .ping-text {
