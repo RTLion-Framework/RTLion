@@ -72,7 +72,7 @@ class FlaskServer:
         self.socketio.stop()
 
     def ping_pong(self): 
-        self.socketio.emit('server_pong')
+        self.socketio.emit('server_pong', namespace=self.graph_namespace)
 
     def start_sdr(self):
         if not self.rtl_sdr.dev_open:
