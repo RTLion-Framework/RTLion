@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <b>RTLion</b>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             namespace = '/';
@@ -19,11 +18,13 @@
     </script>
 </head>
 <body>
-    <img src="{{ url_for('static', filename='img/rtlion.png') }}">
-    <br><br>
-    <form id="graph_page" method="POST" action="/graph">
-        <input type="submit" id="graph_page_btn" value="FFT graph">
-    </form>
-    <br>
+    <center>
+        <img class="resp-img" src="{{ url_for('static', filename='img/rtlion.png') }}">
+        <br><br>
+        <form id="graph_page" method="POST" action="/graph">
+            <input type="submit" id="graph_page_btn" value="FFT graph">
+        </form>
+        <br>
+    </center>
 </body>
 </html>
