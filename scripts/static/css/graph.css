@@ -16,19 +16,19 @@ legend {
 }
 .start-column {
     float: left;
+    width: 25%;
+}
+.mid-column {
+    float: left;
+    width: 20%;
+    margin-left: 10px;
+}
+.end-column {
+    float: left;
     width: 44%;
     text-align: left;
     margin-left: 10px;
     margin-top: 5px;
-}
-.mid-column {
-    float: left;
-    width: 25%;
-}
-.end-column {
-    float: left;
-    width: 20%;
-    margin-left: 10px;
 }
 .row:after {
     content: "";

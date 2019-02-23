@@ -9,10 +9,7 @@
 </head>
 <body>
     <div class="row">
-        <div class="start-column" id="colFFTGraph">
-            <img class="resp-img" id="imgFFTGraph">
-        </div>
-        <div class="mid-column">
+        <div class="start-column">
             <img class="logo-img" src="{{ url_for('static', filename='img/rtlion_crop.png') }}">
             <fieldset>
                 <legend>Graph & Settings</legend>
@@ -34,12 +31,15 @@
                 </form>
         </fieldset>
         </div>
-        <div class="end-column">
+        <div class="mid-column">
             <fieldset>
                 <legend>Log</legend>
                 <div class="log-text" id="divLog"></div>
                 <span class="ping-text" id="spnPingPong">~</span>
             </fieldset>
+        </div>
+        <div class="end-column" id="colFFTGraph">
+            <img class="resp-img" id="imgFFTGraph">
         </div>
     </div>
 </body>
