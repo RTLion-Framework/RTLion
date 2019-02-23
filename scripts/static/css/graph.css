@@ -10,6 +10,9 @@ fieldset {
 }
 legend {
     font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .start-column {
     float: left;
@@ -45,11 +48,15 @@ legend {
     height: auto;
     max-width: 214px; 
     max-height: 81px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-bottom: 10px;
 }
 .log-text {
     float: left;
     overflow-y: auto;
-    height: 501px;
+    height: 507px;
     width: 100%;
 }
 .ping-text {
