@@ -1,6 +1,28 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 import argparse
+from logcl import LogCL
+
+def print_start_msg():
+    print(
+    """
+                 :       .    
+                  :      `.   
+                  .-      -   
+                   -`     -   
+                    /     `-  
+                    `/     :  
+                     .:    :  
+.`      ``            :.   `: 
+ `...    `..         .:o-.  / 
+    `--.    ..    `sNdh+-++::`
+       `--.   .-`.ms-+dNmyMMm:
+          `---  .y+oNMMMMhMMMo
+             `-:-.+MMMMMMMMMM:
+                `:oMMMMMMMmN+ 
+                   .+RTLion/`
+    """)
+    LogCL().log("Starting...")
 
 def parse_cli_args():
     parser = argparse.ArgumentParser()
