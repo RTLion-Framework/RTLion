@@ -4,24 +4,28 @@ import argparse
 from logcl import LogCL
 
 def print_start_msg():
-    print(
-    """
-                 :       .    
-                  :      `.   
-                  .-      -   
-                   -`     -   
-                    /     `-  
-                    `/     :  
-                     .:    :  
+    g_attr = LogCL().attr_gray
+    g_attr_off = LogCL().attr_gray_off
+    ascii_logo = LogCL().bold_attr + \
+    LogCL().color_lwhite + \
+    """                             
+                 :       .      
+                  :      `.       | RTLion Framework | 
+                  .-      -      """ + g_attr + """ Multipurpose RTL-SDR Framework.""" + g_attr_off + """
+                   -`     -      """ + g_attr + """ Created for RTL2832 based DVB-T receivers.""" + g_attr_off + """
+                    /     `-     """ + g_attr + """ https://github.com/RTLion-Framework""" + g_attr_off + """
+                    `/     :     """ + g_attr + """ Copyright (C) 2019 by KeyLo99""" + g_attr_off + """
+                     .:    :     
 .`      ``            :.   `: 
- `...    `..         .:o-.  / 
+ `...    `..         .:o-.  /
     `--.    ..    `sNdh+-++::`
        `--.   .-`.ms-+dNmyMMm:
           `---  .y+oNMMMMhMMMo
              `-:-.+MMMMMMMMMM:
                 `:oMMMMMMMmN+ 
                    .+RTLion/`
-    """)
+    """ + LogCL().all_attr_off
+    print(ascii_logo)
     LogCL().log("Starting...")
 
 def parse_cli_args():
