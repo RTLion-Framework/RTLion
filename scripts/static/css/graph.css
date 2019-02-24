@@ -14,6 +14,12 @@ legend {
     margin-right: auto;
     display: block;
 }
+.right-float {
+    float: right;
+}
+.left-float {
+    float: left;
+}
 .start-column {
     float: left;
     width: 25%;
@@ -111,15 +117,23 @@ legend {
     outline: none;
     min-width: 150px;
 }
-.right-float {
-    float: right;
-}
-.left-float {
-    float: left;
-}
 .ghost-button:hover {
     border:2px solid #515151;
 }
 .ghost-button:focus {
     outline:0;
+}
+.center-align {
+    text-align: center;
+}
+.range-slider{
+    margin-left: auto;
+    margin-right: 207px;
+    display: block;
+}
+.range-text {
+    margin-left: 28px;
+    margin-right: auto;
+    display: block;
+    color: #686868;
 }
