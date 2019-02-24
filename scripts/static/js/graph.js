@@ -12,6 +12,8 @@ function pageInit(){
     $('form#formCreateGraph').submit(formCreateGraph_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
+    $('#rngFreqRange').change(rngFreqRange_change)
+    $('#rngFreqRange').attr('step', Math.pow(10, 6)/2); 
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpCenterFreq').keypress(inputKeyPress);
@@ -48,6 +50,9 @@ function formSaveSettings_change(){
     }else{
         socket.emit('send_cli_args');
     }
+}
+function rngFreqRange_change(){
+    $('#spnFreqRange').text($('#rngFreqRange').val())
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -95,8 +100,8 @@ function graphSocket() {
             graph_active = false;
             $('#btnCreateGraph').val("Stop");
             read_count = 0;
-            $('#rngFreqRange').attr('min', $('#inpCenterFreq').val()-(10*6))
-            $('#rngFreqRange').attr('max', $('#inpCenterFreq').val()+(10*6))
+            $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+(Math.pow(10, 6)));
+            $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-(Math.pow(10, 6)));
         }else{
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
