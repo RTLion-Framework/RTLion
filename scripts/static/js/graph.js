@@ -1,8 +1,8 @@
 $(document).ready(graphSocket);
 
 var graph_namespace = '/graph';
-var graph_active = true;
 var ping_pong_times = [];
+var graph_active = true;
 var start_time;
 var read_count;
 var socket;
@@ -53,6 +53,7 @@ function formSaveSettings_change(){
 }
 function rngFreqRange_change(){
     $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
+    socket.emit('stop_sdr', $('#rngFreqRange').val());
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -94,7 +95,12 @@ function graphSocket() {
     });
 
     socket.on('dev_status', function(status) {
-        if(parseInt(status) == 1){
+        if(parseInt(status) == 0){
+            $('#formSaveSettings :input').prop('disabled', false);
+            $('#formDisconnect :input').prop('disabled', false);
+            graph_active = true;
+            $('#btnCreateGraph').val("Create FFT graph");            
+        }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
             graph_active = false;
@@ -105,10 +111,8 @@ function graphSocket() {
             $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
             $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
         }else{
-            $('#formSaveSettings :input').prop('disabled', false);
-            $('#formDisconnect :input').prop('disabled', false);
-            graph_active = true;
-            $('#btnCreateGraph').val("Create FFT graph");
+            $('#inpCenterFreq').val($('#rngFreqRange').val())
+            socket.emit('start_sdr');
         }
     });
 
