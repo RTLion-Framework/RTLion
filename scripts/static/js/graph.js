@@ -96,7 +96,7 @@ function graphSocket() {
             $('#btnCreateGraph').val("Stop");
             read_count = 0;
             $('#rngFreqRange').attr('min', $('#inpCenterFreq').val()-(10*6))
-            $('#rngFreqRange').attr('min', $('#inpCenterFreq').val()+(10*6))
+            $('#rngFreqRange').attr('max', $('#inpCenterFreq').val()+(10*6))
         }else{
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
