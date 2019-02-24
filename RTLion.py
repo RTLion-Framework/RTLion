@@ -7,7 +7,6 @@ from scripts.argparser import parse_cli_args
 from scripts.logcl import LogCL
 
 def start_message():
-    print("RTLion")
     LogCL().log("Starting...")
 
 def main():
