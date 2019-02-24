@@ -13,12 +13,12 @@ function pageInit(){
     $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
     $('#rngFreqRange').change(rngFreqRange_change)
-    $('#rngFreqRange').attr('step', Math.pow(10, 6)/2); 
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpCenterFreq').keypress(inputKeyPress);
     $('#inpNumRead').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
+    $('#rngFreqRange').attr('step', Math.pow(10, 6)/2); 
 }
 function formCreateGraph_submit(event){
     if (graph_active){
@@ -52,7 +52,7 @@ function formSaveSettings_change(){
     }
 }
 function rngFreqRange_change(){
-    $('#spnFreqRange').text($('#rngFreqRange').val())
+    $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -102,6 +102,8 @@ function graphSocket() {
             read_count = 0;
             $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+(Math.pow(10, 6)));
             $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-(Math.pow(10, 6)));
+            $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
+            $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
         }else{
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
