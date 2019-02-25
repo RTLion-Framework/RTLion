@@ -53,7 +53,7 @@ function formSaveSettings_change(){
 }
 function rngFreqRange_change(){
     $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
-    socket.emit('stop_sdr', $('#rngFreqRange').val());
+    socket.emit('restart_sdr', $('#rngFreqRange').val());
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode

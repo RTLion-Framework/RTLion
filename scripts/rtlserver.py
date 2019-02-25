@@ -46,6 +46,7 @@ class FlaskServer:
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
+            self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
@@ -85,16 +86,18 @@ class FlaskServer:
         else:
             self.create_fft_graph(freq)
 
-    def stop_sdr(self, freq_change=None):
-        if freq_change == None:
-            self.logcl.log("Stop reading samples from RTL-SDR.")
-            self.socket_log("Stop reading samples from RTL-SDR.")
-            self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
-        else:
-            self.rtl_sdr.close()
-            self.rtl_sdr.center_freq = int(freq_change)
-            self.rtl_sdr.init_device()
-            self.socketio.emit('dev_status', 2, namespace=self.graph_namespace)
+    def stop_sdr(self,):
+        self.logcl.log("Stop reading samples from RTL-SDR.")
+        self.socket_log("Stop reading samples from RTL-SDR.")
+        self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
+        self.c_read = False
+        self.n_read = 0
+
+    def restart_sdr(self, new_freq):
+        self.rtl_sdr.close()
+        self.rtl_sdr.center_freq = int(new_freq)
+        self.rtl_sdr.init_device()
+        self.socketio.emit('dev_status', 2, namespace=self.graph_namespace)
         self.c_read = False
         self.n_read = 0
 
