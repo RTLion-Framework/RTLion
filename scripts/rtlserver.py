@@ -86,7 +86,7 @@ class FlaskServer:
         else:
             self.create_fft_graph(freq)
 
-    def stop_sdr(self,):
+    def stop_sdr(self):
         try:
             self.logcl.log("Stop reading samples from RTL-SDR.")
             self.socket_log("Stop reading samples from RTL-SDR.")
