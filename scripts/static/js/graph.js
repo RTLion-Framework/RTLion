@@ -110,10 +110,12 @@ function graphSocket() {
             $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-(Math.pow(10, 6)));
             $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
             $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
-        }else{
-            $('#inpCenterFreq').val($('#rngFreqRange').val())
-            socket.emit('start_sdr', $('#rngFreqRange').val());
         }
+    });
+
+    socket.on('new_freq_set', function(status) {
+        $('#inpCenterFreq').val($('#rngFreqRange').val())
+        socket.emit('start_sdr', $('#rngFreqRange').val());
     });
 
     socket.on('fft_data', function(msg) {

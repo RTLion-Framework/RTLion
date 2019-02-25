@@ -87,19 +87,27 @@ class FlaskServer:
             self.create_fft_graph(freq)
 
     def stop_sdr(self,):
-        self.logcl.log("Stop reading samples from RTL-SDR.")
-        self.socket_log("Stop reading samples from RTL-SDR.")
-        self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
-        self.c_read = False
-        self.n_read = 0
+        try:
+            self.logcl.log("Stop reading samples from RTL-SDR.")
+            self.socket_log("Stop reading samples from RTL-SDR.")
+            self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
+            self.c_read = False
+            self.n_read = 0
+        except Exception as e:
+            self.logcl.log("Failed to stop RTL-SDR device.\n" + str(e), 'error')
+            sys.exit()
 
     def restart_sdr(self, new_freq):
-        self.rtl_sdr.close()
-        self.rtl_sdr.center_freq = int(new_freq)
-        self.rtl_sdr.init_device()
-        self.socketio.emit('dev_status', 2, namespace=self.graph_namespace)
-        self.c_read = False
-        self.n_read = 0
+        try:
+            self.rtl_sdr.close()
+            self.rtl_sdr.center_freq = int(new_freq)
+            self.rtl_sdr.init_device()
+            self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
+            self.c_read = False
+            self.n_read = 0
+        except Exception as e:
+            self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
+            sys.exit()
 
     def send_args_graph(self, status=0): 
         self.socketio.emit(
