@@ -69,6 +69,7 @@ class FlaskServer:
         self.socket_log("RTLion started.")
 
     def socketio_on_disconnect(self):
+        self.rtl_sdr.close(True)
         self.logcl.log("Stopping server...")
         self.socketio.stop()
 
