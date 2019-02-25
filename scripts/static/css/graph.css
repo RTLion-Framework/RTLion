@@ -127,8 +127,9 @@ legend {
     text-align: center;
 }
 .range-slider{
+    width: 300px;
     margin-left: auto;
-    margin-right: 207px;
+    margin-right: 130px;
     display: block;
 }
 .range-text {
