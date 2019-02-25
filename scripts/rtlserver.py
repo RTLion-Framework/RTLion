@@ -101,7 +101,7 @@ class FlaskServer:
         try:
             self.rtl_sdr.close()
             self.rtl_sdr.center_freq = int(new_freq)
-            self.rtl_sdr.init_device()
+            self.rtl_sdr.init_device(False)
             self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
             self.c_read = False
             self.n_read = 0
@@ -125,25 +125,25 @@ class FlaskServer:
             self.logcl.log("Failed to update settings.", 'error')
 
     def create_fft_graph(self, freq_change):
-        self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
+        self.n_read = self.rtl_sdr.num_read
+        self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
+            self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
             self.socket_log("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
+            self.logcl.log("Getting graph data with interval " + 
+            str(self.interval) + " (" + str(self.n_read) + "x)")
         self.c_read = True
         self.socketio.start_background_task(self.rtlsdr_thread)
 
     def rtlsdr_thread(self):
-        self.n_read = self.rtl_sdr.num_read
-        interval = int(self.rtl_sdr.interval) / 1000.0
-        self.logcl.log("Getting graph data with interval " + 
-        str(interval) + " (" + str(self.n_read) + "x)")
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
             'fft_data', 
             {'data': fft_data}, 
             namespace=self.graph_namespace)
-            self.socketio.sleep(interval)
+            self.socketio.sleep(self.interval)
             self.n_read-=1
             if self.n_read == 0: break
     

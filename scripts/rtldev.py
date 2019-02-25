@@ -37,9 +37,10 @@ class RTLSdr:
             self.logcl.log("rtlsdr module not found.", "error")
             sys.exit()
 
-    def init_device(self):
-        self.logcl.log("Trying to open & initialize device #" + str(self.dev_id))
+    def init_device(self, show_log=True):
         try:
+            if show_log: 
+                self.logcl.log("Trying to open & initialize device #" + str(self.dev_id))
             self.dev = RtlSdr(self.dev_id)
             self.dev_open = True
             self.dev.center_freq = self.center_freq
@@ -58,9 +59,10 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to read samples from RTL-SDR.\n" + str(e), 'error')
 
-    def close(self):
+    def close(self, show_log=False):
         try:
-            self.logcl.log("Closing RTL-SDR device #" + str(self.dev_id))
+            if show_log:
+                self.logcl.log("Closing RTL-SDR device #" + str(self.dev_id))
             self.dev.close()
         except Exception as e:
             self.logcl.log("Failed to close RTL-SDR device.\n" + str(e), 'error')
