@@ -12,13 +12,14 @@ function pageInit(){
     $('form#formCreateGraph').submit(formCreateGraph_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
-    $('#rngFreqRange').change(rngFreqRange_change)
+    $('#rngFreqRange').change(rngFreqRange_change);
+    $('#rngFreqRange').on('input', rngFreqRange_input);
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpCenterFreq').keypress(inputKeyPress);
     $('#inpNumRead').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
-    $('#rngFreqRange').attr('step', Math.pow(10, 6)/2); 
+    $('#rngFreqRange').attr('step', Math.pow(10, 6)/6); 
 }
 function formCreateGraph_submit(event){
     if (graph_active){
@@ -52,8 +53,10 @@ function formSaveSettings_change(){
     }
 }
 function rngFreqRange_change(){
-    $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
     socket.emit('restart_sdr', $('#rngFreqRange').val());
+}
+function rngFreqRange_input(){
+    $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -106,8 +109,8 @@ function graphSocket() {
             graph_active = false;
             $('#btnCreateGraph').val("Stop");
             read_count = 0;
-            $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+(Math.pow(10, 6)));
-            $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-(Math.pow(10, 6)));
+            $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+20*(Math.pow(10, 6)));
+            $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-20*(Math.pow(10, 6)));
             $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
             $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
         }
