@@ -19,7 +19,7 @@ function pageInit(){
     $('#inpCenterFreq').keypress(inputKeyPress);
     $('#inpNumRead').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
-    $('#rngFreqRange').attr('step', Math.pow(10, 6)/6); 
+    $('#rngFreqRange').attr('step', Math.pow(10, 6)/5); 
 }
 function formCreateGraph_submit(event){
     if (graph_active){

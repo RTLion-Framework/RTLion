@@ -123,18 +123,13 @@ legend {
 .ghost-button:focus {
     outline:0;
 }
-.center-align {
-    text-align: center;
-}
 .range-slider{
-    width: 400px;
-    margin-left: auto;
-    margin-right: 83px;
-    display: block;
+    float: left;
+    width: 80%;
+    margin-left: 56px;
 }
 .range-text {
     margin-left: 28px;
-    margin-right: auto;
     display: block;
     color: #686868;
 }

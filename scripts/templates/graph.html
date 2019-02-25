@@ -39,11 +39,9 @@
             </fieldset>
         </div>
         <div class="end-column" id="colFFTGraph">
-            <img class="resp-img" id="imgFFTGraph">
-            <div class="center-align">
-                <input type="range" class="range-slider" id="rngFreqRange">
-                <span class="range-text" id="spnFreqRange"></span>
-            </div>
+            <img class="resp-img" src="{{ url_for('static', filename='img/fft.png') }}" id="imgFFTGraph">
+            <input type="range" class="range-slider" id="rngFreqRange">
+            <span class="range-text" id="spnFreqRange"></span>
         </div>
         
     </div>
