@@ -112,7 +112,7 @@ function graphSocket() {
             $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
         }else{
             $('#inpCenterFreq').val($('#rngFreqRange').val())
-            socket.emit('start_sdr');
+            socket.emit('start_sdr', $('#rngFreqRange').val());
         }
     });
 

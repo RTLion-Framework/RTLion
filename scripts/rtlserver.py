@@ -74,25 +74,25 @@ class FlaskServer:
     def ping_pong(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
 
-    def start_sdr(self):
+    def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
             if(self.rtl_sdr.init_device()):
                 self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
-                self.create_fft_graph()
+                self.create_fft_graph(freq)
             else:
                 self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
-            self.create_fft_graph()
+            self.create_fft_graph(freq)
 
-    def stop_sdr(self, freq=None):
-        if freq == None:
+    def stop_sdr(self, freq_change=None):
+        if freq_change == None:
             self.logcl.log("Stop reading samples from RTL-SDR.")
             self.socket_log("Stop reading samples from RTL-SDR.")
             self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
             self.rtl_sdr.close()
-            self.rtl_sdr.center_freq = int(freq)
+            self.rtl_sdr.center_freq = int(freq_change)
             self.rtl_sdr.init_device()
             self.socketio.emit('dev_status', 2, namespace=self.graph_namespace)
         self.c_read = False
@@ -113,10 +113,11 @@ class FlaskServer:
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
-    def create_fft_graph(self):
+    def create_fft_graph(self, freq_change):
         self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
-        self.socket_log("Creating FFT graph from samples...")
-        self.logcl.log("Creating FFT graph from samples...")
+        if freq_change == None:
+            self.socket_log("Creating FFT graph from samples...")
+            self.logcl.log("Creating FFT graph from samples...")
         self.c_read = True
         self.socketio.start_background_task(self.rtlsdr_thread)
 
