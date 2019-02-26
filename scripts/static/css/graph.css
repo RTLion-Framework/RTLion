@@ -72,6 +72,8 @@ legend {
     width: 100%;
 }
 .ping-text {
+    font-family: "UbuntuMono-R";
+    font-size: 15px;
     float: right;
     margin-right: 5px;
     color: #686868;
