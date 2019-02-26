@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "UbuntuMono-R";
+    src: url("font/UbuntuMono-R.ttf");
+}
 body {
     font-family: monospace, monospace;
     font-size: 14px;
@@ -60,6 +64,8 @@ legend {
     margin-bottom: 10px;
 }
 .log-text {
+    font-size: 15px;
+    font-family: "UbuntuMono-R";
     float: left;
     overflow-y: auto;
     height: 507px;
