@@ -1,3 +1,10 @@
+body {
+    background-image: url("/static/img/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: 135%;
+    background-color: #383442;
+  }
 .logo-img {
     width: 100%;
     height: auto;
