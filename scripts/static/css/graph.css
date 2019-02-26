@@ -64,8 +64,8 @@ legend {
     margin-bottom: 10px;
 }
 .log-text {
-    font-size: 15px;
     font-family: "UbuntuMono-R";
+    font-size: 15px;
     float: left;
     overflow-y: auto;
     height: 507px;
