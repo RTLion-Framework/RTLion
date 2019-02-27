@@ -18,21 +18,21 @@
     opacity: 0;
 }
 .project-desc:before, .project-desc:after {
-  background-color: #000;
-  content: "";
-  display: inline-block;
-  height: 1px;
-  position: relative;
-  vertical-align: middle;
-  width: 3%;
+    background-color: #1a1a1a;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 3%;
 }
 
 .project-desc:before {
-  right: 0.5em;
-  margin-left: -3%;
+    right: 0.5em;
+    margin-left: -3%;
 }
 
 .project-desc:after {
-  left: 0.5em;
-  margin-right: -3%;
+    left: 0.5em;
+    margin-right: -3%;
 }
