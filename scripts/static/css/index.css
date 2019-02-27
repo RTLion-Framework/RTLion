@@ -7,7 +7,7 @@
     height: auto;
     max-width: 428px;
     max-height: 228px;
-    padding:10px;
+    padding:5px;
     opacity: 0;
 }
 .project-desc {
@@ -16,4 +16,23 @@
     font-size: 19px;
     color: #1a1a1a;
     opacity: 0;
+}
+.project-desc:before, .project-desc:after {
+  background-color: #000;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 3%;
+}
+
+.project-desc:before {
+  right: 0.5em;
+  margin-left: -3%;
+}
+
+.project-desc:after {
+  left: 0.5em;
+  margin-right: -3%;
 }
