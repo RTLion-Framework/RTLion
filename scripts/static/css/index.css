@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "UbuntuMono-R";
+    src: url("font/UbuntuMono-R.ttf");
+}
 .logo-img {
     width: 100%;
     height: auto;
@@ -5,4 +9,10 @@
     max-height: 228px;
     padding:10px;
     opacity: 0;
+}
+.project-desc {
+    font-family: "UbuntuMono-R";
+    font-weight: bold;
+    font-size: 19px;
+    color: #1a1a1a;
 }
