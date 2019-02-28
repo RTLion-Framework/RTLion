@@ -1,5 +1,8 @@
 $(document).ready(mainPage);
 
+var index_namespace = '/';
+var socket;
+
 function fadeInAnim(){
     $("#imgLogo").delay(50).animate({"opacity": "1"}, 700);
     $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
@@ -14,10 +17,8 @@ function btnFFTGraph_click(){
 }
 function mainPage() {
     pageInit();
-    namespace = '/';
-    var socket = io.connect(location.protocol + '//' + document.domain + 
-                 ':' + location.port + namespace);
-
+    socket = io.connect(location.protocol + '//' + document.domain + 
+                 ':' + location.port + index_namespace);
     socket.on('connect', function() {
         //
     });
