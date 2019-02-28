@@ -27,12 +27,13 @@
     </script>
 </head>
 <body>
-    
+    <div class="center">
         <img class="logo-img" src="{{ url_for('static', filename='img/rtlion.png') }}" id="imgLogo">
         <br>
         <div class="decorative-line"></div>
         <span class="project-desc" id="spnDesc">Multipurpose RTL-SDR Framework</span>
         <br>
+        
         <div id="divFFTGraphArea" class="no-opacity">
             <div class="anim-button" id="btnFFTGraph">
                 <span class="anim-button-mask"></span>
@@ -40,6 +41,7 @@
                 <span class="anim-button-text anim-button-text--bis">Power Spectrum (FFT Graph)</span>
             </div>
         </div>
+    </div>
     
 </body>
 </html>

@@ -5,6 +5,9 @@
 .no-opacity {
     opacity: 0;
 }
+.center {
+    text-align: center;
+}
 .logo-img {
     width: 100%;
     height: auto;
