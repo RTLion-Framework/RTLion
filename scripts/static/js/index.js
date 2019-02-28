@@ -1,9 +1,11 @@
+$(document).ready(mainPage);
+
 function fadeInAnim(){
     $("#imgLogo").delay(50).animate({"opacity": "1"}, 700);
     $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
     $("#divFFTGraphArea").delay(800).animate({"opacity": "1"}, 700);
 }
-$(document).ready(function() {
+function mainPage() {
     fadeInAnim();
     $("#btnFFTGraph").click(function () {
         window.location.replace("/graph"); 
@@ -15,4 +17,4 @@ $(document).ready(function() {
     socket.on('connect', function() {
         //
     });
-});
+}
