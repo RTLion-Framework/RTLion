@@ -23,6 +23,11 @@
     color: #1a1a1a;
     opacity: 0;
 }
+.dev-status {
+    font-family: "UbuntuMono-R";
+    font-size: 15px;
+    color: #ccc;
+}
 .project-desc:before, .project-desc:after {
     background-color: #1a1a1a;
     content: "";
@@ -61,7 +66,7 @@
     overflow: hidden;
     opacity: 0.6;
     color: #000;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .anim-button-text {
     display: block;
