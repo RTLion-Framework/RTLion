@@ -45,7 +45,7 @@
     background-image: -ms-linear-gradient(left, #1a1a11, #1a1a11, #ccc);
     background-image: -o-linear-gradient(left, #1a1a11, #1a1a11, #ccc);
 }
-.button {
+.anim-button {
     -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -58,16 +58,16 @@
     opacity: 0.6;
     color: #000;
 }
-.button__text {
+.anim-button-text {
     display: block;
     padding: 1em 2em;
     font-weight: bold;
     font-size: 14px;
 }
-.button__text:before {
+.anim-button-text:before {
     content: attr(title);
 }
-.button__text--bis {
+.anim-button-text--bis {
     display: block;
     position: absolute;
     top: 0;
@@ -78,7 +78,7 @@
             transform: translateX(-1em);
     opacity: 0;
 }
-.button__mask {
+.anim-button-mask {
     display: block;
     position: absolute;
     top: 0;
@@ -90,22 +90,22 @@
             transform: translateX(-100%) rotate(45deg);
     transition: all 0.3s;
 }
-.button:hover {
+.anim-button:hover {
     opacity: 1;
 }
-.button:hover .button__text {
+.anim-button:hover .anim-button-text {
     -webkit-animation: fx-text .3s ease-out;
             animation: fx-text .3s ease-out;
 }
-.button:hover .button__text--bis {
+.anim-button:hover .anim-button-text--bis {
     -webkit-animation: fx-text-bis .3s ease-out;
             animation: fx-text-bis .3s ease-out;
 }
-.button:hover .button__mask {
+.anim-button:hover .anim-button-mask {
     -webkit-animation: fx-mask .3s ease-out;
             animation: fx-mask .3s ease-out;
 }
-.button:active {
+.anim-button:active {
     opacity: 1;
     background: #000;
     color: #fff;
