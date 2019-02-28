@@ -6,7 +6,7 @@ var socket;
 function fadeInAnim(){
     $("#imgLogo").delay(50).animate({"opacity": "1"}, 700);
     $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
-    $("#divFFTGraphArea").delay(800).animate({"opacity": "1"}, 700);
+    $("#divFWActions").delay(800).animate({"opacity": "1"}, 700);
 }
 function pageInit(){
     fadeInAnim();

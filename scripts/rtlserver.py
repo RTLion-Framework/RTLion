@@ -40,7 +40,7 @@ class FlaskServer:
 
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            self.flask_server.route(self.index_namespace)(page_index)
+            self.flask_server.route(self.index_namespace,  methods=['GET', 'POST'])(page_index)
             self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.dev_status)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
             self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
