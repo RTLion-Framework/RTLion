@@ -5,11 +5,15 @@ function fadeInAnim(){
     $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
     $("#divFFTGraphArea").delay(800).animate({"opacity": "1"}, 700);
 }
-function mainPage() {
+function pageInit(){
     fadeInAnim();
-    $("#btnFFTGraph").click(function () {
-        window.location.replace("/graph"); 
-    });
+    $("#btnFFTGraph").click(btnFFTGraph_click);
+}
+function btnFFTGraph_click(){
+    window.location.replace("/graph");
+}
+function mainPage() {
+    pageInit();
     namespace = '/';
     var socket = io.connect(location.protocol + '//' + document.domain + 
                  ':' + location.port + namespace);
