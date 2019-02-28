@@ -68,7 +68,7 @@ class FlaskServer:
 
     def dev_status(self):
         if not self.rtl_sdr.dev_open:
-            if(self.rtl_sdr.init_device()):
+            if(self.rtl_sdr.init_device(init_dev=False)):
                 self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
             else:
                 self.socketio.emit('dev_status', 0, namespace=self.index_namespace)

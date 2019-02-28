@@ -37,15 +37,16 @@ class RTLSdr:
             self.logcl.log("rtlsdr module not found.", "error")
             sys.exit()
 
-    def init_device(self, show_log=True):
+    def init_device(self, init_dev=True, show_log=True):
         try:
             if show_log: 
                 self.logcl.log("Trying to open & initialize device #" + str(self.dev_id))
             self.dev = RtlSdr(self.dev_id)
             self.dev_open = True
-            self.dev.center_freq = self.center_freq
-            self.dev.sample_rate = self.sample_rate
-            self.dev.gain = self.gain
+            if init_dev:
+                self.dev.center_freq = self.center_freq
+                self.dev.sample_rate = self.sample_rate
+                self.dev.gain = self.gain
         except IOError as e:
             self.dev_open = False
             self.logcl.log("Failed to open RTL-SDR device!\n" + str(e), 'error')
