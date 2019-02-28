@@ -27,7 +27,6 @@
     vertical-align: middle;
     width: 3%;
 }
-
 .project-desc:before {
     right: 0.5em;
     margin-left: -3%;
@@ -36,7 +35,6 @@
     background-image: -ms-linear-gradient(left, #ccc, #1a1a11, #1a1a11);
     background-image: -o-linear-gradient(left, #ccc, #1a1a11, #1a1a11);
 }
-
 .project-desc:after {
     left: 0.5em;
     margin-right: -3%;
@@ -57,10 +55,11 @@
     overflow: hidden;
     opacity: 0.6;
     color: #000;
+    margin-top: 10px;
 }
 .anim-button-text {
     display: block;
-    padding: 1em 2em;
+    padding: 0.5em 4em;
     font-weight: bold;
     font-size: 14px;
 }
