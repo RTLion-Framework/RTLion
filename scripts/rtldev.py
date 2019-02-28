@@ -64,7 +64,8 @@ class RTLSdr:
         try:
             if show_log:
                 self.logcl.log("Closing RTL-SDR device #" + str(self.dev_id))
-            self.dev.close()
+            if self.dev != None:
+                self.dev.close()
         except Exception as e:
             self.logcl.log("Failed to close RTL-SDR device.\n" + str(e), 'error')
 

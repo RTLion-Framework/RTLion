@@ -11,9 +11,16 @@ function fadeInAnim(){
 function pageInit(){
     fadeInAnim();
     $("#btnFFTGraph").click(btnFFTGraph_click);
+    $("#btnExitFW").click(btnExitFW_click);
 }
 function btnFFTGraph_click(){
     window.location.replace("/graph");
+}
+function btnExitFW_click(){
+    socket.emit('disconnect_request');
+    setTimeout(function() {
+        location.reload();
+    }, 2000);
 }
 function mainPage() {
     pageInit();
