@@ -27,6 +27,7 @@
     font-family: "UbuntuMono-R";
     font-size: 15px;
     color: #ccc;
+    opacity: 0;
 }
 .project-desc:before, .project-desc:after {
     background-color: #1a1a1a;
