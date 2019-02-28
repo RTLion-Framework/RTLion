@@ -5,26 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script type="text/javascript" charset="utf-8">
-        function fadeInAnim(){
-            $("#imgLogo").delay(50).animate({"opacity": "1"}, 700);
-            $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
-            $("#divFFTGraphArea").delay(800).animate({"opacity": "1"}, 700);
-        }
-        $(document).ready(function() {
-            fadeInAnim();
-            $("#btnFFTGraph").click(function () {
-                window.location.replace("/graph"); 
-            });
-            namespace = '/';
-            var socket = io.connect(location.protocol + '//' + document.domain + 
-                         ':' + location.port + namespace);
-
-            socket.on('connect', function() {
-                //
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}" charset="utf-8"></script>
 </head>
 <body>
     <div class="center">
@@ -42,6 +23,5 @@
             </div>
         </div>
     </div>
-    
 </body>
 </html>
