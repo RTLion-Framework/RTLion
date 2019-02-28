@@ -49,7 +49,8 @@ class RTLSdr:
                 self.dev.gain = self.gain
         except IOError as e:
             self.dev_open = False
-            self.logcl.log("Failed to open RTL-SDR device!\n" + str(e), 'error')
+            if init_dev:
+                self.logcl.log("Failed to open RTL-SDR device!\n" + str(e), 'error')
         except Exception as e:
             self.logcl.log("Failed to initialize RTL-SDR device.\n" + str(e), 'fatal')
         return self.dev_open
