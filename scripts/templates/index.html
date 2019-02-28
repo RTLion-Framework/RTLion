@@ -1,24 +1,24 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <title>RTLion Framework</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}" charset="utf-8"></script>
-</head>
-<body>
-    <div class="center">
-        <img class="logo-img" src="{{ url_for('static', filename='img/rtlion.png') }}" id="imgLogo"><br>
-        <span class="project-desc" id="spnDesc">Multipurpose RTL-SDR Framework</span><br>
-        <span class="dev-status" id="spnDevStatus"></span>
-        <div id="divFWActions" class="no-opacity">
-            <div class="anim-button" id="btnFFTGraph">
-                <span class="anim-button-mask"></span>
-                <span class="anim-button-text">Power Spectrum (FFT Graph)</span>
-                <span class="anim-button-text anim-button-text--bis">Power Spectrum (FFT Graph)</span>
+    <head>
+        <title>RTLion Framework</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="center">
+            <img class="logo-img" src="{{ url_for('static', filename='img/rtlion.png') }}" id="imgLogo"><br>
+            <span class="project-desc" id="spnDesc">Multipurpose RTL-SDR Framework</span><br>
+            <span class="dev-status" id="spnDevStatus"></span>
+            <div id="divFWActions" class="no-opacity">
+                <div class="anim-button" id="btnFFTGraph">
+                    <span class="anim-button-mask"></span>
+                    <span class="anim-button-text">Power Spectrum (FFT Graph)</span>
+                    <span class="anim-button-text anim-button-text--bis">Power Spectrum (FFT Graph)</span>
+                </div><br>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
