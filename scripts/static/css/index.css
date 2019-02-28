@@ -2,6 +2,9 @@
     font-family: "UbuntuMono-R";
     src: url("font/UbuntuMono-R.ttf");
 }
+.no-opacity {
+    opacity: 0;
+}
 .logo-img {
     width: 100%;
     height: auto;
@@ -42,9 +45,6 @@
     background-image: -moz-linear-gradient(left, #1a1a11, #1a1a11, #ccc);
     background-image: -ms-linear-gradient(left, #1a1a11, #1a1a11, #ccc);
     background-image: -o-linear-gradient(left, #1a1a11, #1a1a11, #ccc);
-}
-.no-opacity {
-    opacity: 0;
 }
 .anim-button {
     -webkit-user-select: none;
