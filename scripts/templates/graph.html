@@ -1,49 +1,48 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <title>RTLion Framework [Graph]</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css') }}">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/graph.js') }}" charset="utf-8"></script>
-</head>
-<body>
-    <div class="row">
-        <div class="start-column">
-            <img class="logo-img" src="{{ url_for('static', filename='img/rtlion_crop.png') }}">
-            <fieldset>
-                <legend>Graph & Settings</legend>
-                <span class="settings-text" id="spnSettingsLog"></span>
-                <form id="formSaveSettings" class="graph-form" method="POST" action="#">
-                    Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
-                    Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
-                    Center Frequency<input class="ghost-input" type="text" placeholder="" id="inpCenterFreq">
-                    Gain<input class="ghost-input" type="text" placeholder="auto" id="inpDevGain">
-                    Reads <i><span id="spnReads"></span></i>
-                    <input class="ghost-input" type="text" placeholder="-1" id="inpNumRead">
-                    Interval<input class="ghost-input" type="text" placeholder="500" id="inpInterval">
-                </form>
-                <form id="formCreateGraph" method="POST" action="#">
-                    <input class="ghost-button left-float" type="submit" id="btnCreateGraph" value="Create FFT graph">
-                </form>
-                <form id="formDisconnect" method="POST" action="#">
-                    <input class="ghost-button right-float" type="submit" id="btnDisconnect" value="Disconnect">
-                </form>
-        </fieldset>
-        </div>
-        <div class="mid-column">
-            <fieldset>
-                <legend>Log</legend>
-                <div class="log-text" id="divLog"></div>
-                <span class="ping-text" id="spnPingPong">~</span>
+    <head>
+        <title>RTLion Framework [Graph]</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css') }}">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/graph.js') }}" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="start-column">
+                <img class="logo-img" src="{{ url_for('static', filename='img/rtlion_crop.png') }}">
+                <fieldset>
+                    <legend>Graph & Settings</legend>
+                    <span class="settings-text" id="spnSettingsLog"></span>
+                    <form id="formSaveSettings" class="graph-form" method="POST" action="#">
+                        Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
+                        Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
+                        Center Frequency<input class="ghost-input" type="text" placeholder="" id="inpCenterFreq">
+                        Gain<input class="ghost-input" type="text" placeholder="auto" id="inpDevGain">
+                        Reads <i><span id="spnReads"></span></i>
+                        <input class="ghost-input" type="text" placeholder="-1" id="inpNumRead">
+                        Interval<input class="ghost-input" type="text" placeholder="500" id="inpInterval">
+                    </form>
+                    <form id="formCreateGraph" method="POST" action="#">
+                        <input class="ghost-button left-float" type="submit" id="btnCreateGraph" value="Create FFT graph">
+                    </form>
+                    <form id="formDisconnect" method="POST" action="#">
+                        <input class="ghost-button right-float" type="submit" id="btnDisconnect" value="Disconnect">
+                    </form>
             </fieldset>
+            </div>
+            <div class="mid-column">
+                <fieldset>
+                    <legend>Log</legend>
+                    <div class="log-text" id="divLog"></div>
+                    <span class="ping-text" id="spnPingPong">~</span>
+                </fieldset>
+            </div>
+            <div class="end-column" id="colFFTGraph">
+                <img class="resp-img" id="imgFFTGraph">
+                <input type="range" class="range-slider" id="rngFreqRange">
+                <span class="range-text" id="spnFreqRange"></span>
+            </div>
         </div>
-        <div class="end-column" id="colFFTGraph">
-            <img class="resp-img" id="imgFFTGraph">
-            <input type="range" class="range-slider" id="rngFreqRange">
-            <span class="range-text" id="spnFreqRange"></span>
-        </div>
-        
-    </div>
-</body>
+    </body>
 </html>
