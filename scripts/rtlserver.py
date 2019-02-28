@@ -41,6 +41,7 @@ class FlaskServer:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace)(page_index)
+            self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.dev_status)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
             self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
@@ -64,6 +65,15 @@ class FlaskServer:
         except Exception as e:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
+
+    def dev_status(self):
+        if not self.rtl_sdr.dev_open:
+            if(self.rtl_sdr.init_device()):
+                self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
+            else:
+                self.socketio.emit('dev_status', 0, namespace=self.index_namespace)
+        else:
+            self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
 
     def socketio_on_connect(self):
         self.socket_log("RTLion started.")
