@@ -58,6 +58,17 @@
     color: #fff;
     background: #000;
 }
+.info-button{
+    background: #fff;
+}
+.info-button:before{
+    font-family: "FontAwesome";
+    content: "\f129";
+}
+.info-button:hover{
+    color: #fff;
+    background: #000;
+}
 .project-desc {
     font-family: "UbuntuMono-R";
     font-weight: bold;
