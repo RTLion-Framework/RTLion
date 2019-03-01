@@ -1,12 +1,15 @@
 $(document).ready(mainPage);
 
 var index_namespace = '/';
+var anim_speed = 600;
 var socket;
 
 function fadeInAnim(){
-    $("#imgLogo").delay(50).animate({"opacity": "1"}, 700);
-    $("#spnDesc").delay(500).animate({"opacity": "1"}, 700);
-    $("#divFWActions").delay(800).animate({"opacity": "1"}, 700);
+    $("#imgLogo").delay(50).animate({"opacity": "1"}, anim_speed);
+    $("#spnDesc").delay(500).animate({"opacity": "1"}, anim_speed);
+    $("#divFWActions").delay(800).animate({"opacity": "1"}, anim_speed);
+    $("#btnGithub").delay(1000).animate({"opacity": "1"}, anim_speed);
+    $("#btnInfo").delay(1000).animate({"opacity": "1"}, anim_speed);
 }
 function pageInit(){
     fadeInAnim();
