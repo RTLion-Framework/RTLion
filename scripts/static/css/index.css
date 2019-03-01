@@ -62,7 +62,7 @@
 }
 .info-button:before{
     font-family: "FontAwesome";
-    content: "\f129";
+    content: "\f029";
 }
 .info-button:hover{
     color: #5a5a5a;
