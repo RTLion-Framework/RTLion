@@ -23,34 +23,41 @@
     color: #ccc;
     opacity: 0;
 }
-.smGlobalBtn{
+.sm-button-area {
+    position:absolute;
+    bottom:0px;
+    margin-bottom: 10px;
+    text-align: center;
+    left: 48.5%;
+}
+.sm-button{
     display: inline-block;
     position: relative;
     cursor: pointer;
     width: 50px;
     height: 50px;
-    box-shadow: 0 2px 2px #999;
+    
     padding: 0px;
     text-decoration: none;
-    text-align: center;
-    color: #fff;
+    color: #1a1a1a;
     font-size: 25px;
     font-weight: normal;
     line-height: 2em;
+    text-align: center;
     border-radius: 25px;
     -moz-border-radius:25px;
     -webkit-border-radius:25px;
 }
-.githubBtn{
-    background: #1a1a1a;
+.github-button{
+    background: #fff;
 }
-.githubBtn:before{
+.github-button:before{
     font-family: "FontAwesome";
     content: "\f092";
 }
-.githubBtn:hover{
-    color: #1a1a1a;
-    background: #fff;
+.github-button:hover{
+    color: #fff;
+    background: #1a1a1a;
 }
 .project-desc {
     font-family: "UbuntuMono-R";
