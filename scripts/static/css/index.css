@@ -41,16 +41,13 @@
     -moz-border-radius:25px;
     -webkit-border-radius:25px;
 }
-
 .githubBtn{
     background: #1a1a1a;
 }
-
 .githubBtn:before{
     font-family: "FontAwesome";
     content: "\f092";
 }
-
 .githubBtn:hover{
     color: #1a1a1a;
     background: #fff;
