@@ -23,7 +23,38 @@
     color: #ccc;
     opacity: 0;
 }
+.smGlobalBtn{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 2px 2px #999;
+    padding: 0px;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 2em;
+    border-radius: 25px;
+    -moz-border-radius:25px;
+    -webkit-border-radius:25px;
+}
 
+.githubBtn{
+    background: #1a1a1a;
+}
+
+.githubBtn:before{
+    font-family: "FontAwesome";
+    content: "\f092";
+}
+
+.githubBtn:hover{
+    color: #1a1a1a;
+    background: #fff;
+}
 .project-desc {
     font-family: "UbuntuMono-R";
     font-weight: bold;
