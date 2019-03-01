@@ -1,3 +1,4 @@
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @font-face {
     font-family: "UbuntuMono-R";
     src: url("font/UbuntuMono-R.ttf");
@@ -16,17 +17,18 @@
     padding:6px;
     opacity: 0;
 }
+.dev-status {
+    font-family: "UbuntuMono-R";
+    font-size: 15px;
+    color: #ccc;
+    opacity: 0;
+}
+
 .project-desc {
     font-family: "UbuntuMono-R";
     font-weight: bold;
     font-size: 19px;
     color: #1a1a1a;
-    opacity: 0;
-}
-.dev-status {
-    font-family: "UbuntuMono-R";
-    font-size: 15px;
-    color: #ccc;
     opacity: 0;
 }
 .project-desc:before, .project-desc:after {
