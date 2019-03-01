@@ -55,8 +55,7 @@
     content: "\f092";
 }
 .github-button:hover{
-    color: #fff;
-    background: #000;
+    color: #5a5a5a;
 }
 .info-button{
     background: #fff;
@@ -66,8 +65,7 @@
     content: "\f129";
 }
 .info-button:hover{
-    color: #fff;
-    background: #000;
+    color: #5a5a5a;
 }
 .project-desc {
     font-family: "UbuntuMono-R";
