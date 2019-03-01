@@ -36,7 +36,6 @@
     cursor: pointer;
     width: 50px;
     height: 50px;
-    
     padding: 0px;
     text-decoration: none;
     color: #1a1a1a;
@@ -57,7 +56,7 @@
 }
 .github-button:hover{
     color: #fff;
-    background: #1a1a1a;
+    background: #000;
 }
 .project-desc {
     font-family: "UbuntuMono-R";
