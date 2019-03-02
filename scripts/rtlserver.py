@@ -113,7 +113,7 @@ class FlaskServer:
         try:
             self.rtl_sdr.close()
             self.rtl_sdr.center_freq = int(new_freq)
-            self.rtl_sdr.init_device(False)
+            self.rtl_sdr.init_device(init_dev=False, show_log=False)
             self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
             self.c_read = False
             self.n_read = 0
