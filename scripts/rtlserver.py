@@ -111,12 +111,12 @@ class FlaskServer:
 
     def restart_sdr(self, new_freq):
         try:
-            self.rtl_sdr.close()
-            self.rtl_sdr.center_freq = int(new_freq)
-            self.rtl_sdr.init_device(init_dev=False, show_log=False)
-            self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
             self.c_read = False
             self.n_read = 0
+            self.rtl_sdr.close()
+            self.rtl_sdr.center_freq = int(new_freq)
+            self.rtl_sdr.init_device(show_log=False)
+            self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
         except Exception as e:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
@@ -153,7 +153,7 @@ class FlaskServer:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
             'fft_data', 
-            {'data': fft_data}, 
+            {'data': fft_data},
             namespace=self.graph_namespace)
             self.socketio.sleep(self.interval)
             self.n_read-=1
