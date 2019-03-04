@@ -56,7 +56,7 @@ function rngFreqRange_change(){
     socket.emit('restart_sdr', $('#rngFreqRange').val());
 }
 function rngFreqRange_input(){
-    $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
+    $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)));
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -112,12 +112,12 @@ function graphSocket() {
             $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+20*(Math.pow(10, 6)));
             $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-20*(Math.pow(10, 6)));
             $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
-            $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)))
+            $('#spnFreqRange').text(parseFloat(parseInt($('#rngFreqRange').val())/Math.pow(10, 6)));
         }
     });
 
     socket.on('new_freq_set', function(status) {
-        $('#inpCenterFreq').val($('#rngFreqRange').val())
+        $('#inpCenterFreq').val($('#rngFreqRange').val());
         socket.emit('start_sdr', $('#rngFreqRange').val());
     });
 
@@ -145,7 +145,7 @@ function graphSocket() {
         $("#inpSampRate").val(args.samprate);
         $("#inpDevGain").val(args.gain);
         $("#inpCenterFreq").val(args.freq);
-        $("#inpNumRead").val(args.n)
+        $("#inpNumRead").val(args.n);
         $("#inpInterval").val(args.i);
         read_count = args.n;
         if (cliargs.status == 1){
