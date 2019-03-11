@@ -11,7 +11,12 @@ class FlaskServer:
         self.server_addr = server_addr
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
-        self.routes = (self.index_namespace, self.graph_namespace)
+        self.status_namespace = '/status'
+        self.routes = (
+            self.index_namespace, 
+            self.graph_namespace,
+            self.status_namespace
+        )
         self.import_flask()
         self.initialize_flask()
 
