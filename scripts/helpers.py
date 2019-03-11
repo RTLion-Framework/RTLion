@@ -27,7 +27,6 @@ def print_start_msg():
                    .+RTLion/`
     """ + LogCL().all_attr_off
     print(ascii_logo)
-    LogCL().log("Starting...")
 
 def parse_cli_args():
     parser = argparse.ArgumentParser()
@@ -67,4 +66,5 @@ def parse_cli_args():
                         default="0.0.0.0:8081")
 
     args = vars(parser.parse_args())
+    LogCL().log("Starting...")
     return args
