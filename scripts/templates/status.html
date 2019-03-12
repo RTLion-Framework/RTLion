@@ -5,16 +5,17 @@
         <script type="text/javascript" src="{{ url_for('static', filename='js/client.min.js') }}" charset="utf-8"></script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
-                var client = new ClientJS();
+                var clientJS = new ClientJS();
                 var clientInfo = { 
-                    "browserFingerprint"  :  client.getFingerprint(),
-                    "browserInfo"         :  client.getBrowser() + " (" + client.getBrowserVersion() + ")",
-                    "osInfo"              :  client.getOS() + " " + client.getOSVersion() + " (" + client.getCPU() + ")",
-                    "screenInfo"          :  client.getScreenPrint(),
-                    "timeZoneInfo"        :  client.getTimeZone(),
-                    "langInfo"            :  client.getLanguage()
+                    "browserFingerprint"  :  clientJS.getFingerprint(),
+                    "browserInfo"         :  clientJS.getBrowser() + " (" + clientJS.getBrowserVersion() + ")",
+                    "osInfo"              :  clientJS.getOS() + " " + clientJS.getOSVersion() + " (" + clientJS.getCPU() + ")",
+                    "screenInfo"          :  clientJS.getScreenPrint(),
+                    "timeZoneInfo"        :  clientJS.getTimeZone(),
+                    "langInfo"            :  clientJS.getLanguage()
                 }
                 $("#spnClientInfo").text(JSON.stringify(clientInfo, null, 2));
+                $("#spnClientInfo").hide();
             });
         </script>
     </head>
