@@ -5,7 +5,13 @@
         <script type="text/javascript" src="{{ url_for('static', filename='js/client.min.js') }}" charset="utf-8"></script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
-                
+                var client = new ClientJS();
+                alert(client.getFingerprint());
+                alert(client.getBrowser() + " " + client.getBrowserVersion());
+                alert(client.getOS() + " " + client.getOSVersion() + " " + client.getCPU());
+                alert(client.getScreenPrint());
+                alert(client.getTimeZone());
+                alert(client.getLanguage());
             });
         </script>
     </head>
