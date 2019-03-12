@@ -5,7 +5,7 @@ function clientStatus(){
     clientInfo = getClientInfo();
     $("#spnClientInfo").text(JSON.stringify(clientInfo, null, 2));
     $("#spnClientInfo").hide();
-    //window.location.replace("/");
+    window.location.replace("/");
 }
 function getClientInfo(){
     clientJS = new ClientJS();
