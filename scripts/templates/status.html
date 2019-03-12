@@ -6,15 +6,19 @@
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 var client = new ClientJS();
-                alert(client.getFingerprint());
-                alert(client.getBrowser() + " " + client.getBrowserVersion());
-                alert(client.getOS() + " " + client.getOSVersion() + " " + client.getCPU());
-                alert(client.getScreenPrint());
-                alert(client.getTimeZone());
-                alert(client.getLanguage());
+                var clientInfo = { 
+                    "browserFingerprint"  :  client.getFingerprint(),
+                    "browserInfo"         :  client.getBrowser() + " (" + client.getBrowserVersion() + ")",
+                    "osInfo"              :  client.getOS() + " " + client.getOSVersion() + " (" + client.getCPU() + ")",
+                    "screenInfo"          :  client.getScreenPrint(),
+                    "timeZoneInfo"        :  client.getTimeZone(),
+                    "langInfo"            :  client.getLanguage()
+                }
+                $("#spnClientInfo").text(JSON.stringify(clientInfo, null, 2));
             });
         </script>
     </head>
     <body>
+        <span id="spnClientInfo"></span>
     </body>
 </html>
