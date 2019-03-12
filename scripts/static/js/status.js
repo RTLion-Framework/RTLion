@@ -17,5 +17,5 @@ function getClientInfo(){
         "timeZoneInfo"        :  clientJS.getTimeZone(),
         "langInfo"            :  clientJS.getLanguage()
     }
-    return clientInfo;3
+    return clientInfo;
 }
