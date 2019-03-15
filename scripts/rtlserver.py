@@ -11,11 +11,11 @@ class FlaskServer:
         self.server_addr = server_addr
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
-        self.status_namespace = '/status'
+        self.app_namespace = '/app'
         self.routes = (
             self.index_namespace, 
             self.graph_namespace,
-            self.status_namespace
+            self.app_namespace
         )
         self.import_flask()
         self.initialize_flask()
@@ -42,7 +42,7 @@ class FlaskServer:
         try:
             def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
-            def page_status(): return render_template('status.html', async_mode=self.socketio.async_mode)
+            def page_status(): return render_template('app.html', async_mode=self.socketio.async_mode)
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace,  methods=['GET', 'POST'])(page_index)
@@ -57,7 +57,7 @@ class FlaskServer:
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
-            self.flask_server.route(self.status_namespace)(page_status)
+            self.flask_server.route(self.app_namespace)(page_status)
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
