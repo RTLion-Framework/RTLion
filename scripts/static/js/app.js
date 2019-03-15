@@ -1,3 +1,9 @@
+$(document).ready(appPageInit);
+
+function appPageInit(){
+    
+}
+
 var clientJS;
 function getClientInfo(){
     clientJS = new ClientJS();
