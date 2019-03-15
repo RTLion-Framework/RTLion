@@ -1,5 +1,3 @@
-$(document).ready(clientStatus);
-
 var clientJS;
 function getClientInfo(){
     clientJS = new ClientJS();
@@ -11,5 +9,5 @@ function getClientInfo(){
         "timeZoneInfo"        :  clientJS.getTimeZone(),
         "langInfo"            :  clientJS.getLanguage()
     }
-    return clientInfo;
+    return JSON.stringify(clientInfo, null, 2);
 }
