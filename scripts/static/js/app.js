@@ -48,3 +48,7 @@ function getCliArgs(){
     socket.emit('send_cli_args');
     return JSON.stringify(rtlArgs, null, 2);
 }
+
+function setCliArgs(newArgs){
+    
+}
