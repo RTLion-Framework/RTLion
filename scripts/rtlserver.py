@@ -58,6 +58,7 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
+            self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_graph(ns=2))
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
@@ -126,16 +127,15 @@ class FlaskServer:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
 
-    def send_args_graph(self, status=0): 
+    def send_args_graph(self, status=0, ns=1): 
         self.socketio.emit(
             'cli_args', 
-            {'args': self.rtl_sdr.args, 'status': status},
-            namespace=self.graph_namespace)
+            {'args': self.rtl_sdr.args, 'status': status}, namespace=self.routes[ns])
 
     def update_settings(self, args):
         try:
             self.rtl_sdr.set_args(args)
-            self.send_args_graph(1)
+            self.send_args_graph(status=1)
             self.logcl.log("Settings/arguments updated.")
             self.socket_log("Settings/arguments updated.")
         except:
