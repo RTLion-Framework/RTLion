@@ -58,7 +58,7 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
-            self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_graph)
+            self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
@@ -132,6 +132,12 @@ class FlaskServer:
             'cli_args', 
             {'args': self.rtl_sdr.args, 'status': status}, 
             namespace=self.graph_namespace)
+
+    def send_args_app(self):
+        self.socketio.emit(
+            'cli_args', 
+            {'args': self.rtl_sdr.args}, 
+            namespace=self.app_namespace)
 
     def update_settings(self, args):
         try:
