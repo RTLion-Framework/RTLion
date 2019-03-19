@@ -43,3 +43,8 @@ function getClientInfo(){
     }
     return JSON.stringify(clientInfo, null, 2);
 }
+
+function getCliArgs(){
+    socket.emit('send_cli_args');
+    return JSON.stringify(rtlArgs, null, 2);
+}
