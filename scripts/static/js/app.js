@@ -3,6 +3,7 @@ $(document).ready(appPageInit);
 var app_namespace = '/app';
 var socket;
 var rtlArgs;
+var clientJS;
 var clientInfo;
 
 function appPageInit(){
@@ -27,11 +28,9 @@ function appPageInit(){
             "numRead"       :  args.n,
             "readInterval"  :  args.i
         }
-        console.log(rtlArgs);
     });
 }
 
-var clientJS;
 function getClientInfo(){
     clientJS = new ClientJS();
     clientInfo = { 
