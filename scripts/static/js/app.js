@@ -1,6 +1,12 @@
 $(document).ready(appPageInit);
 
+var app_namespace = '/app';
+var socket;
+
 function appPageInit(){
+    socket = io.connect(location.protocol + '//' + document.domain + 
+                 ':' + location.port + app_namespace);
+    
     
 }
 
