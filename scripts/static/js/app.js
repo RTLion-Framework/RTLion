@@ -2,6 +2,8 @@ $(document).ready(appPageInit);
 
 var app_namespace = '/app';
 var socket;
+var rtlArgs;
+var clientInfo;
 
 function appPageInit(){
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -17,7 +19,7 @@ function appPageInit(){
             if (i != 'freq')
                 args[i] = args[i] || 0;
         }
-        var rtlArgs = {
+        rtlArgs = {
             "devIndex"      :  args.dev,
             "sampleRate"    :  args.samprate,
             "devGain"       :  args.gain,
@@ -32,7 +34,7 @@ function appPageInit(){
 var clientJS;
 function getClientInfo(){
     clientJS = new ClientJS();
-    var clientInfo = { 
+    clientInfo = { 
         "browserFingerprint"  :  clientJS.getFingerprint(),
         "browserInfo"         :  clientJS.getBrowser() + " (" + clientJS.getBrowserVersion() + ")",
         "osInfo"              :  clientJS.getOS() + " " + clientJS.getOSVersion() + " (" + clientJS.getCPU() + ")",
