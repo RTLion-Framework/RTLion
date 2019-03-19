@@ -17,13 +17,15 @@ function appPageInit(){
             if (i != 'freq')
                 args[i] = args[i] || 0;
         }
-        alert(args);
-        /*$("#inpDevIndex").val(args.dev);
-        $("#inpSampRate").val(args.samprate);
-        $("#inpDevGain").val(args.gain);
-        $("#inpCenterFreq").val(args.freq);
-        $("#inpNumRead").val(args.n);
-        $("#inpInterval").val(args.i);*/
+        var rtlArgs = {
+            "devIndex"      :  args.dev,
+            "sampleRate"    :  args.samprate,
+            "devGain"       :  args.gain,
+            "centerFreq"    :  args.freq,
+            "numRead"       :  args.n,
+            "readInterval"  :  args.i
+        }
+        console.log(rtlArgs);
     });
 }
 
