@@ -38,7 +38,7 @@ function getClientInfo(){
 
 function getCliArgs(){
     socket.emit('send_cli_args');
-    return JSON.stringify(args, null, 2);
+    return JSON.stringify(args);
 }
 
 function checkArgs(args){
@@ -52,12 +52,12 @@ function checkArgs(args){
 
 function setCliArgs(newArgs){
     try {
-        args = JSON.parse(newArgs);
+        newArgs = JSON.parse(newArgs);
         if(checkArgs(args)){
-            socket.emit('update_settings', args);
+            socket.emit('update_settings', newArgs);
             socket.emit('send_cli_args');
         }
-        return JSON.stringify(rtlArgs, null, 2);
+        return JSON.stringify(args, null, 2);
     } catch (err) {
         return err.message;
     }
