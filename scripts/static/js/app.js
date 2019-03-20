@@ -2,7 +2,7 @@ $(document).ready(appPageInit);
 
 var app_namespace = '/app';
 var socket;
-var rtlArgs;
+var args;
 var clientJS;
 var clientInfo;
 
@@ -19,14 +19,6 @@ function appPageInit(){
         for (var i in args){
             if (i != 'freq')
                 args[i] = args[i] || 0;
-        }
-        rtlArgs = {
-            "devIndex"      :  args.dev,
-            "sampleRate"    :  args.samprate,
-            "devGain"       :  args.gain,
-            "centerFreq"    :  args.freq,
-            "numRead"       :  args.n,
-            "readInterval"  :  args.i
         }
     });
 }
@@ -46,8 +38,9 @@ function getClientInfo(){
 
 function getCliArgs(){
     socket.emit('send_cli_args');
-    return JSON.stringify(rtlArgs, null, 2);
+    return JSON.stringify(args, null, 2);
 }
+
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
      args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
@@ -56,6 +49,7 @@ function checkArgs(args){
     }
     return true;
 }
+
 function setCliArgs(newArgs){
     try {
         args = JSON.parse(newArgs);
