@@ -59,6 +59,8 @@ class FlaskServer:
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
+            self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_settings)
+            
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
