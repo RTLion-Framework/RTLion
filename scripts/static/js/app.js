@@ -22,7 +22,6 @@ function appPageInit(){
         }
     });
 }
-
 function getClientInfo(){
     clientJS = new ClientJS();
     clientInfo = { 
@@ -35,12 +34,10 @@ function getClientInfo(){
     }
     return JSON.stringify(clientInfo, null, 2);
 }
-
 function getCliArgs(){
     socket.emit('send_cli_args');
     return JSON.stringify(args);
 }
-
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
      args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
@@ -49,7 +46,6 @@ function checkArgs(args){
     }
     return true;
 }
-
 function setCliArgs(newArgs){
     newArgs = JSON.parse(newArgs);
     if(checkArgs(newArgs))
