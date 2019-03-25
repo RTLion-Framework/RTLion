@@ -46,7 +46,14 @@ function checkArgs(args){
     return true;
 }
 function setCliArgs(newArgs){
-    newArgs = JSON.parse(newArgs);
-    if(checkArgs(newArgs))
-        socket.emit('update_settings', newArgs);
+    try {
+        newArgs = JSON.parse(newArgs);
+        if(checkArgs(newArgs)){
+            socket.emit('update_settings', newArgs);
+            return true;
+        }    
+    } catch (error) {
+        console.log(error);
+    }
+    return false;
 }
