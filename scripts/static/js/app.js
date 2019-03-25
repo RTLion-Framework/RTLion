@@ -50,10 +50,9 @@ function setCliArgs(newArgs){
         newArgs = JSON.parse(newArgs);
         if(checkArgs(newArgs)){
             socket.emit('update_settings', newArgs);
-            return "updated";
+            socket.emit('send_cli_args');
         }    
-    } catch (error) {
+    } catch (error){
         console.log(error);
-    }
-    return "";
+    } 
 }
