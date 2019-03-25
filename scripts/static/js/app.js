@@ -40,8 +40,7 @@ function getCliArgs(){
 }
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
-     args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
-     isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1){
+     args['gain'] < 0 || args['i'] < 0 || args['n'] < -1){
         return false;
     }
     return true;
