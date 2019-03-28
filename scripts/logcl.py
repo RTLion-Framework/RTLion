@@ -21,3 +21,4 @@ class LogCL:
         self.levels[level][1] + self.levels[level][0] + \
         self.all_attr_off + " " + msg
         print(content)
+        
