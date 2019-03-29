@@ -56,3 +56,6 @@ function setCliArgs(newArgs){
         console.log(error);
     } 
 }
+function getGraph(){
+    socket.emit('get_fft_graph');
+}
