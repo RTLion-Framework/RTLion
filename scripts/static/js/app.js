@@ -21,6 +21,10 @@ function appPageInit(){
                 args[i] = args[i] || 0;
         }
     });
+
+    socket.on('fft_data', function(msg) {
+        console.log(msg.data);
+    });
 }
 function getClientInfo(){
     clientJS = new ClientJS();
