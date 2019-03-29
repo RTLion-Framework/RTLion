@@ -152,6 +152,7 @@ class FlaskServer:
             self.logcl.log("Failed to update settings.", 'error')
 
     def get_fft_graph(self):
+        self.dev_status()
         self.socketio.emit(
             'fft_data', 
             {'data': self.rtl_sdr.get_fft_data()}, 
