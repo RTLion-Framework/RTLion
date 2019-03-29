@@ -60,6 +60,7 @@ class FlaskServer:
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_settings)
+            self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -149,6 +150,12 @@ class FlaskServer:
             self.socket_log("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
+
+    def get_fft_graph(self):
+        self.socketio.emit(
+            'fft_data', 
+            {'data': self.rtl_sdr.get_fft_data()}, 
+            namespace=self.app_namespace)
 
     def create_fft_graph(self, freq_change):
         self.n_read = self.rtl_sdr.num_read
