@@ -59,7 +59,7 @@ class FlaskServer:
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
-            self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_settings)
+            self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             
         except Exception as e:
@@ -148,6 +148,13 @@ class FlaskServer:
             self.send_args_graph(status=1)
             self.logcl.log("Settings/arguments updated.")
             self.socket_log("Settings/arguments updated.")
+        except:
+            self.logcl.log("Failed to update settings.", 'error')
+
+    def update_app_settings(self, args):
+        try:
+            self.rtl_sdr.set_args(args)
+            self.send_args_app()
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
