@@ -65,7 +65,10 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             self.flask_server.route(self.scan_namespace)(page_scan)
-            
+            self.socketio.on('connect', namespace=self.scan_namespace)(self.scan_on_connect)
+            self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
+            self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args_scan)
+            self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong_scan)
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -93,6 +96,9 @@ class FlaskServer:
     def graph_on_connect(self):
         self.socket_graph_log("RTLion started.")
 
+    def scan_on_connect(self):
+        self.socket_graph_scan("RTLion started.")
+
     def socketio_on_disconnect(self):
         self.rtl_sdr.close(True)
         self.logcl.log("Stopping server...")
@@ -100,6 +106,9 @@ class FlaskServer:
 
     def ping_pong_graph(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
+
+    def ping_pong_scan(self): 
+        self.socketio.emit('server_pong', namespace=self.scan_namespace)
 
     def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
@@ -140,6 +149,12 @@ class FlaskServer:
             'cli_args', 
             {'args': self.rtl_sdr.args, 'status': status}, 
             namespace=self.graph_namespace)
+
+    def send_args_scan(self, status=0):
+        self.socketio.emit(
+            'cli_args', 
+            {'args': self.rtl_sdr.args, 'status': status}, 
+            namespace=self.scan_namespace)
 
     def send_args_app(self):
         self.socketio.emit(
