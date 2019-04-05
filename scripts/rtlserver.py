@@ -59,7 +59,7 @@ class FlaskServer:
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
-            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong_graph)
+            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
@@ -68,7 +68,7 @@ class FlaskServer:
             self.socketio.on('connect', namespace=self.scan_namespace)(self.scan_on_connect)
             self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
             self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args_scan)
-            self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong_scan)
+            self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong)
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -97,17 +97,15 @@ class FlaskServer:
         self.socket_graph_log("RTLion started.")
 
     def scan_on_connect(self):
-        self.socket_graph_scan("RTLion started.")
+        self.socket_scanner_log("RTLion started.")
 
     def socketio_on_disconnect(self):
         self.rtl_sdr.close(True)
         self.logcl.log("Stopping server...")
         self.socketio.stop()
 
-    def ping_pong_graph(self): 
+    def ping_pong(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
-
-    def ping_pong_scan(self): 
         self.socketio.emit('server_pong', namespace=self.scan_namespace)
 
     def start_sdr(self, freq=None):
