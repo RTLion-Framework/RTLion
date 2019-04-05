@@ -52,7 +52,7 @@ class FlaskServer:
             self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.dev_status)
             self.socketio.on('disconnect_request', namespace=self.index_namespace)(self.socketio_on_disconnect)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
-            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
+            self.socketio.on('connect', namespace=self.graph_namespace)(self.graph_on_connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
@@ -65,10 +65,7 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             self.flask_server.route(self.scan_namespace)(page_scan)
-            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
-            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
-            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
-            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
+            
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -93,8 +90,8 @@ class FlaskServer:
         else:
             self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
 
-    def socketio_on_connect(self):
-        self.socket_log("RTLion started.")
+    def graph_on_connect(self):
+        self.socket_graph_log("RTLion started.")
 
     def socketio_on_disconnect(self):
         self.rtl_sdr.close(True)
@@ -107,10 +104,10 @@ class FlaskServer:
     def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
             if(self.rtl_sdr.init_device()):
-                self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.socket_graph_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.create_fft_graph(freq)
             else:
-                self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.socket_graph_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
             self.create_fft_graph(freq)
@@ -118,7 +115,7 @@ class FlaskServer:
     def stop_sdr(self):
         try:
             self.logcl.log("Stop reading samples from RTL-SDR.")
-            self.socket_log("Stop reading samples from RTL-SDR.")
+            self.socket_graph_log("Stop reading samples from RTL-SDR.")
             self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
             self.c_read = False
             self.n_read = 0
@@ -155,7 +152,7 @@ class FlaskServer:
             self.rtl_sdr.set_args(args)
             self.send_args_graph(status=1)
             self.logcl.log("Settings/arguments updated.")
-            self.socket_log("Settings/arguments updated.")
+            self.socket_graph_log("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
@@ -178,7 +175,7 @@ class FlaskServer:
         self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
-            self.socket_log("Creating FFT graph from samples...")
+            self.socket_graph_log("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
             self.logcl.log("Getting graph data with interval " + 
             str(self.interval) + " (" + str(self.n_read) + "x)")
@@ -196,7 +193,12 @@ class FlaskServer:
             self.n_read-=1
             if self.n_read == 0: break
     
-    def socket_log(self, msg, ns=1):
-        self.socketio.emit('log_message', {'msg': msg}, namespace=self.routes[ns])
+    def socket_graph_log(self, msg):
+        self.socketio.emit('log_message', {'msg': msg}, 
+        namespace=self.graph_namespace)
+    
+    def socket_scanner_log(self, msg):
+        self.socketio.emit('log_message', {'msg': msg}, 
+        namespace=self.scan_namespace)
 
 
