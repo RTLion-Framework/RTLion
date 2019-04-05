@@ -57,7 +57,7 @@ class FlaskServer:
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
-            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
+            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
@@ -67,7 +67,7 @@ class FlaskServer:
             self.flask_server.route(self.scan_namespace)(page_scan)
             self.socketio.on('connect', namespace=self.scan_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
-            self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args_scan)
+            self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args)
             self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong)
             
         except Exception as e:
@@ -139,17 +139,12 @@ class FlaskServer:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
 
-    def send_args_graph(self, status=0):
-        self.socketio.emit(
-            'cli_args', 
-            {'args': self.rtl_sdr.args, 'status': status}, 
-            namespace=self.graph_namespace)
-
-    def send_args_scan(self, status=0):
-        self.socketio.emit(
-            'cli_args', 
-            {'args': self.rtl_sdr.args, 'status': status}, 
-            namespace=self.scan_namespace)
+    def send_args(self, status=0):
+        for ns in self.routes:
+            self.socketio.emit(
+                'cli_args', 
+                {'args': self.rtl_sdr.args, 'status': status}, 
+                namespace=ns)
 
     def send_args_app(self):
         self.socketio.emit(
@@ -160,7 +155,7 @@ class FlaskServer:
     def update_settings(self, args):
         try:
             self.rtl_sdr.set_args(args)
-            self.send_args_graph(status=1)
+            self.send_args(status=1)
             self.logcl.log("Settings/arguments updated.")
             self.socket_log("Settings/arguments updated.")
         except:
