@@ -11,13 +11,35 @@
         <div class="row">
             <div class="start-column">
                 <img class="logo-img" src="{{ url_for('static', filename='img/rtlion_crop.png') }}">
-               
+                <fieldset>
+                    <legend>Graph & Settings</legend>
+                    <span class="settings-text" id="spnSettingsLog"></span>
+                    <form id="formSaveSettings" class="graph-form" method="POST" action="#">
+                        Device Index<input class="ghost-input" type="text" placeholder="0" id="inpDevIndex">
+                        Sample Rate<input class="ghost-input" type="text" placeholder="2048000" id="inpSampRate">
+                        Center Frequency<input class="ghost-input" type="text" placeholder="" id="inpCenterFreq">
+                        Gain<input class="ghost-input" type="text" placeholder="auto" id="inpDevGain">
+                        Reads <i><span id="spnReads"></span></i>
+                        <input class="ghost-input" type="text" placeholder="-1" id="inpNumRead">
+                        Interval<input class="ghost-input" type="text" placeholder="500" id="inpInterval">
+                    </form>
+                    <form id="formCreateGraph" method="POST" action="#">
+                        <input class="ghost-button left-float" type="submit" id="btnCreateGraph" value="Create FFT graph">
+                    </form>
+                    <form id="formDisconnect" method="POST" action="#">
+                        <input class="ghost-button right-float" type="submit" id="btnDisconnect" value="Disconnect">
+                    </form>
+            </fieldset>
             </div>
             <div class="mid-column">
-               
+                <fieldset>
+                    <legend>Log</legend>
+                    <div class="log-text" id="divLog"></div>
+                    <span class="ping-text" id="spnPingPong">~</span>
+                </fieldset>
             </div>
             <div class="end-column" id="colFFTGraph">
-                
+                <img class="resp-img" id="imgFFTGraph">
             </div>
         </div>
     </body>
