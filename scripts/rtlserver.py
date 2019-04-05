@@ -59,7 +59,7 @@ class FlaskServer:
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args_graph)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
-            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
+            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong_graph)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
@@ -98,7 +98,7 @@ class FlaskServer:
         self.logcl.log("Stopping server...")
         self.socketio.stop()
 
-    def ping_pong(self): 
+    def ping_pong_graph(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
 
     def start_sdr(self, freq=None):
