@@ -12,10 +12,12 @@ class FlaskServer:
         self.index_namespace = '/'
         self.graph_namespace = '/graph'
         self.app_namespace = '/app'
+        self.scan_namespace = '/scan'
         self.routes = (
             self.index_namespace, 
             self.graph_namespace,
-            self.app_namespace
+            self.app_namespace,
+            self.scan_namespace
         )
         self.import_flask()
         self.initialize_flask()
