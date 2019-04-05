@@ -64,7 +64,7 @@ class FlaskServer:
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
-            self.flask_server.route(self.scan_namespace)(page_scan)
+            self.flask_server.route(self.scan_namespace, methods=['GET', 'POST'])(page_scan)
             self.socketio.on('connect', namespace=self.scan_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
             self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args)
@@ -140,12 +140,15 @@ class FlaskServer:
             sys.exit()
 
     def send_args(self, status=0):
-        for ns in self.routes:
-            self.socketio.emit(
+        self.socketio.emit(
                 'cli_args', 
                 {'args': self.rtl_sdr.args, 'status': status}, 
-                namespace=ns)
-
+                namespace=self.graph_namespace)
+        self.socketio.emit(
+                'cli_args', 
+                {'args': self.rtl_sdr.args, 'status': status}, 
+                namespace=self.scan_namespace)
+            
     def send_args_app(self):
         self.socketio.emit(
             'cli_args', 
