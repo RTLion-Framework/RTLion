@@ -14,10 +14,18 @@ function fadeInAnim(){
 function pageInit(){
     fadeInAnim();
     $("#btnFFTGraph").click(btnFFTGraph_click);
+    $("#btnFreqScan").click(btnFreqScan_click);
+    $("#btnAndroidApp").click(btnAndroidApp_click);
     $("#btnExitFW").click(btnExitFW_click);
 }
 function btnFFTGraph_click(){
     window.location.replace("/graph");
+}
+function btnFreqScan_click(){
+    window.location.replace("/scan");
+}
+function btnAndroidApp_click(){
+    window.location.replace("/app");
 }
 function btnExitFW_click(){
     socket.emit('disconnect_request');
