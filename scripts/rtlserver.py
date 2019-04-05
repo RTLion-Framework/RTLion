@@ -44,6 +44,7 @@ class FlaskServer:
         try:
             def page_index(): return render_template('index.html', async_mode=self.socketio.async_mode)
             def page_graph(): return render_template('graph.html', async_mode=self.socketio.async_mode)
+            def page_scan(): return render_template('scan.html', async_mode=self.socketio.async_mode)
             def page_app(): return render_template('app.html', async_mode=self.socketio.async_mode)
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
@@ -63,6 +64,7 @@ class FlaskServer:
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
+            self.flask_server.route(self.scan_namespace)(page_scan)
             
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
