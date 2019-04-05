@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>RTLion Framework [Scanner]</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/scan.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.js') }}" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/scan.js') }}" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="start-column">
+                <img class="logo-img" src="{{ url_for('static', filename='img/rtlion_crop.png') }}">
+               
+            </div>
+            <div class="mid-column">
+               
+            </div>
+            <div class="end-column" id="colFFTGraph">
+                
+            </div>
+        </div>
+    </body>
+</html>
