@@ -43,7 +43,7 @@ function formSaveSettings_change(){
         'dev': parseInt($('#inpDevIndex').val()), 
         'samprate': parseInt($('#inpSampRate').val()), 
         'gain': $('#inpDevGain').val(), 
-        'freq': center_freq,
+        'freq': parseInt($('#inpFreqMin').val()),
         'n': n_read,
         'i': parseInt($('#inpInterval').val())
     };
