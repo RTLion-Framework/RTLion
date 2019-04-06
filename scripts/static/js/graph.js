@@ -128,6 +128,8 @@ function graphSocket() {
             $('#spnReads').text('(' + read_count + '/∞)');
         }else{
             $('#spnReads').text('('+ read_count+ '/' + $('#inpNumRead').val() + ')');
+            if(read_count == parseInt($('#inpNumRead').val()))
+                $('#btnCreateGraph').click();
         }
         if(!$('#colFFTGraph').is(':visible')){
             $('#colFFTGraph').show();
