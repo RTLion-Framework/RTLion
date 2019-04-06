@@ -96,7 +96,7 @@ function scannerSocket(){
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
             graph_active = false;
-            $('#btnCreateGraph').val("Stop Scan");
+            $('#btnStartScan').val("Stop Scan");
         }
     });
 

@@ -190,6 +190,7 @@ class FlaskServer:
         self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
+            self.socketio.emit('dev_status', 1, namespace=self.scan_namespace)
             self.socket_log("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
             self.logcl.log("Getting graph data with interval " + 
@@ -204,6 +205,10 @@ class FlaskServer:
             'fft_data', 
             {'data': fft_data},
             namespace=self.graph_namespace)
+            self.socketio.emit(
+            'fft_data', 
+            {'data': fft_data},
+            namespace=self.scan_namespace)
             self.socketio.sleep(self.interval)
             self.n_read-=1
             if self.n_read == 0: break
