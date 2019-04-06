@@ -135,7 +135,7 @@ function graphSocket() {
     });
 
     socket.on('cli_args', function(cliargs) {
-        args = cliargs.args;
+        var args = cliargs.args;
         for (var i in args){
             if (i != 'freq')
                 args[i] = args[i] || 0;
