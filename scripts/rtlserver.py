@@ -179,8 +179,12 @@ class FlaskServer:
             self.logcl.log("Creating FFT graph from samples...")
             self.logcl.log("Getting graph data with interval " + 
             str(self.interval) + " (" + str(self.n_read) + "x)")
-        self.c_read = True
-        self.socketio.start_background_task(self.rtlsdr_thread)
+        if freq_change != None and int(freq_change) == -1:
+            self.socketio.start_background_task(self.send_data_thread)
+        else:
+            self.c_read = True
+            self.socketio.start_background_task(self.rtlsdr_thread)
+            
 
     def rtlsdr_thread(self):
         while self.c_read:
@@ -193,6 +197,13 @@ class FlaskServer:
             self.n_read-=1
             if self.n_read == 0: break
     
+    def send_data_thread(self):
+        fft_data = self.rtl_sdr.get_fft_data()
+        self.socketio.emit(
+            'fft_data', 
+            {'data': fft_data},
+            namespace=self.graph_namespace)
+
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
             namespace=self.graph_namespace)

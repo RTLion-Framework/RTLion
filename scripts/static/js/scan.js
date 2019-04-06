@@ -130,7 +130,7 @@ function scannerSocket(){
     });
 
     socket.on('new_freq_set', function(status) {
-        socket.emit('start_sdr', current_freq);
+        socket.emit('start_sdr', -1);
     });
 
     socket.on('cli_args', function(cliargs) {
