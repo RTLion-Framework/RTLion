@@ -109,7 +109,6 @@ class FlaskServer:
             else:
                 self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
-                self.socketio.emit('dev_status', 0, namespace=self.scan_namespace)
         else:
             self.create_fft_graph(freq)
 
@@ -118,7 +117,6 @@ class FlaskServer:
             self.logcl.log("Stop reading samples from RTL-SDR.")
             self.socket_log("Stop reading samples from RTL-SDR.")
             self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
-            self.socketio.emit('dev_status', 0, namespace=self.scan_namespace)
             self.c_read = False
             self.n_read = 0
         except Exception as e:
@@ -133,7 +131,6 @@ class FlaskServer:
             self.rtl_sdr.center_freq = int(new_freq)
             self.rtl_sdr.init_device(show_log=False)
             self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
-            self.socketio.emit('new_freq_set', namespace=self.scan_namespace)
         except Exception as e:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
@@ -143,10 +140,6 @@ class FlaskServer:
                 'cli_args', 
                 {'args': self.rtl_sdr.args, 'status': status}, 
                 namespace=self.graph_namespace)
-        self.socketio.emit(
-                'cli_args', 
-                {'args': self.rtl_sdr.args, 'status': status}, 
-                namespace=self.scan_namespace)
             
     def send_args_app(self):
         self.socketio.emit(
@@ -182,7 +175,6 @@ class FlaskServer:
         self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
-            self.socketio.emit('dev_status', 1, namespace=self.scan_namespace)
             self.socket_log("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
             self.logcl.log("Getting graph data with interval " + 
@@ -197,18 +189,13 @@ class FlaskServer:
             'fft_data', 
             {'data': fft_data},
             namespace=self.graph_namespace)
-            self.socketio.emit(
-            'fft_data', 
-            {'data': fft_data},
-            namespace=self.scan_namespace)
             self.socketio.sleep(self.interval)
             self.n_read-=1
             if self.n_read == 0: break
     
     def socket_log(self, msg):
-        for ns in self.routes:
-            self.socketio.emit('log_message', {'msg': msg}, 
-            namespace=ns)
+        self.socketio.emit('log_message', {'msg': msg}, 
+            namespace=self.graph_namespace)
         
 
         
