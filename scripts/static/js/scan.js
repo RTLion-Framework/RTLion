@@ -9,7 +9,11 @@ function pageInit(){
     $('#colScanner').hide();
     $('form#formStartScan').submit(formStartScan_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
-    
+    $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
+    $('#inpDevIndex').keypress(inputKeyPress);
+    $('#inpSampRate').keypress(inputKeyPress);
+    $('#inpCenterFreq').keypress(inputKeyPress);
+    $('#inpInterval').keypress(inputKeyPress);
 }
 function formStartScan_submit(event){
     
@@ -22,6 +26,27 @@ function formDisconnect_submit(event){
         location.reload();
     }, 2000);
     return false;
+}
+function formSaveSettings_change(){
+    /*var args = {
+        'dev': parseInt($('#inpDevIndex').val()), 
+        'samprate': parseInt($('#inpSampRate').val()), 
+        'gain': $('#inpDevGain').val(), 
+        'freq': parseInt($('#inpCenterFreq').val()),
+        'n': parseInt($('#inpNumRead').val()),
+        'i': parseInt($('#inpInterval').val())
+    };
+    if(checkArgs(args)){
+        socket.emit('update_settings', args);
+    }else{
+        socket.emit('send_cli_args');
+    }*/
+}
+function inputKeyPress(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
 }
 function on_log_message(msg){
     current_time = new Date().toLocaleTimeString().split(' ')[0];

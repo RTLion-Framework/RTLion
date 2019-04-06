@@ -38,7 +38,7 @@ function formDisconnect_submit(event){
     return false;
 }
 function formSaveSettings_change(){
-    args = {
+    var args = {
         'dev': parseInt($('#inpDevIndex').val()), 
         'samprate': parseInt($('#inpSampRate').val()), 
         'gain': $('#inpDevGain').val(), 
