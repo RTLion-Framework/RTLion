@@ -6,6 +6,7 @@ var graph_active = true;
 var start_time;
 var n_read;
 var center_freq;
+var minFreq, maxFreq;
 var socket;
 
 function pageInit(){
@@ -13,6 +14,8 @@ function pageInit(){
     $('form#formStartScan').submit(formStartScan_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
     $('#formSaveSettings *').filter(':input').change(formSaveSettings_change);
+    $('#inpFreqMax').keypress(inputKeyPress);
+    $('#inpFreqMin').keypress(inputKeyPress);
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
@@ -54,9 +57,16 @@ function inputKeyPress(evt){
         return false;
     return true;
 }
+function checkRange(){
+    minFreq = parseInt($('#inpFreqMin').val());
+    maxFreq = parseInt($('#inpFreqMax').val());
+    if(maxFreq > minFreq)
+        return true;
+    return false;
+}
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 || 
-    args['gain'] < 0  || args['i'] < 0){
+    args['gain'] < 0  || args['i'] < 0 || !checkRange()){
         on_log_message("Invalid settings detected.");
         $('#spnSettingsLog').text('Invalid settings detected.');
         setTimeout(function() {
