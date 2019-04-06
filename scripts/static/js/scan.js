@@ -1,6 +1,6 @@
 $(document).ready(scannerSocket);
 
-var scan_namespace = '/scan';
+var scan_namespace = '/graph';
 var ping_pong_times = [];
 var graph_active = true;
 var start_time;
