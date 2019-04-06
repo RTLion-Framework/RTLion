@@ -61,7 +61,7 @@ function inputKeyPress(evt){
     return true;
 }
 function setNewFreq(){
-    currentFreq = parseInt($('#inpFreqMin').val());
+    currentFreq += step_size;
     socket.emit('restart_sdr', currentFreq);
 }
 function checkRange(){
@@ -123,7 +123,7 @@ function scannerSocket(){
 
     socket.on('fft_data', function(msg) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
-        //setNewFreq();
+        setNewFreq();
         if(!$('#colScanner').is(':visible')){
             $('#colScanner').show();
         }
