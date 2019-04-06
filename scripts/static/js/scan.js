@@ -23,7 +23,7 @@ function pageInit(){
 }
 function formStartScan_submit(event){
     if (graph_active){
-        stepSize = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
+        step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
         socket.emit('restart_sdr', current_freq);
     }else{
@@ -123,10 +123,10 @@ function scannerSocket(){
 
     socket.on('fft_data', function(msg) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
-        setNewFreq();
         if(!$('#colScanner').is(':visible')){
             $('#colScanner').show();
         }
+        setNewFreq();
     });
 
     socket.on('new_freq_set', function(status) {
