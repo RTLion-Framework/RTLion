@@ -64,6 +64,10 @@ function checkRange(){
         return true;
     return false;
 }
+function setRange(freq){
+    $('#inpFreqMin').val(parseInt(+freq - (freq/5)));
+    $('#inpFreqMax').val(parseInt(+freq + (freq/5)));
+}
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 || 
     args['gain'] < 0  || args['i'] < 0 || !checkRange()){
@@ -128,6 +132,8 @@ function scannerSocket(){
         $("#inpDevGain").val(args.gain);
         $("#inpInterval").val(args.i);
         center_freq = args.freq;
+        if(center_freq > 0)
+            setRange(center_freq);
         n_read = args.n;
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
