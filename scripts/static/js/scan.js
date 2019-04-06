@@ -24,7 +24,8 @@ function pageInit(){
 function formStartScan_submit(event){
     if (graph_active){
         stepSize = 2 * Math.pow(10, parseInt(Math.log10(maxFreq-minFreq)-1));
-        socket.emit('start_sdr');
+        currentFreq = parseInt($('#inpFreqMin').val());
+        socket.emit('restart_sdr', currentFreq);
     }else{
         socket.emit('stop_sdr');
     }
@@ -129,6 +130,7 @@ function scannerSocket(){
     });
 
     socket.on('new_freq_set', function(status) {
+        alert('x');
         socket.emit('start_sdr', currentFreq);
     });
 
