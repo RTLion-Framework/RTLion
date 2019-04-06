@@ -68,6 +68,7 @@ class FlaskServer:
             self.socketio.on('connect', namespace=self.scan_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
             self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args)
+            self.socketio.on('update_settings', namespace=self.scan_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong)
             
         except Exception as e:

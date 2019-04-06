@@ -29,19 +29,19 @@ function formDisconnect_submit(event){
     return false;
 }
 function formSaveSettings_change(){
-    /*var args = {
+    var args = {
         'dev': parseInt($('#inpDevIndex').val()), 
         'samprate': parseInt($('#inpSampRate').val()), 
         'gain': $('#inpDevGain').val(), 
-        'freq': parseInt($('#inpCenterFreq').val()),
-        'n': parseInt($('#inpNumRead').val()),
+        'freq': center_freq,
+        'n': n_read,
         'i': parseInt($('#inpInterval').val())
     };
     if(checkArgs(args)){
         socket.emit('update_settings', args);
     }else{
         socket.emit('send_cli_args');
-    }*/
+    }
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -50,8 +50,8 @@ function inputKeyPress(evt){
     return true;
 }
 function checkArgs(args){
-    if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
-     args['gain'] < 0  || args['i'] < 0){
+    if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 || 
+    args['gain'] < 0  || args['i'] < 0){
         on_log_message("Invalid settings detected.");
         $('#spnSettingsLog').text('Invalid settings detected.');
         setTimeout(function() {
