@@ -120,6 +120,7 @@ function scannerSocket(){
             $('#colScanner').show();
         }
     });
+
     socket.on('cli_args', function(cliargs) {
         var args = cliargs.args;
         for (var i in args){
@@ -132,14 +133,15 @@ function scannerSocket(){
         $("#inpDevGain").val(args.gain);
         $("#inpInterval").val(args.i);
         center_freq = args.freq;
-        if(center_freq > 0)
-            setRange(center_freq);
         n_read = args.n;
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {
                 $('#spnSettingsLog').text('');
             }, 1000);
+        }else{
+            if(center_freq > 0)
+                setRange(center_freq);
         }
     });
 
