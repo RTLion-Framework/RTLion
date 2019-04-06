@@ -67,6 +67,9 @@ class FlaskServer:
             self.flask_server.route(self.scan_namespace, methods=['GET', 'POST'])(page_scan)
             self.socketio.on('connect', namespace=self.scan_namespace)(self.socketio_on_connect)
             self.socketio.on('disconnect_request', namespace=self.scan_namespace)(self.socketio_on_disconnect)
+            self.socketio.on('start_sdr', namespace=self.scan_namespace)(self.start_sdr)
+            self.socketio.on('stop_sdr', namespace=self.scan_namespace)(self.stop_sdr)
+            self.socketio.on('restart_sdr', namespace=self.scan_namespace)(self.restart_sdr)
             self.socketio.on('send_cli_args', namespace=self.scan_namespace)(self.send_args)
             self.socketio.on('update_settings', namespace=self.scan_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.scan_namespace)(self.ping_pong)
@@ -114,6 +117,7 @@ class FlaskServer:
             else:
                 self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
+                self.socketio.emit('dev_status', 0, namespace=self.scan_namespace)
         else:
             self.create_fft_graph(freq)
 
@@ -122,6 +126,7 @@ class FlaskServer:
             self.logcl.log("Stop reading samples from RTL-SDR.")
             self.socket_log("Stop reading samples from RTL-SDR.")
             self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
+            self.socketio.emit('dev_status', 0, namespace=self.scan_namespace)
             self.c_read = False
             self.n_read = 0
         except Exception as e:
@@ -136,6 +141,7 @@ class FlaskServer:
             self.rtl_sdr.center_freq = int(new_freq)
             self.rtl_sdr.init_device(show_log=False)
             self.socketio.emit('new_freq_set', namespace=self.graph_namespace)
+            self.socketio.emit('new_freq_set', namespace=self.scan_namespace)
         except Exception as e:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()

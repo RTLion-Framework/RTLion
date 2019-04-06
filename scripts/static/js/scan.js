@@ -2,6 +2,7 @@ $(document).ready(scannerSocket);
 
 var scan_namespace = '/scan';
 var ping_pong_times = [];
+var graph_active = true;
 var start_time;
 var n_read;
 var center_freq;
@@ -17,7 +18,11 @@ function pageInit(){
     $('#inpInterval').keypress(inputKeyPress);
 }
 function formStartScan_submit(event){
-    
+    if (graph_active){
+        socket.emit('start_sdr');
+    }else{
+        socket.emit('stop_sdr');
+    }
     return false;
 }
 function formDisconnect_submit(event){
@@ -81,6 +86,26 @@ function scannerSocket(){
         on_log_message(log.msg);   
     });
 
+    socket.on('dev_status', function(status) {
+        if(parseInt(status) == 0){
+            $('#formSaveSettings :input').prop('disabled', false);
+            $('#formDisconnect :input').prop('disabled', false);
+            graph_active = true;
+            $('#btnStartScan').val("Start Scan");            
+        }else if(parseInt(status) == 1) {
+            $('#formSaveSettings :input').prop('disabled', true);
+            $('#formDisconnect :input').prop('disabled', true);
+            graph_active = false;
+            $('#btnCreateGraph').val("Stop Scan");
+        }
+    });
+
+    socket.on('fft_data', function(msg) {
+        $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
+        if(!$('#colScanner').is(':visible')){
+            $('#colScanner').show();
+        }
+    });
     socket.on('cli_args', function(cliargs) {
         var args = cliargs.args;
         for (var i in args){
