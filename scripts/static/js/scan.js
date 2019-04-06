@@ -6,7 +6,8 @@ var graph_active = true;
 var start_time;
 var n_read;
 var center_freq;
-var minFreq, maxFreq;
+var currentFreq, minFreq, maxFreq;
+var step_size;
 var socket;
 
 function pageInit(){
@@ -22,6 +23,7 @@ function pageInit(){
 }
 function formStartScan_submit(event){
     if (graph_active){
+        stepSize = 2 * Math.pow(10, parseInt(Math.log10(maxFreq-minFreq)-1));
         socket.emit('start_sdr');
     }else{
         socket.emit('stop_sdr');
@@ -56,6 +58,10 @@ function inputKeyPress(evt){
     if (charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
     return true;
+}
+function setNewFreq(){
+    currentFreq = parseInt($('#inpFreqMin').val());
+    socket.emit('restart_sdr', currentFreq);
 }
 function checkRange(){
     minFreq = parseInt($('#inpFreqMin').val());
@@ -116,9 +122,14 @@ function scannerSocket(){
 
     socket.on('fft_data', function(msg) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
+        //setNewFreq();
         if(!$('#colScanner').is(':visible')){
             $('#colScanner').show();
         }
+    });
+
+    socket.on('new_freq_set', function(status) {
+        socket.emit('start_sdr', currentFreq);
     });
 
     socket.on('cli_args', function(cliargs) {
