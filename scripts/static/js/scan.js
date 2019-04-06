@@ -6,7 +6,7 @@ var graph_active = true;
 var start_time;
 var n_read;
 var center_freq;
-var currentFreq, minFreq, maxFreq;
+var current_freq, min_freq, max_freq;
 var step_size;
 var socket;
 
@@ -23,9 +23,9 @@ function pageInit(){
 }
 function formStartScan_submit(event){
     if (graph_active){
-        stepSize = 2 * Math.pow(10, parseInt(Math.log10(maxFreq-minFreq)-1));
-        currentFreq = parseInt($('#inpFreqMin').val());
-        socket.emit('restart_sdr', currentFreq);
+        stepSize = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
+        current_freq = parseInt($('#inpFreqMin').val());
+        socket.emit('restart_sdr', current_freq);
     }else{
         socket.emit('stop_sdr');
     }
@@ -61,13 +61,13 @@ function inputKeyPress(evt){
     return true;
 }
 function setNewFreq(){
-    currentFreq += step_size;
-    socket.emit('restart_sdr', currentFreq);
+    current_freq += step_size;
+    socket.emit('restart_sdr', current_freq);
 }
 function checkRange(){
-    minFreq = parseInt($('#inpFreqMin').val());
-    maxFreq = parseInt($('#inpFreqMax').val());
-    if(maxFreq > minFreq)
+    min_freq = parseInt($('#inpFreqMin').val());
+    max_freq = parseInt($('#inpFreqMax').val());
+    if(max_freq > min_freq)
         return true;
     return false;
 }
@@ -130,7 +130,7 @@ function scannerSocket(){
     });
 
     socket.on('new_freq_set', function(status) {
-        socket.emit('start_sdr', currentFreq);
+        socket.emit('start_sdr', current_freq);
     });
 
     socket.on('cli_args', function(cliargs) {
