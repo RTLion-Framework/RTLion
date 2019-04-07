@@ -186,6 +186,7 @@ class FlaskServer:
             self.logcl.log("Getting graph data with interval " + 
             str(self.interval) + " (" + str(self.n_read) + "x)")
         if freq_change != None and int(freq_change) == -1:
+            self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
             self.socketio.start_background_task(self.send_data_thread)
         else:
             self.c_read = True

@@ -126,7 +126,7 @@ function scannerSocket(){
         if(!$('#colScanner').is(':visible')){
             $('#colScanner').show();
         }
-        setNewFreq();
+        //setNewFreq();
     });
 
     socket.on('new_freq_set', function(status) {
