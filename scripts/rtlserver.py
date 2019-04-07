@@ -57,6 +57,7 @@ class FlaskServer:
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
+            self.socketio.on('start_scan', namespace=self.graph_namespace)(self.start_scan)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
@@ -135,6 +136,11 @@ class FlaskServer:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
 
+    def start_scan(self, freq):
+        self.rtl_sdr.close()
+        self.rtl_sdr.center_freq = int(freq)
+        self.start_sdr(freq=-1)
+
     def send_args(self, status=0):
         self.socketio.emit(
                 'cli_args', 
@@ -184,7 +190,6 @@ class FlaskServer:
         else:
             self.c_read = True
             self.socketio.start_background_task(self.rtlsdr_thread)
-            
 
     def rtlsdr_thread(self):
         while self.c_read:

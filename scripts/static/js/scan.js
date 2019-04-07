@@ -25,7 +25,7 @@ function formStartScan_submit(event){
     if (graph_active){
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
-        socket.emit('restart_sdr', current_freq);
+        socket.emit('start_scan', current_freq);
     }else{
         socket.emit('stop_sdr');
     }
