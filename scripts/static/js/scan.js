@@ -60,10 +60,6 @@ function inputKeyPress(evt){
         return false;
     return true;
 }
-function setNewFreq(){
-    current_freq += step_size;
-    socket.emit('restart_sdr', current_freq);
-}
 function checkRange(){
     min_freq = parseInt($('#inpFreqMin').val());
     max_freq = parseInt($('#inpFreqMax').val());
@@ -123,10 +119,10 @@ function scannerSocket(){
 
     socket.on('fft_data', function(msg) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
-        if(!$('#colScanner').is(':visible')){
+        if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
-        }
-        //setNewFreq();
+        current_freq += step_size;
+        socket.emit('restart_sdr', current_freq);
     });
 
     socket.on('new_freq_set', function(status) {
