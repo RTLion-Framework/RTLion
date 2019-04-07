@@ -71,9 +71,31 @@ legend {
     height: 507px;
     width: 100%;
 }
+.log-text-scan {
+    font-family: "UbuntuMono-R";
+    font-size: 15px;
+    float: left;
+    overflow-y: auto;
+    height: 200px;
+    width: 100%;
+}
+.scan-text {
+    font-family: "UbuntuMono-R";
+    font-size: 15px;
+    float: left;
+    overflow-y: auto;
+    height: 246px;
+    width: 100%;
+}
 .ping-text {
     font-family: "UbuntuMono-R";
     float: right;
+    margin-right: 3px;
+    color: #686868;
+}
+.freq-text{
+    font-family: "UbuntuMono-R";
+    float: left;
     margin-right: 3px;
     color: #686868;
 }
