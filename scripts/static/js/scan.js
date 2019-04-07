@@ -23,6 +23,7 @@ function pageInit(){
 }
 function formStartScan_submit(event){
     if (graph_active){
+        checkRange();
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
         socket.emit('start_scan', current_freq);
@@ -122,7 +123,10 @@ function scannerSocket(){
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
-        socket.emit('restart_sdr', current_freq);
+        if(current_freq<max_freq)
+            socket.emit('restart_sdr', current_freq);
+        else
+            $('#btnStartScan').click();
     });
 
     socket.on('new_freq_set', function(status) {
