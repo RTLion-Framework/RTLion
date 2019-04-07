@@ -122,7 +122,7 @@ function scannerSocket(){
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
-        socket.emit('start_scan', current_freq);
+        socket.emit('restart_sdr', current_freq);
     });
 
     socket.on('new_freq_set', function(status) {
