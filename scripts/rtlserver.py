@@ -205,12 +205,12 @@ class FlaskServer:
     
     def send_data_thread(self):
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
-        '''self.socketio.emit(
+        self.socketio.emit(
             'graph_data', 
             {'fft': graph_values[0], 
             'freqs': graph_values[1][0],
             'dbs': graph_values[1][1]},
-            namespace=self.graph_namespace)'''
+            namespace=self.graph_namespace)
 
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
