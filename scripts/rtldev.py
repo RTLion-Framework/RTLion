@@ -87,7 +87,7 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
-    def find_peaks(self, Y, F):
+    def find_peaks(self, Y, F, n=3):
         try:
             pass
         except:
