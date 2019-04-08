@@ -118,8 +118,8 @@ function scannerSocket(){
         }
     });
 
-    socket.on('fft_data', function(msg) {
-        $('#imgFreqScan').attr("src", "data:image/png;base64," + msg.data);
+    socket.on('graph_data', function(data) {
+        $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;

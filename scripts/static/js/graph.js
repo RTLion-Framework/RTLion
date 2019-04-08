@@ -121,8 +121,8 @@ function graphSocket() {
         socket.emit('start_sdr', $('#rngFreqRange').val());
     });
 
-    socket.on('graph_data', function(data) {
-        $('#imgFFTGraph').attr("src", "data:image/png;base64," + data.fft);
+    socket.on('fft_data', function(msg) {
+        $('#imgFFTGraph').attr("src", "data:image/png;base64," + msg.data);
         read_count++;
         if($('#inpNumRead').val() == "-1"){
             $('#spnReads').text('(' + read_count + '/∞)');
