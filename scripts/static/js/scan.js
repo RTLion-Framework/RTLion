@@ -92,7 +92,9 @@ function on_log_message(msg){
     $('#divLog').scrollTop($('#divLog').height());
 }
 function on_freq_received(freqs){
-   
+    for (var i = 0; i < freqs.length; i++){
+        $('#divScanResults').append(freqs[i] + "<br>");
+    }
 }
 function scannerSocket(){
     pageInit();
