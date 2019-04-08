@@ -4,6 +4,7 @@
 import sys
 import os
 import base64
+import math
 from logcl import LogCL
 
 class RTLSdr:
