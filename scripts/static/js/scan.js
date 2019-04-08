@@ -96,9 +96,10 @@ function on_log_message(msg){
 }
 function on_freq_received(freqs){
     for (var i = 0; i < freqs.length; i++){
-        if(scan_res.indexOf(freqs[i]) == -1){
-            scan_res.push(freqs[i]);
-            $('#divScanResults').append(freqs[i] + "<br>");
+        var freq = freqs[i].toFixed(1);
+        if(scan_res.indexOf(freq) == -1){
+            scan_res.push(freq);
+            $('#divScanResults').append(freq + "<br>");
         }
     }
 }
