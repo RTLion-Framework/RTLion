@@ -7,7 +7,7 @@ var start_time;
 var n_read;
 var center_freq;
 var current_freq, min_freq, max_freq;
-var scan_res = [];
+var scan_res = {};
 var step_size;
 var socket;
 
@@ -28,7 +28,7 @@ function formStartScan_submit(event){
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
         $('#divScanResults').text("");
-        scan_res = []
+        scan_res = {};
         socket.emit('start_scan', current_freq);
     }else{
         current_freq = max_freq;
@@ -94,11 +94,12 @@ function on_log_message(msg){
     $('#divLog').append("<b>[" + current_time + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
-function on_freq_received(freqs){
+function on_freq_received(freqs, dbs){
     for (var i = 0; i < freqs.length; i++){
         var freq = freqs[i].toFixed(1);
+        var db = dbs[i].toFixed(2);
         if(scan_res.indexOf(freq) == -1){
-            scan_res.push(freq);
+            scan_res.push([freq, db]);
             $('#divScanResults').append(freq + "<br>");
         }
     }
@@ -132,7 +133,7 @@ function scannerSocket(){
 
     socket.on('graph_data', function(data) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
-        on_freq_received(data.freqs);
+        on_freq_received(data.freqs, data.dbs);
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
