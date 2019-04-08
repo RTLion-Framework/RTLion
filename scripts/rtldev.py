@@ -90,7 +90,7 @@ class RTLSdr:
     def get_fft_data(self, scan=False):
         try:
             from pylab import psd, xlabel, ylabel, title, clf, savefig
-            psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+            [Y, F] = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
