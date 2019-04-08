@@ -87,13 +87,13 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
-    def find_peaks(self, Y, F, n=3):
+    def find_max_freqs(self, Y, F, n=3):
         try:
             import numpy as np
             Y_sorted = Y[np.argsort(Y)[-n:]]
-            peaks = []
+            freqs = []
             for y_val in Y_sorted:
-                peaks.append(F[np.where(Y == y_val)[0][0]])
+                freqs.append(F[np.where(Y == y_val)[0][0]])
             return peaks
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
@@ -111,6 +111,6 @@ class RTLSdr:
             if not scan:
                 return encoded
             else:
-                return [encoded, self.find_peaks(Y, F)]
+                return [encoded, self.find_max_freqs(Y, F)]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
