@@ -35,7 +35,7 @@ function formStartScan_submit(event){
         $('#divScanResults').text("");
         freq_res = [];
         db_res = [];
-        socket.emit('start_scan', current_freq);
+        socket.emit('start_scan', current_freq, parseInt($('#rngScanSensivity').val()));
     }else{
         current_freq = max_freq;
     }
