@@ -65,7 +65,7 @@ function formSaveSettings_change(){
     }
 }
 function rngScanSensivity_input(){
-    
+    $("#spnSensivity").text("Sensivity (" + $('#rngScanSensivity').val() + ")");
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
