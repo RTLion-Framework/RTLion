@@ -204,7 +204,7 @@ class FlaskServer:
             if self.n_read == 0: break
     
     def send_data_thread(self):
-        fft_data = self.rtl_sdr.get_fft_data(scan=True)
+        fft_data = self.rtl_sdr.get_fft_data(scan=True)[0]
         self.socketio.emit(
             'fft_data', 
             {'data': fft_data},
