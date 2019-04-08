@@ -88,7 +88,10 @@ class RTLSdr:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
     def find_peaks(self, Y, F):
-        pass
+        try:
+            pass
+        except:
+            pass
 
     def get_fft_data(self, scan=False):
         try:
