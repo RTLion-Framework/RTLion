@@ -76,7 +76,7 @@ legend {
     font-size: 15px;
     float: left;
     overflow-y: auto;
-    height: 200px;
+    height: 184px;
     width: 100%;
 }
 .scan-text {
@@ -160,7 +160,7 @@ legend {
     float: right;
     width: 100%;
     margin-top: 7px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .range-text {
     margin-left: 28px;
