@@ -205,7 +205,6 @@ class FlaskServer:
     
     def send_data_thread(self):
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
-        print(graph_values)
         fft_data = graph_values[0]
         self.socketio.emit(
             'fft_data', 

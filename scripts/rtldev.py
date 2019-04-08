@@ -94,7 +94,7 @@ class RTLSdr:
             freqs = []
             for y_val in Y_sorted:
                 freqs.append(F[np.where(Y == y_val)[0][0]])
-            return peaks
+            return freqs
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
 
