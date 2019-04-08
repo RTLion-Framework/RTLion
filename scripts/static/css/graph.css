@@ -157,9 +157,10 @@ legend {
     margin-left: 56px;
 }
 .range-slider-scan{
-    float: left;
-    width: 80%;
-    margin-left: 56px;
+    float: right;
+    width: 100%;
+    margin-top: 7px;
+    margin-bottom: 5px;
 }
 .range-text {
     margin-left: 28px;
