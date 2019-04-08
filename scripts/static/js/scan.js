@@ -108,8 +108,12 @@ function on_freq_received(freqs, dbs){
     }
 }
 function calc_threshold(){
-    
-
+    var db_sum = 0;
+    for(var i = 0; i < db_res.length; i++){
+        db_sum += parseInt(db_res[i]);
+    }
+    var db_avg = db_sum/db_res.length;
+    alert(db_avg);
 
 }
 function scannerSocket(){
