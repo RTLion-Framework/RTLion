@@ -177,7 +177,6 @@ function scannerSocket(){
             if (i != 'freq')
                 args[i] = args[i] || 0;
         }
-        checkArgs(args);
         $("#inpDevIndex").val(args.dev);
         $("#inpSampRate").val(args.samprate);
         $("#inpDevGain").val(args.gain);
@@ -193,6 +192,7 @@ function scannerSocket(){
             if(center_freq > 0)
                 setRange(center_freq);
         }
+        checkArgs(args);
     });
 
     socket.on('server_pong', function() {
