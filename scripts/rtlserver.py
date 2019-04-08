@@ -207,7 +207,7 @@ class FlaskServer:
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
         self.socketio.emit(
             'graph_data', 
-            {'data': graph_values[0], 
+            {'fft': graph_values[0], 
             'freq': graph_values[1]},
             namespace=self.graph_namespace)
 
