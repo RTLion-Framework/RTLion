@@ -107,6 +107,11 @@ function on_freq_received(freqs, dbs){
         }
     }
 }
+function calc_threshold(){
+    
+
+
+}
 function scannerSocket(){
     pageInit();
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -140,10 +145,12 @@ function scannerSocket(){
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
-        if(current_freq<max_freq)
+        if(current_freq<max_freq){
             socket.emit('restart_sdr', current_freq);
-        else
+        }else{
             socket.emit('stop_sdr');
+            calc_threshold();
+        }
     });
 
     socket.on('new_freq_set', function(status) {
