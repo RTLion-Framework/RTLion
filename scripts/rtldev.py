@@ -91,7 +91,7 @@ class RTLSdr:
         try:
             pass
         except:
-            pass
+            self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
 
     def get_fft_data(self, scan=False):
         try:
