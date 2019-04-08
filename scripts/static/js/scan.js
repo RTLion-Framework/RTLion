@@ -132,7 +132,7 @@ function scannerSocket(){
 
     socket.on('graph_data', function(data) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
-        on_freq_received(data.freq);
+        on_freq_received(data.freqs);
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;

@@ -208,7 +208,8 @@ class FlaskServer:
         self.socketio.emit(
             'graph_data', 
             {'fft': graph_values[0], 
-            'freq': graph_values[1]},
+            'freqs': graph_values[1][0],
+            'dbs': graph_values[1][1]},
             namespace=self.graph_namespace)
 
     def socket_log(self, msg):
