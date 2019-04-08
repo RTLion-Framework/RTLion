@@ -87,16 +87,22 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
+    def find_peaks(self, Y, F):
+        pass
+
     def get_fft_data(self, scan=False):
         try:
             from pylab import psd, xlabel, ylabel, title, clf, savefig
             [Y, F] = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                    Fc=int(self.center_freq)/1e6, color='k')
+                    Fc=int(self.center_freq)/1e6, color='k')            
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
             savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
             clf()
             encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb").read())
-            return encoded
+            if not scan:
+                return encoded
+            else:
+                return [encoded, self.find_peaks(Y, F)]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
