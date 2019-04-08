@@ -7,7 +7,7 @@ var start_time;
 var n_read;
 var center_freq;
 var current_freq, min_freq, max_freq;
-var scan_res = {};
+var freq_res = [], db_res = [];
 var step_size;
 var socket;
 
@@ -28,7 +28,8 @@ function formStartScan_submit(event){
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
         $('#divScanResults').text("");
-        scan_res = {};
+        freq_res = [];
+        db_res = [];
         socket.emit('start_scan', current_freq);
     }else{
         current_freq = max_freq;
@@ -98,8 +99,9 @@ function on_freq_received(freqs, dbs){
     for (var i = 0; i < freqs.length; i++){
         var freq = freqs[i].toFixed(1);
         var db = dbs[i].toFixed(2);
-        if(scan_res.indexOf(freq) == -1){
-            scan_res.push([freq, db]);
+        if(freq_res.indexOf(freq) == -1){
+            freq_res.push(freq);
+            db_res.push(db);
             $('#divScanResults').append(freq + "<br>");
         }
     }
