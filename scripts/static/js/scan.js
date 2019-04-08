@@ -91,6 +91,9 @@ function on_log_message(msg){
     $('#divLog').append("<b>[" + current_time + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
+function on_freq_received(freqs){
+   
+}
 function scannerSocket(){
     pageInit();
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -120,6 +123,7 @@ function scannerSocket(){
 
     socket.on('graph_data', function(data) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
+        on_freq_received(data.freq);
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
