@@ -125,7 +125,6 @@ function calc_threshold(){
         if(Math.abs(db_res[i]) > Math.abs(db_avg/2))
             $('#divScanResults').append(freq_res[i] + "<br>");
     }
-
 }
 function scannerSocket(){
     pageInit();

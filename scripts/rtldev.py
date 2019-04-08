@@ -14,6 +14,7 @@ class RTLSdr:
         self.set_args(args)
         self.dev = None
         self.dev_open = False
+        self.sensivity = 3
         self.static_dir = 'scripts/static/'
 
     def set_args(self, args):
@@ -88,7 +89,7 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
-    def find_max_freqs(self, Y, F, n=3):
+    def find_max_freqs(self, Y, F, n):
         try:
             import numpy as np
             Y_sorted = Y[np.argsort(Y)[-n:]]
@@ -114,6 +115,6 @@ class RTLSdr:
             if not scan:
                 return encoded
             else:
-                return [encoded, self.find_max_freqs(Y, F)]
+                return [encoded, self.find_max_freqs(Y, F, n=self.sensivity)]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')

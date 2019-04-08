@@ -136,7 +136,8 @@ class FlaskServer:
             self.logcl.log("Failed to set new frequency.\n" + str(e), 'error')
             sys.exit()
 
-    def start_scan(self, freq):
+    def start_scan(self, freq, sensivity):
+        self.rtl_sdr.sensivity = sensivity
         self.rtl_sdr.close()
         self.rtl_sdr.center_freq = int(freq)
         self.start_sdr(freq=-1)
