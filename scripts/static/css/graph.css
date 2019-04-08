@@ -151,7 +151,12 @@ legend {
 .ghost-button:focus {
     outline:0;
 }
-.range-slider{
+.range-slider-graph{
+    float: left;
+    width: 80%;
+    margin-left: 56px;
+}
+.range-slider-scan{
     float: left;
     width: 80%;
     margin-left: 56px;
