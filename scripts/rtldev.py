@@ -89,8 +89,8 @@ class RTLSdr:
 
     def find_peaks(self, Y, F, n=3):
         try:
-            #sorted_Y = Y[np.argsort(Y)[-n:]]
-            pass
+            import numpy as np
+            sorted_Y = Y[np.argsort(Y)[-n:]]
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
 
