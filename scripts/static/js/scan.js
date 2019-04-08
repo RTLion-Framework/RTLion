@@ -113,7 +113,11 @@ function calc_threshold(){
         db_sum += parseInt(db_res[i]);
     }
     var db_avg = db_sum/db_res.length;
-    alert(db_avg);
+    $('#divScanResults').text("");
+    for (var i = 0; i < freq_res.length; i++){
+        if(Math.abs(db_res[i]) > Math.abs(db_avg))
+            $('#divScanResults').append(freq_res[i] + "<br>");
+    }
 
 }
 function scannerSocket(){
