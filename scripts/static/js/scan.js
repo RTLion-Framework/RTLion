@@ -31,7 +31,6 @@ function formStartScan_submit(event){
         checkRange();
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
-        $('#spnFreqRange').text(min_freq + "-" + max_freq);
         $('#divScanResults').text("");
         freq_res = [];
         db_res = [];
@@ -144,12 +143,13 @@ function scannerSocket(){
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
             graph_active = true;
-            $('#btnStartScan').val("Start Scan");            
+            $('#btnStartScan').val("Start Scan");          
         }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
             graph_active = false;
             $('#btnStartScan').val("Stop Scan");
+            $('#spnFreqRange').text(min_freq + "-" + max_freq);
         }
     });
 
