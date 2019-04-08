@@ -21,6 +21,10 @@ function pageInit(){
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
     $('#inpInterval').keypress(inputKeyPress);
+    $('#rngScanSensivity').attr('min', 1);
+    $('#rngScanSensivity').attr('max', 10);
+    $('#rngScanSensivity').val(3);
+    $('#rngScanSensivity').on('input', rngScanSensivity_input);
 }
 function formStartScan_submit(event){
     if (graph_active){
@@ -59,6 +63,9 @@ function formSaveSettings_change(){
     }else{
         socket.emit('send_cli_args');
     }
+}
+function rngScanSensivity_input(){
+    
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
