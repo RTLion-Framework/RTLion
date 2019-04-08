@@ -28,7 +28,7 @@ function formStartScan_submit(event){
         current_freq = parseInt($('#inpFreqMin').val());
         socket.emit('start_scan', current_freq);
     }else{
-        socket.emit('stop_sdr');
+        current_freq = max_freq;
     }
     return false;
 }
@@ -126,7 +126,7 @@ function scannerSocket(){
         if(current_freq<max_freq)
             socket.emit('restart_sdr', current_freq);
         else
-            $('#btnStartScan').click();
+            socket.emit('stop_sdr');
     });
 
     socket.on('new_freq_set', function(status) {
