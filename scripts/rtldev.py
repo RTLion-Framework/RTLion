@@ -92,9 +92,11 @@ class RTLSdr:
             import numpy as np
             Y_sorted = Y[np.argsort(Y)[-n:]]
             freqs = []
+            dbs = []
             for y_val in Y_sorted:
                 freqs.append(F[np.where(Y == y_val)[0][0]])
-            return freqs
+                dbs.append(10 * math.log10(y_val))
+            return [freqs, dbs]
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
 
