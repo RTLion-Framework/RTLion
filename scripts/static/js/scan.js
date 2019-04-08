@@ -27,6 +27,7 @@ function formStartScan_submit(event){
         checkRange();
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
         current_freq = parseInt($('#inpFreqMin').val());
+        $('#spnFreqRange').text(min_freq + "-" + max_freq);
         $('#divScanResults').text("");
         freq_res = [];
         db_res = [];
