@@ -6,6 +6,7 @@ var graph_active = true;
 var start_time;
 var n_read;
 var center_freq;
+var interval;
 var current_freq, min_freq, max_freq;
 var freq_res = [], db_res = [];
 var step_size;
@@ -20,7 +21,6 @@ function pageInit(){
     $('#inpFreqMin').keypress(inputKeyPress);
     $('#inpDevIndex').keypress(inputKeyPress);
     $('#inpSampRate').keypress(inputKeyPress);
-    $('#inpInterval').keypress(inputKeyPress);
     $('#rngScanSensivity').attr('min', 1);
     $('#rngScanSensivity').attr('max', 10);
     $('#rngScanSensivity').val(3);
@@ -55,7 +55,7 @@ function formSaveSettings_change(){
         'gain': $('#inpDevGain').val(), 
         'freq': parseInt($('#inpFreqMin').val()),
         'n': n_read,
-        'i': parseInt($('#inpInterval').val())
+        'i': interval
     };
     if(checkArgs(args)){
         socket.emit('update_settings', args);
@@ -181,7 +181,7 @@ function scannerSocket(){
         $("#inpDevIndex").val(args.dev);
         $("#inpSampRate").val(args.samprate);
         $("#inpDevGain").val(args.gain);
-        $("#inpInterval").val(args.i);
+        interval = args.i;
         center_freq = args.freq;
         n_read = args.n;
         if (cliargs.status == 1){
