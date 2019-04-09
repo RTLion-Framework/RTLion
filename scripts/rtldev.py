@@ -11,11 +11,15 @@ class RTLSdr:
     def __init__(self, **args):
         self.logcl = LogCL()
         self.import_rtlsdr()
+        self.set_static_dir()
         self.set_args(args)
         self.dev = None
         self.dev_open = False
         self.sensivity = 3
-        self.static_dir = 'scripts/static/'
+
+    def set_static_dir(self):
+        full_path = os.path.realpath(__file__)
+        self.static_dir = os.path.split(full_path)[0] + '/static/'
 
     def set_args(self, args):
         try:
