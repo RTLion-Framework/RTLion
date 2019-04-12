@@ -181,7 +181,7 @@ class FlaskServer:
 
     def get_scanned_values(self):
         self.dev_status()
-        self.send_data_thread(ns=2)
+        self.send_data_thread(ns=2, json=True)
     
     def create_fft_graph(self, freq_change):
         self.n_read = self.rtl_sdr.num_read
