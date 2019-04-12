@@ -22,8 +22,10 @@ function appPageInit(){
         }
     });
 
-    socket.on('fft_data', function(msg) {
-        console.log(msg.data);
+    socket.on('graph_data', function(data) {
+        console.log(data.fft);
+        console.log(data.freqs);
+        console.log(data.dbs);
     });
 }
 function getClientInfo(){
