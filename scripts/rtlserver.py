@@ -177,6 +177,9 @@ class FlaskServer:
             'fft_data', 
             {'data': self.rtl_sdr.get_fft_data()}, 
             namespace=self.app_namespace)
+    
+    def get_scanned_values(self):
+        pass
 
     def create_fft_graph(self, freq_change):
         self.n_read = self.rtl_sdr.num_read
