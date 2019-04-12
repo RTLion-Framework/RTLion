@@ -221,7 +221,7 @@ class FlaskServer:
                 namespace=self.routes[ns])
         else:
             def get_str_from_list(lst):
-                ' '.join(str(i) for i in lst)
+                return ' '.join(str(float(i)) for i in lst)
             self.socketio.emit(
                 'graph_data', 
                 graph_values[0] + "|" + \
