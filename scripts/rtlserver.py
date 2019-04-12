@@ -222,7 +222,9 @@ class FlaskServer:
         else:
             self.socketio.emit(
                 'graph_data', 
-                json.dumps(graph_values, ensure_ascii=False),
+                {'fft': graph_values[0], 
+                'freqs': json.dumps(graph_values[1][0]),
+                'dbs': json.dumps(graph_values[1][1])},
                 namespace=self.routes[ns])
 
     def socket_log(self, msg):
