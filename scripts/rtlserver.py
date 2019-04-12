@@ -181,7 +181,7 @@ class FlaskServer:
 
     def get_scanned_values(self):
         self.dev_status()
-        self.send_data_thread(ns=2, json=True)
+        self.send_data_thread(ns=2, parse_json=True)
     
     def create_fft_graph(self, freq_change):
         self.n_read = self.rtl_sdr.num_read
@@ -210,9 +210,9 @@ class FlaskServer:
             self.n_read-=1
             if self.n_read == 0: break
     
-    def send_data_thread(self, ns=1, json=False):
+    def send_data_thread(self, ns=1, parse_json=False):
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
-        if not json:
+        if not parse_json:
             self.socketio.emit(
                 'graph_data', 
                 {'fft': graph_values[0], 
