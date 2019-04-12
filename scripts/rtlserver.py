@@ -226,7 +226,7 @@ class FlaskServer:
                 'graph_data', 
                 graph_values[0] + "|" + \
                 get_str_from_list(graph_values[1][0]) + "|" + \
-                get_str_from_list(graph_values[1][1]), \
+                get_str_from_list(graph_values[1][1]),
                 namespace=self.routes[ns])
 
     def socket_log(self, msg):
