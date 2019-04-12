@@ -179,6 +179,7 @@ class FlaskServer:
             namespace=self.app_namespace)
 
     def get_scanned_values(self):
+        self.dev_status()
         self.send_data_thread(ns=3)
     
     def create_fft_graph(self, freq_change):
