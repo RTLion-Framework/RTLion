@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
 from logcl import LogCL
 
 class FlaskServer:
@@ -180,7 +181,7 @@ class FlaskServer:
 
     def get_scanned_values(self):
         self.dev_status()
-        self.send_data_thread(ns=3)
+        self.send_data_thread(ns=2)
     
     def create_fft_graph(self, freq_change):
         self.n_read = self.rtl_sdr.num_read
@@ -209,14 +210,20 @@ class FlaskServer:
             self.n_read-=1
             if self.n_read == 0: break
     
-    def send_data_thread(self, ns=1):
+    def send_data_thread(self, ns=1, json=False):
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
-        self.socketio.emit(
-            'graph_data', 
-            {'fft': graph_values[0], 
-            'freqs': graph_values[1][0],
-            'dbs': graph_values[1][1]},
-            namespace=self.routes[ns])
+        if not json:
+            self.socketio.emit(
+                'graph_data', 
+                {'fft': graph_values[0], 
+                'freqs': graph_values[1][0],
+                'dbs': graph_values[1][1]},
+                namespace=self.routes[ns])
+        else:
+            self.socketio.emit(
+                'graph_data', 
+                json.dumps(graph_values, ensure_ascii=False),
+                namespace=self.routes[ns])
 
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 

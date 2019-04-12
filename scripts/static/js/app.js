@@ -23,9 +23,9 @@ function appPageInit(){
     });
 
     socket.on('graph_data', function(data) {
-        console.log(data.fft);
-        console.log(data.freqs);
-        console.log(data.dbs);
+        console.log(data);
+        
+
     });
 }
 function getClientInfo(){
