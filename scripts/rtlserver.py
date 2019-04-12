@@ -167,7 +167,9 @@ class FlaskServer:
 
     def update_app_settings(self, args):
         try:
+            self.rtl_sdr.close()
             self.rtl_sdr.set_args(args)
+            self.rtl_sdr.init_device(show_log=False)
             self.send_args_app()
         except:
             self.logcl.log("Failed to update settings.", 'error')
