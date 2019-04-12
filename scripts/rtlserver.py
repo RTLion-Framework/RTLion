@@ -220,18 +220,16 @@ class FlaskServer:
                 'dbs': graph_values[1][1]},
                 namespace=self.routes[ns])
         else:
+            def get_str_from_list(lst):
+                ' '.join(str(i) for i in lst)
             self.socketio.emit(
                 'graph_data', 
-                {'fft': graph_values[0], 
-                'freqs': json.dumps(graph_values[1][0]),
-                'dbs': json.dumps(graph_values[1][1])},
+                graph_values[0] + "|" + \
+                get_str_from_list(graph_values[1][0]) + "|" + \
+                get_str_from_list(graph_values[1][1]), \
                 namespace=self.routes[ns])
 
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
             namespace=self.graph_namespace)
         
-
-        
-
-
