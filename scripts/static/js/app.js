@@ -21,12 +21,6 @@ function appPageInit(){
                 args[i] = args[i] || 0;
         }
     });
-
-    socket.on('graph_data', function(data) {
-        console.log(data);
-        
-
-    });
 }
 function getClientInfo(){
     clientJS = new ClientJS();
