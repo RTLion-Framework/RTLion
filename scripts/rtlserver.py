@@ -215,25 +215,31 @@ class FlaskServer:
     
     def send_data_thread(self, ns=1, parse_json=False):
         graph_values = self.rtl_sdr.get_fft_data(scan=True)
-        if not parse_json:
+        try:
+            if not parse_json:
+                self.socketio.emit(
+                    'graph_data', 
+                    {'fft': graph_values[0], 
+                    'freqs': graph_values[1][0],
+                    'dbs': graph_values[1][1]},
+                    namespace=self.routes[ns])
+            else:
+                def get_str_from_list(lst):
+                    try: 
+                        return ' '.join(str(float(i)) for i in lst)
+                    except: 
+                        return None
+                self.socketio.emit(
+                    'graph_data', 
+                    graph_values[0] + "|" + \
+                    get_str_from_list(graph_values[1][0]) + "|" + \
+                    get_str_from_list(graph_values[1][1]),
+                    namespace=self.routes[ns])
+        except:
             self.socketio.emit(
-                'graph_data', 
-                {'fft': graph_values[0], 
-                'freqs': graph_values[1][0],
-                'dbs': graph_values[1][1]},
-                namespace=self.routes[ns])
-        else:
-            def get_str_from_list(lst):
-                try: 
-                    return ' '.join(str(float(i)) for i in lst)
-                except: 
-                    return None
-            self.socketio.emit(
-                'graph_data', 
-                graph_values[0] + "|" + \
-                get_str_from_list(graph_values[1][0]) + "|" + \
-                get_str_from_list(graph_values[1][1]),
-                namespace=self.routes[ns])
+                    'graph_data', 
+                    None,
+                    namespace=self.routes[ns])
 
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
