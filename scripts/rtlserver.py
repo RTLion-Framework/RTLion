@@ -182,7 +182,7 @@ class FlaskServer:
             {'data': self.rtl_sdr.get_fft_data()}, 
             namespace=self.app_namespace)
 
-    def get_scanned_values(self):
+    def get_scanned_values(self, sensivity):
         self.dev_status()
         self.send_data_thread(ns=2, parse_json=True)
     
