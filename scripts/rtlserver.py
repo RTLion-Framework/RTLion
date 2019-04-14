@@ -183,8 +183,8 @@ class FlaskServer:
             namespace=self.app_namespace)
 
     def get_scanned_values(self, sensivity):
-        self.rtl_sdr.sensivity = sensivity
         self.dev_status()
+        self.rtl_sdr.sensivity = sensivity
         self.send_data_thread(ns=2, parse_json=True)
     
     def create_fft_graph(self, freq_change):
