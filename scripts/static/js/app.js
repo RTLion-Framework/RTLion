@@ -59,6 +59,6 @@ function setCliArgs(newArgs){
 function getGraph(){
     socket.emit('get_fft_graph');
 }
-function getScannedValues(){
-    socket.emit('get_scanned_values');
+function getScannedValues(sensivity){
+    socket.emit('get_scanned_values', sensivity);
 }
