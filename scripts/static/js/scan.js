@@ -116,7 +116,11 @@ function on_freq_received(freqs, dbs){
     }
 }
 function update_progress(){
-    
+    if(c_read < max_read){
+            
+    }else{
+
+    }
 }
 function calc_threshold(){
     var db_sum = 0;
