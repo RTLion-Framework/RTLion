@@ -118,9 +118,10 @@ function on_freq_received(freqs, dbs){
 function update_progress(){
     if(c_read < max_read){
         var percentage = (c_read * 100) / max_read;
-        $('#spnFreqRange').text(min_freq + "-" + max_freq + " [%" + percentage + "]");
+        c_read++;
+        
     }else{
-        $('#spnFreqRange').text(min_freq + "-" + max_freq + " [%100]");
+        
     }
 }
 function calc_threshold(){
