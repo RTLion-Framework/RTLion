@@ -115,6 +115,9 @@ function on_freq_received(freqs, dbs){
         }
     }
 }
+function update_progress(){
+    
+}
 function calc_threshold(){
     var db_sum = 0;
     for(var i = 0; i < db_res.length; i++){
@@ -158,6 +161,7 @@ function scannerSocket(){
     socket.on('graph_data', function(data) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
         on_freq_received(data.freqs, data.dbs);
+        update_progress();
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         current_freq += step_size;
