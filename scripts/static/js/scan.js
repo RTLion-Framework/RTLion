@@ -66,7 +66,7 @@ function formSaveSettings_change(){
     }
 }
 function rngScanSensivity_input(){
-    $("#spnSensivity").text("Sensivity (" + $('#rngScanSensivity').val() + ")");
+    $('#spnSensivity').text("Sensivity (" + $('#rngScanSensivity').val() + ")");
 }
 function inputKeyPress(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -119,9 +119,9 @@ function update_progress(){
     if(c_read < max_read){
         var percentage = parseInt((c_read * 100) / max_read);
         c_read++;
-        $("#lgScanResults").text("Scan Results [%" + percentage + "]");
+        $('#lgScanResults').text('Scan Results [%' + percentage + ']');
     }else{
-        $("#lgScanResults").text("Scan Results [%100]");
+        $('#lgScanResults').text(Scan Results [%100]');
     }
 }
 function calc_threshold(){
@@ -155,7 +155,7 @@ function scannerSocket(){
             $('#formDisconnect :input').prop('disabled', false);
             graph_active = true;
             $('#btnStartScan').val("Start Scan");
-            $("#lgScanResults").text("Scan Results");        
+            $('#lgScanResults').text("Scan Results");        
         }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
@@ -190,9 +190,9 @@ function scannerSocket(){
             if (i != 'freq')
                 args[i] = args[i] || 0;
         }
-        $("#inpDevIndex").val(args.dev);
-        $("#inpSampRate").val(args.samprate);
-        $("#inpDevGain").val(args.gain);
+        $('#inpDevIndex').val(args.dev);
+        $('#inpSampRate').val(args.samprate);
+        $('#inpDevGain').val(args.gain);
         interval = args.i;
         center_freq = args.freq;
         n_read = args.n;
