@@ -9,7 +9,7 @@ var center_freq;
 var interval;
 var current_freq, min_freq, max_freq;
 var freq_res = [], db_res = [];
-var step_size;
+var step_size, c_read, max_read;
 var socket;
 
 function pageInit(){
@@ -30,6 +30,8 @@ function formStartScan_submit(event){
     if (graph_active){
         checkRange();
         step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
+        max_read = parseInt(max_freq-min_freq)  / step_size;
+        c_read = 0;
         current_freq = parseInt($('#inpFreqMin').val());
         $('#divScanResults').text("");
         freq_res = [];
