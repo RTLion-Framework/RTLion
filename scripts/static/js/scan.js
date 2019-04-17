@@ -117,11 +117,11 @@ function on_freq_received(freqs, dbs){
 }
 function update_progress(){
     if(c_read < max_read){
-        var percentage = (c_read * 100) / max_read;
+        var percentage = parseInt((c_read * 100) / max_read);
         c_read++;
-        
+        $("#lgScanResults").text("Scan Results [%" + percentage + "]");
     }else{
-        
+        $("#lgScanResults").text("Scan Results [%100]");
     }
 }
 function calc_threshold(){
@@ -154,7 +154,8 @@ function scannerSocket(){
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
             graph_active = true;
-            $('#btnStartScan').val("Start Scan");          
+            $('#btnStartScan').val("Start Scan");
+            $("#lgScanResults").text("Scan Results");        
         }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
