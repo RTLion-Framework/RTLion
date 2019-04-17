@@ -127,7 +127,8 @@ function graphSocket() {
         if($('#inpNumRead').val() == "-1"){
             $('#spnReads').text('(' + read_count + '/∞)');
         }else{
-            $('#spnReads').text('('+ read_count+ '/' + $('#inpNumRead').val() + ')');
+            var percentage = parseInt((read_count * 100) / parseInt($('#inpNumRead').val()));
+            $('#spnReads').text('('+ read_count+ '/' + $('#inpNumRead').val() + ') [%' + percentage + "]");
             if(read_count == parseInt($('#inpNumRead').val()))
                 $('#btnCreateGraph').click();
         }
