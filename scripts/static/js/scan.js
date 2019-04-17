@@ -121,7 +121,7 @@ function update_progress(){
         c_read++;
         $('#lgScanResults').text('Scan Results [%' + percentage + ']');
     }else{
-        $('#lgScanResults').text(Scan Results [%100]');
+        $('#lgScanResults').text('Scan Results [%100]');
     }
 }
 function calc_threshold(){
