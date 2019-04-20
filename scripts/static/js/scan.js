@@ -1,15 +1,20 @@
 $(document).ready(scannerSocket);
 
-var scan_namespace = '/graph';
-var ping_pong_times = [];
-var graph_active = true;
-var start_time;
-var n_read;
-var center_freq;
+var scanNamespace = '/graph';
+var pingPongTimes = [];
+var graphActive = true;
+var startTime;
+var numRead;
+var centerFreq;
 var interval;
-var current_freq, min_freq, max_freq;
-var freq_res = [], db_res = [];
-var step_size, c_read, max_read;
+var currentFreq;
+var minFreq;
+var maxFreq;
+var freqRes = [];
+var dbRes = [];
+var stepSize;
+var currentRead;
+var maxRead;
 var socket;
 
 function pageInit(){
@@ -27,18 +32,18 @@ function pageInit(){
     $('#rngScanSensivity').on('input', rngScanSensivity_input);
 }
 function formStartScan_submit(event){
-    if (graph_active){
+    if (graphActive){
         checkRange();
-        step_size = 2 * Math.pow(10, parseInt(Math.log10(max_freq-min_freq)-1));
-        max_read = parseInt(max_freq-min_freq)  / step_size;
-        c_read = 0;
-        current_freq = parseInt($('#inpFreqMin').val());
+        stepSize = 2 * Math.pow(10, parseInt(Math.log10(maxFreq-minFreq)-1));
+        maxRead = parseInt(maxFreq-minFreq)  / stepSize;
+        currentRead = 0;
+        currentFreq = parseInt($('#inpFreqMin').val());
         $('#divScanResults').text("");
-        freq_res = [];
-        db_res = [];
-        socket.emit('start_scan', current_freq, parseInt($('#rngScanSensivity').val()));
+        freqRes = [];
+        dbRes = [];
+        socket.emit('start_scan', currentFreq, parseInt($('#rngScanSensivity').val()));
     }else{
-        current_freq = max_freq;
+        currentFreq = maxFreq;
     }
     return false;
 }
@@ -56,7 +61,7 @@ function formSaveSettings_change(){
         'samprate': parseInt($('#inpSampRate').val()), 
         'gain': $('#inpDevGain').val(), 
         'freq': parseInt($('#inpFreqMin').val()),
-        'n': n_read,
+        'n': numRead,
         'i': interval
     };
     if(checkArgs(args)){
@@ -75,9 +80,9 @@ function inputKeyPress(evt){
     return true;
 }
 function checkRange(){
-    min_freq = parseInt($('#inpFreqMin').val());
-    max_freq = parseInt($('#inpFreqMax').val());
-    if(max_freq > min_freq)
+    minFreq = parseInt($('#inpFreqMin').val());
+    maxFreq = parseInt($('#inpFreqMax').val());
+    if(maxFreq > minFreq)
         return true;
     return false;
 }
@@ -108,17 +113,17 @@ function on_freq_received(freqs, dbs){
     for (var i = 0; i < freqs.length; i++){
         var freq = freqs[i].toFixed(1);
         var db = dbs[i].toFixed(2);
-        if(freq_res.indexOf(freq) == -1){
-            freq_res.push(freq);
-            db_res.push(db);
+        if(freqRes.indexOf(freq) == -1){
+            freqRes.push(freq);
+            dbRes.push(db);
             $('#divScanResults').append(freq + "<br>");
         }
     }
 }
 function update_progress(){
-    if(c_read < max_read){
-        var percentage = parseInt((c_read * 100) / max_read);
-        c_read++;
+    if(currentRead < maxRead){
+        var percentage = parseInt((currentRead * 100) / maxRead);
+        currentRead++;
         $('#lgScanResults').text('Scan Results [%' + percentage + ']');
     }else{
         $('#lgScanResults').text('Scan Results [%100]');
@@ -126,20 +131,20 @@ function update_progress(){
 }
 function calc_threshold(){
     var db_sum = 0;
-    for(var i = 0; i < db_res.length; i++){
-        db_sum += parseInt(db_res[i]);
+    for(var i = 0; i < dbRes.length; i++){
+        db_sum += parseInt(dbRes[i]);
     }
-    var db_avg = db_sum/db_res.length;
+    var db_avg = db_sum/dbRes.length;
     $('#divScanResults').text("");
-    for (var i = 0; i < freq_res.length; i++){
-        if(Math.abs(db_res[i]) > Math.abs(db_avg/2))
-            $('#divScanResults').append(freq_res[i] + "<br>");
+    for (var i = 0; i < freqRes.length; i++){
+        if(Math.abs(dbRes[i]) > Math.abs(db_avg/2))
+            $('#divScanResults').append(freqRes[i] + "<br>");
     }
 }
 function scannerSocket(){
     pageInit();
     socket = io.connect(location.protocol + '//' + document.domain + 
-                 ':' + location.port + scan_namespace);
+                 ':' + location.port + scanNamespace);
 
     socket.on('connect', function() {
         socket.emit('send_cli_args');
@@ -153,15 +158,15 @@ function scannerSocket(){
         if(parseInt(status) == 0){
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
-            graph_active = true;
+            graphActive = true;
             $('#btnStartScan').val("Start Scan");
             $('#lgScanResults').text("Scan Results");        
         }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
-            graph_active = false;
+            graphActive = false;
             $('#btnStartScan').val("Stop Scan");
-            $('#spnFreqRange').text(min_freq + "-" + max_freq);
+            $('#spnFreqRange').text(minFreq + "-" + maxFreq);
         }
     });
 
@@ -171,9 +176,9 @@ function scannerSocket(){
         update_progress();
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
-        current_freq += step_size;
-        if(current_freq<max_freq){
-            socket.emit('restart_sdr', current_freq);
+        currentFreq += stepSize;
+        if(currentFreq<maxFreq){
+            socket.emit('restart_sdr', currentFreq);
         }else{
             socket.emit('stop_sdr');
             calc_threshold();
@@ -194,32 +199,32 @@ function scannerSocket(){
         $('#inpSampRate').val(args.samprate);
         $('#inpDevGain').val(args.gain);
         interval = args.i;
-        center_freq = args.freq;
-        n_read = args.n;
+        centerFreq = args.freq;
+        numRead = args.n;
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {
                 $('#spnSettingsLog').text('');
             }, 1000);
         }else{
-            if(center_freq > 0)
-                setRange(center_freq);
+            if(centerFreq > 0)
+                setRange(centerFreq);
         }
         checkArgs(args);
     });
 
     socket.on('server_pong', function() {
-        var latency = (new Date).getTime() - start_time;
-        ping_pong_times.push(latency);
-        ping_pong_times = ping_pong_times.slice(-30);11
+        var latency = (new Date).getTime() - startTime;
+        pingPongTimes.push(latency);
+        pingPongTimes = pingPongTimes.slice(-30);11
         var sum = 0;
-        for (var i = 0; i < ping_pong_times.length; i++)
-            sum += ping_pong_times[i];
-        $('#spnPingPong').text(Math.round(10 * sum / ping_pong_times.length) / 10 + "ms");
+        for (var i = 0; i < pingPongTimes.length; i++)
+            sum += pingPongTimes[i];
+        $('#spnPingPong').text(Math.round(10 * sum / pingPongTimes.length) / 10 + "ms");
     });
     
     window.setInterval(function() {
-        start_time = (new Date).getTime();
+        startTime = (new Date).getTime();
         socket.emit('server_ping');
     }, 1000);
 }
