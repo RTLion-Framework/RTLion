@@ -108,9 +108,15 @@ class RTLSdr:
 
     def get_fft_data(self, scan=False):
         try:
-            from pylab import psd, xlabel, ylabel, title, clf, savefig
+            from pylab import psd, plot, xlabel, ylabel, title, clf, savefig
             [Y, F] = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                    Fc=int(self.center_freq)/1e6, color='k')            
+                    Fc=int(self.center_freq)/1e6, color='k')
+            if not scan: ####
+                max_freqs = self.find_max_freqs(Y, F, n=self.sensivity)  
+                plot(max_freqs[0], max_freqs[1], 
+                    color='#686868', 
+                    marker='o', 
+                    linestyle='None')
             xlabel('Frequency (MHz)')
             ylabel('Relative power (dB)')
             savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
@@ -119,6 +125,6 @@ class RTLSdr:
             if not scan:
                 return encoded
             else:
-                return [encoded, self.find_max_freqs(Y, F, n=self.sensivity)]
+                return [encoded, max_freqs]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')

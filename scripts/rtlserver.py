@@ -245,4 +245,3 @@ class FlaskServer:
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
             namespace=self.graph_namespace)
-        
