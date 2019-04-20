@@ -114,16 +114,12 @@ class RTLSdr:
             import pylab as plt
             [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')
-            if scan: 
-                max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)  
+            if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)  
             plt.xlabel('Frequency (MHz)')
             plt.ylabel('Relative power (dB)')
             plt.savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
             plt.clf()
             encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb").read())
-            if not scan:
-                return encoded
-            else:
-                return [encoded, max_freqs]
+            return encoded if not scan else [encoded, max_freqs]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
