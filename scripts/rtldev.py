@@ -100,7 +100,7 @@ class RTLSdr:
                 plt.plot(freq, db, 
                     color='k', 
                     marker='o', 
-                    markersize=4, 
+                    markersize=5, 
                     linestyle='None')
             return [freqs, dbs]
         except:
