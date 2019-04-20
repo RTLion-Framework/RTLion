@@ -82,7 +82,6 @@ function appendLog(msg){
     $('#divLog').append("<b>[" + currentTime + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
-
 function documentReady() {
     initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -136,8 +135,8 @@ function documentReady() {
         }
     });
 
-    socket.on('cli_args', function(cliargs) {
-        var args = cliargs.args;
+    socket.on('cli_args', function(cliArgs) {
+        var args = cliArgs.args;
         for (var i in args){
             if (i != 'freq')
                 args[i] = args[i] || 0;
@@ -150,7 +149,7 @@ function documentReady() {
         $("#inpNumRead").val(args.n);
         $("#inpInterval").val(args.i);
         readCount = args.n;
-        if (cliargs.status == 1){
+        if (cliArgs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {
                 $('#spnSettingsLog').text('');
