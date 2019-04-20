@@ -76,23 +76,7 @@ class RTLSdr:
                 self.dev_open = False
         except Exception as e:
             self.logcl.log("Failed to close RTL-SDR device.\n" + str(e), 'error')
-
-    def create_graph(self, continous=False, read_count=1, refresh_rate=0.05):
-        self.logcl.log("Creating graph...")
-        try:
-            from pylab import psd, xlabel, ylabel, pause, clf, show
-            for i in range(read_count):
-                psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                    Fc=int(self.center_freq)/1e6, color='k')
-                xlabel('Frequency (MHz)')
-                ylabel('Relative power (dB)')
-                if continous:
-                    pause(refresh_rate)
-                    clf()
-                else: show()
-        except Exception as e:
-            self.logcl.log("Failed to create graph.\n" + str(e), 'error')
-
+            
     def find_max_freqs(self, plt, Y, F, n):
         try:
             import numpy as np
