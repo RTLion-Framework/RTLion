@@ -93,34 +93,33 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to create graph.\n" + str(e), 'error')
 
-    def find_max_freqs(self, Y, F, n):
+    def find_max_freqs(self, plt, Y, F, n):
         try:
             import numpy as np
             Y_sorted = Y[np.argsort(Y)[-n:]]
             freqs = []
             dbs = []
             for y_val in Y_sorted:
-                freqs.append(F[np.where(Y == y_val)[0][0]])
-                dbs.append(10 * math.log10(y_val))
+                freq = F[np.where(Y == y_val)[0][0]]
+                db = 10 * math.log10(y_val)
+                freqs.append(freq)
+                dbs.append(db)
+                plt.plot(freq, db, color='#686868', marker='o', linestyle='None')
             return [freqs, dbs]
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
 
     def get_fft_data(self, scan=False):
         try:
-            from pylab import psd, plot, xlabel, ylabel, title, clf, savefig
-            [Y, F] = psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
+            import pylab as plt
+            [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')
-            if not scan: ####
-                max_freqs = self.find_max_freqs(Y, F, n=self.sensivity)  
-                plot(max_freqs[0], max_freqs[1], 
-                    color='#686868', 
-                    marker='o', 
-                    linestyle='None')
-            xlabel('Frequency (MHz)')
-            ylabel('Relative power (dB)')
-            savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
-            clf()
+            if scan: 
+                max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)  
+            plt.xlabel('Frequency (MHz)')
+            plt.ylabel('Relative power (dB)')
+            plt.savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
+            plt.clf()
             encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb").read())
             if not scan:
                 return encoded
