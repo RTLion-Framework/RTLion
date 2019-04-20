@@ -1,17 +1,17 @@
-$(document).ready(mainPage);
+$(document).ready(documentReady);
 
-var index_namespace = '/';
-var anim_speed = 600;
+var indexNamespace = '/';
+var animSpeed = 600;
 var socket;
 
 function fadeInAnim(){
-    $("#imgLogo").delay(50).animate({"opacity": "1"}, anim_speed);
-    $("#spnDesc").delay(500).animate({"opacity": "1"}, anim_speed);
-    $("#divFWActions").delay(800).animate({"opacity": "1"}, anim_speed);
-    $("#btnGithub").delay(1000).animate({"opacity": "1"}, anim_speed);
-    $("#btnInfo").delay(1000).animate({"opacity": "1"}, anim_speed);
+    $("#imgLogo").delay(50).animate({"opacity": "1"}, animSpeed);
+    $("#spnDesc").delay(500).animate({"opacity": "1"}, animSpeed);
+    $("#divFWActions").delay(800).animate({"opacity": "1"}, animSpeed);
+    $("#btnGithub").delay(1000).animate({"opacity": "1"}, animSpeed);
+    $("#btnInfo").delay(1000).animate({"opacity": "1"}, animSpeed);
 }
-function pageInit(){
+function initializePage(){
     fadeInAnim();
     $("#btnFFTGraph").click(btnFFTGraph_click);
     $("#btnFreqScan").click(btnFreqScan_click);
@@ -33,21 +33,20 @@ function btnExitFW_click(){
         location.reload();
     }, 2000);
 }
-function mainPage() {
-    pageInit();
+function documentReady() {
+    initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
-                 ':' + location.port + index_namespace);
+                 ':' + location.port + indexNamespace);
 
     socket.on('connect', function() {
         socket.emit('get_dev_status');
     });
     
     socket.on('dev_status', function(status) {
-        if(parseInt(status) == 0){
-            $("#spnDevStatus").text("[!] No RTL-SDR device found.");
-        }else if(parseInt(status) == 1) {
+        if(parseInt(status) == 1)
             $("#spnDevStatus").text("[+] RTL-SDR device found.");
-        }
+        else
+            $("#spnDevStatus").text("[!] No RTL-SDR device found.");
         $("#spnDevStatus").delay(800).animate({"opacity": "1"}, 700);
     });
 }
