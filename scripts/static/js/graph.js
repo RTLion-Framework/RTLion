@@ -1,10 +1,10 @@
 $(document).ready(graphSocket);
 
-var graph_namespace = '/graph';
-var ping_pong_times = [];
-var graph_active = true;
-var start_time;
-var read_count;
+var graphNamespace = '/graph';
+var pingPongTimes = [];
+var graphActive = true;
+var startTime;
+var readCount;
 var socket;
 
 function pageInit(){
@@ -22,7 +22,7 @@ function pageInit(){
     $('#rngFreqRange').attr('step', Math.pow(10, 6)/5); 
 }
 function formCreateGraph_submit(event){
-    if (graph_active){
+    if (graphActive){
         socket.emit('start_sdr');
     }else{
         socket.emit('stop_sdr');
@@ -80,14 +80,14 @@ function checkArgs(args){
     return true;
 }
 function on_log_message(msg){
-    current_time = new Date().toLocaleTimeString().split(' ')[0];
-    $('#divLog').append("<b>[" + current_time + "]</b> " + msg + "<br>");
+    var currentTime = new Date().toLocaleTimeString().split(' ')[0];
+    $('#divLog').append("<b>[" + currentTime + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
 function graphSocket() {
     pageInit();
     socket = io.connect(location.protocol + '//' + document.domain + 
-                 ':' + location.port + graph_namespace);
+                 ':' + location.port + graphNamespace);
 
     socket.on('connect', function() {
         socket.emit('send_cli_args');
@@ -101,14 +101,14 @@ function graphSocket() {
         if(parseInt(status) == 0){
             $('#formSaveSettings :input').prop('disabled', false);
             $('#formDisconnect :input').prop('disabled', false);
-            graph_active = true;
+            graphActive = true;
             $('#btnCreateGraph').val("Create FFT graph");            
         }else if(parseInt(status) == 1) {
             $('#formSaveSettings :input').prop('disabled', true);
             $('#formDisconnect :input').prop('disabled', true);
-            graph_active = false;
+            graphActive = false;
             $('#btnCreateGraph').val("Stop");
-            read_count = 0;
+            readCount = 0;
             $('#rngFreqRange').attr('max', parseInt($('#inpCenterFreq').val())+20*(Math.pow(10, 6)));
             $('#rngFreqRange').attr('min', parseInt($('#inpCenterFreq').val())-20*(Math.pow(10, 6)));
             $('#rngFreqRange').val(parseInt($('#inpCenterFreq').val()));
@@ -123,13 +123,13 @@ function graphSocket() {
 
     socket.on('fft_data', function(msg) {
         $('#imgFFTGraph').attr("src", "data:image/png;base64," + msg.data);
-        read_count++;
+        readCount++;
         if($('#inpNumRead').val() == "-1"){
-            $('#spnReads').text('(' + read_count + '/∞)');
+            $('#spnReads').text('(' + readCount + '/∞)');
         }else{
-            var percentage = parseInt((read_count * 100) / parseInt($('#inpNumRead').val()));
-            $('#spnReads').text('('+ read_count+ '/' + $('#inpNumRead').val() + ') [%' + percentage + "]");
-            if(read_count == parseInt($('#inpNumRead').val()))
+            var percentage = parseInt((readCount * 100) / parseInt($('#inpNumRead').val()));
+            $('#spnReads').text('('+ readCount+ '/' + $('#inpNumRead').val() + ') [%' + percentage + "]");
+            if(readCount == parseInt($('#inpNumRead').val()))
                 $('#btnCreateGraph').click();
         }
         if(!$('#colFFTGraph').is(':visible')){
@@ -150,7 +150,7 @@ function graphSocket() {
         $("#inpCenterFreq").val(args.freq);
         $("#inpNumRead").val(args.n);
         $("#inpInterval").val(args.i);
-        read_count = args.n;
+        readCount = args.n;
         if (cliargs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {
@@ -160,17 +160,17 @@ function graphSocket() {
     });
 
     socket.on('server_pong', function() {
-        var latency = (new Date).getTime() - start_time;
-        ping_pong_times.push(latency);
-        ping_pong_times = ping_pong_times.slice(-30);11
+        var latency = (new Date).getTime() - startTime;
+        pingPongTimes.push(latency);
+        pingPongTimes = pingPongTimes.slice(-30);
         var sum = 0;
-        for (var i = 0; i < ping_pong_times.length; i++)
-            sum += ping_pong_times[i];
-        $('#spnPingPong').text(Math.round(10 * sum / ping_pong_times.length) / 10 + "ms");
+        for (var i = 0; i < pingPongTimes.length; i++)
+            sum += pingPongTimes[i];
+        $('#spnPingPong').text(Math.round(10 * sum / pingPongTimes.length) / 10 + "ms");
     });
     
     window.setInterval(function() {
-        start_time = (new Date).getTime();
+        startTime = (new Date).getTime();
         socket.emit('server_ping');
     }, 1000);
 }
