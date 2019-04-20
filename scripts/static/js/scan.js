@@ -1,4 +1,4 @@
-$(document).ready(scannerSocket);
+$(document).ready(documentReady);
 
 var scanNamespace = '/graph';
 var pingPongTimes = [];
@@ -17,7 +17,7 @@ var currentRead;
 var maxRead;
 var socket;
 
-function pageInit(){
+function initializePage(){
     $('#colScanner').hide();
     $('form#formStartScan').submit(formStartScan_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
@@ -49,7 +49,7 @@ function formStartScan_submit(event){
 }
 function formDisconnect_submit(event){
     socket.emit('disconnect_request');
-    on_log_message("Disconnecting...")
+    appendLog("Disconnecting...")
     setTimeout(function() {
         location.reload();
     }, 2000);
@@ -64,11 +64,10 @@ function formSaveSettings_change(){
         'n': numRead,
         'i': interval
     };
-    if(checkArgs(args)){
+    if(checkArgs(args))
         socket.emit('update_settings', args);
-    }else{
+    else
         socket.emit('send_cli_args');
-    }
 }
 function rngScanSensivity_input(){
     $('#spnSensivity').text("Sensivity (" + $('#rngScanSensivity').val() + ")");
@@ -93,7 +92,7 @@ function setRange(freq){
 function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 || 
     args['gain'] < 0  || args['i'] < 0 || !checkRange()){
-        on_log_message("Invalid settings detected.");
+        appendLog("Invalid settings detected.");
         $('#spnSettingsLog').text('Invalid settings detected.');
         setTimeout(function() {
             $('#spnSettingsLog').text('');
@@ -104,12 +103,12 @@ function checkArgs(args){
     $('#btnStartScan').prop("disabled", false);
     return true;
 }
-function on_log_message(msg){
-    current_time = new Date().toLocaleTimeString().split(' ')[0];
-    $('#divLog').append("<b>[" + current_time + "]</b> " + msg + "<br>");
+function appendLog(msg){
+    var currentTime = new Date().toLocaleTimeString().split(' ')[0];
+    $('#divLog').append("<b>[" + currentTime + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
-function on_freq_received(freqs, dbs){
+function processRange(freqs, dbs){
     for (var i = 0; i < freqs.length; i++){
         var freq = freqs[i].toFixed(1);
         var db = dbs[i].toFixed(2);
@@ -120,7 +119,7 @@ function on_freq_received(freqs, dbs){
         }
     }
 }
-function update_progress(){
+function updateProgress(){
     if(currentRead < maxRead){
         var percentage = parseInt((currentRead * 100) / maxRead);
         currentRead++;
@@ -129,20 +128,20 @@ function update_progress(){
         $('#lgScanResults').text('Scan Results [%100]');
     }
 }
-function calc_threshold(){
-    var db_sum = 0;
+function calcThreshold(){
+    var dbSum = 0;
     for(var i = 0; i < dbRes.length; i++){
-        db_sum += parseInt(dbRes[i]);
+        dbSum += parseInt(dbRes[i]);
     }
-    var db_avg = db_sum/dbRes.length;
+    var dbAvg = dbSum/dbRes.length;
     $('#divScanResults').text("");
     for (var i = 0; i < freqRes.length; i++){
-        if(Math.abs(dbRes[i]) > Math.abs(db_avg/2))
+        if(Math.abs(dbRes[i]) > Math.abs(dbAvg/2))
             $('#divScanResults').append(freqRes[i] + "<br>");
     }
 }
-function scannerSocket(){
-    pageInit();
+function documentReady(){
+    initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
                  ':' + location.port + scanNamespace);
 
@@ -151,7 +150,7 @@ function scannerSocket(){
     });
 
     socket.on('log_message', function(log) {
-        on_log_message(log.msg);   
+        appendLog(log.msg);   
     });
 
     socket.on('dev_status', function(status) {
@@ -172,8 +171,8 @@ function scannerSocket(){
 
     socket.on('graph_data', function(data) {
         $('#imgFreqScan').attr("src", "data:image/png;base64," + data.fft);
-        on_freq_received(data.freqs, data.dbs);
-        update_progress();
+        processRange(data.freqs, data.dbs);
+        updateProgress();
         if(!$('#colScanner').is(':visible'))
             $('#colScanner').show();
         currentFreq += stepSize;
@@ -181,7 +180,7 @@ function scannerSocket(){
             socket.emit('restart_sdr', currentFreq);
         }else{
             socket.emit('stop_sdr');
-            calc_threshold();
+            calcThreshold();
         }
     });
 
@@ -189,8 +188,8 @@ function scannerSocket(){
         socket.emit('start_sdr', -1);
     });
 
-    socket.on('cli_args', function(cliargs) {
-        var args = cliargs.args;
+    socket.on('cli_args', function(cliArgs) {
+        var args = cliArgs.args;
         for (var i in args){
             if (i != 'freq')
                 args[i] = args[i] || 0;
@@ -201,7 +200,7 @@ function scannerSocket(){
         interval = args.i;
         centerFreq = args.freq;
         numRead = args.n;
-        if (cliargs.status == 1){
+        if (cliArgs.status == 1){
             $('#spnSettingsLog').text('Settings saved.');
             setTimeout(function() {
                 $('#spnSettingsLog').text('');
