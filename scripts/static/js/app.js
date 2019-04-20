@@ -1,21 +1,21 @@
-$(document).ready(appPageInit);
+$(document).ready(documentReady);
 
-var app_namespace = '/app';
-var socket;
+var appNamespace = '/app';
 var args;
 var clientJS;
 var clientInfo;
+var socket;
 
-function appPageInit(){
+function documentReady(){
     socket = io.connect(location.protocol + '//' + document.domain + 
-                 ':' + location.port + app_namespace);
+                 ':' + location.port + appNamespace);
     
     socket.on('connect', function() {
         socket.emit('send_cli_args');
     });
 
-    socket.on('cli_args', function(cliargs) {
-        args = cliargs.args;
+    socket.on('cli_args', function(cliArgs) {
+        args = cliArgs.args;
         for (var i in args){
             if (i != 'freq')
                 args[i] = args[i] || 0;
