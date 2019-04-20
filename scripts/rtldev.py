@@ -88,7 +88,7 @@ class RTLSdr:
                 db = 10 * math.log10(y_val)
                 freqs.append(freq)
                 dbs.append(db)
-                plt.plot(freq, db, color='#686868', marker='o', linestyle='None')
+                plt.plot(freq, db, color='#2F2E2E', marker='o', linestyle='None')
             return [freqs, dbs]
         except:
             self.logcl.log("Failed to find peaks on graph.\n" + str(e), 'error')
