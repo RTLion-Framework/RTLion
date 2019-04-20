@@ -11,6 +11,7 @@ class RTLSdr:
     def __init__(self, **args):
         self.logcl = LogCL()
         self.import_rtlsdr()
+        self.import_pylab()
         self.set_static_dir()
         self.set_args(args)
         self.dev = None
@@ -41,6 +42,15 @@ class RTLSdr:
             from rtlsdr import RtlSdr
         except:
             self.logcl.log("rtlsdr module not found.", "error")
+            sys.exit()
+    
+    def import_pylab(self):
+        try:
+            global plt, np
+            import pylab as plt
+            import numpy as np
+        except:
+            self.logcl.log("(pylab || numpy) module not found.", "error")
             sys.exit()
 
     def init_device(self, init_dev=True, show_log=True):
@@ -79,7 +89,6 @@ class RTLSdr:
             
     def find_max_freqs(self, plt, Y, F, n):
         try:
-            import numpy as np
             Y_sorted = Y[np.argsort(Y)[-n:]]
             freqs = []
             dbs = []
@@ -95,7 +104,6 @@ class RTLSdr:
 
     def get_fft_data(self, scan=False):
         try:
-            import pylab as plt
             [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')
             if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)  
