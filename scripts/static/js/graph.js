@@ -1,4 +1,4 @@
-$(document).ready(graphSocket);
+$(document).ready(documentReady);
 
 var graphNamespace = '/graph';
 var pingPongTimes = [];
@@ -7,7 +7,7 @@ var startTime;
 var readCount;
 var socket;
 
-function pageInit(){
+function initializePage(){
     $('#colFFTGraph').hide();
     $('form#formCreateGraph').submit(formCreateGraph_submit);
     $('form#formDisconnect').submit(formDisconnect_submit);
@@ -22,16 +22,15 @@ function pageInit(){
     $('#rngFreqRange').attr('step', Math.pow(10, 6)/5); 
 }
 function formCreateGraph_submit(event){
-    if (graphActive){
+    if (graphActive)
         socket.emit('start_sdr');
-    }else{
+    else
         socket.emit('stop_sdr');
-    }
     return false;
 }
 function formDisconnect_submit(event){
     socket.emit('disconnect_request');
-    on_log_message("Disconnecting...")
+    appendLog("Disconnecting...")
     setTimeout(function() {
         location.reload();
     }, 2000);
@@ -46,11 +45,10 @@ function formSaveSettings_change(){
         'n': parseInt($('#inpNumRead').val()),
         'i': parseInt($('#inpInterval').val())
     };
-    if(checkArgs(args)){
+    if(checkArgs(args))
         socket.emit('update_settings', args);
-    }else{
+    else
         socket.emit('send_cli_args');
-    }
 }
 function rngFreqRange_change(){
     socket.emit('restart_sdr', $('#rngFreqRange').val());
@@ -68,7 +66,7 @@ function checkArgs(args){
     if (args['dev'] < 0 || args['dev'] > 20 || args['samprate'] < 0 ||
      args['gain'] < 0 || args['freq'] <= 0 || args['freq'] == "" || 
      isNaN(args['freq']) || args['freq'] == null || args['i'] < 0 || args['n'] < -1){
-        on_log_message("Invalid settings detected.");
+        appendLog("Invalid settings detected.");
         $('#spnSettingsLog').text('Invalid settings detected.');
         setTimeout(function() {
             $('#spnSettingsLog').text('');
@@ -79,22 +77,23 @@ function checkArgs(args){
     $('#btnCreateGraph').prop("disabled", false);
     return true;
 }
-function on_log_message(msg){
+function appendLog(msg){
     var currentTime = new Date().toLocaleTimeString().split(' ')[0];
     $('#divLog').append("<b>[" + currentTime + "]</b> " + msg + "<br>");
     $('#divLog').scrollTop($('#divLog').height());
 }
-function graphSocket() {
-    pageInit();
+
+function documentReady() {
+    initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
                  ':' + location.port + graphNamespace);
-
+    
     socket.on('connect', function() {
         socket.emit('send_cli_args');
     });
 
     socket.on('log_message', function(log) {
-        on_log_message(log.msg);   
+        appendLog(log.msg);   
     });
 
     socket.on('dev_status', function(status) {
