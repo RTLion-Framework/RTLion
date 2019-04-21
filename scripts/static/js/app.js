@@ -49,7 +49,7 @@ function setCliArgs(newArgs){
     try {
         newArgs = JSON.parse(newArgs);
         if(checkArgs(newArgs)){
-            socket.emit('update_settings', newArgs);
+            socket.emit('update_app_settings', newArgs);
             socket.emit('send_app_args');
         }    
     } catch (error){

@@ -64,7 +64,7 @@ class FlaskServer:
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.server_ping)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_app_args', namespace=self.app_namespace)(self.send_app_args))
-            self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
+            self.socketio.on('update_app_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             self.socketio.on('get_scanned_values', namespace=self.app_namespace)(self.get_scanned_values)
             self.flask_server.route(self.scan_namespace, methods=['GET', 'POST'])(page_scan)
