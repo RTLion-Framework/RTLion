@@ -61,7 +61,7 @@ class FlaskServer:
             self.socketio.on('start_scan', namespace=self.graph_namespace)(self.start_scan)
             self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_cli_args)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
-            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
+            self.socketio.on('server_ping', namespace=self.graph_namespace)(self.server_ping)
             self.flask_server.route(self.app_namespace)(page_app)
             self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
@@ -103,9 +103,8 @@ class FlaskServer:
         self.logcl.log("Stopping server...")
         self.socketio.stop()
 
-    def ping_pong(self): 
+    def server_ping(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
-        self.socketio.emit('server_pong', namespace=self.scan_namespace)
 
     def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
