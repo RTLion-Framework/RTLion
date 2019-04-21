@@ -4,24 +4,15 @@
 import sys
 import json
 from logcl import LogCL
+from rtlns import RTLNs
 
 class FlaskServer:
     def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):
         self.logcl = LogCL()
         self.rtl_sdr = rtl_sdr
         self.server_addr = server_addr
-        self.index_namespace = '/'
-        self.graph_namespace = '/graph'
-        self.app_namespace = '/app'
-        self.scan_namespace = '/scan'
-        self.routes = (
-            self.index_namespace, 
-            self.graph_namespace,
-            self.app_namespace,
-            self.scan_namespace
-        )
         self.import_flask()
-        self.initialize_flask()
+        self.initialize_flask1()
 
     def import_flask(self):
         try:
@@ -31,6 +22,28 @@ class FlaskServer:
             from flask_socketio import SocketIO, emit
         except Exception as e:
             self.logcl.log("Flask & SocketIO not found.\n" + str(e), 'error')
+            sys.exit()
+
+    def initialize_flask1(self):
+        self.routes = RTLNs(None, None, self.logcl).get_routes()
+        self.logcl.log("Initializing Flask server with routes: " + str(self.routes))
+        try:
+            self.flask_server = Flask(__name__)
+            self.socketio = SocketIO(self.flask_server, async_mode=None)
+            self.rtlNs = RTLNs(self.socketio, self.rtl_sdr, self.logcl)
+            @self.flask_server.route(self.routes[0], methods=['GET', 'POST'])
+            def index_page(): return render_template('index.html', 
+                async_mode=self.socketio.async_mode)
+            self.rtlNs.add_namespace(0, 
+                ('get_dev_status',
+                'disconnect_request'))
+            
+            
+
+
+
+        except Exception as e:
+            self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
 
     def initialize_flask(self):
@@ -78,23 +91,11 @@ class FlaskServer:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
 
-    def get_dev_status(self):
-        if not self.rtl_sdr.dev_open:
-            if(self.rtl_sdr.init_device(init_dev=False, show_log=False)):
-                self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
-            else:
-                self.socketio.emit('dev_status', 0, namespace=self.index_namespace)
-        else:
-            self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
+    
 
     def connect(self):
         self.socket_log("RTLion started.")
-        
-    def disconnect_request(self):
-        if self.rtl_sdr.dev_open:
-            self.rtl_sdr.close(True)
-        self.logcl.log("Stopping server...")
-        self.socketio.stop()
+
 
     def server_ping(self): 
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
