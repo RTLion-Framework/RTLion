@@ -9,7 +9,9 @@ def main():
     print_start_msg()
     cli_args = parse_cli_args()
     rtl_sdr = RTLSdr(**cli_args)
-    flask_server = FlaskServer(rtl_sdr, cli_args['host:port'].split(':'))
+    flask_server = FlaskServer(
+        rtl_sdr, 
+        cli_args['host:port'].split(':'))
     flask_server.run()
 
 if __name__ == "__main__":
