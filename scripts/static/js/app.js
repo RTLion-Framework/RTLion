@@ -11,7 +11,7 @@ function documentReady(){
                  ':' + location.port + appNamespace);
     
     socket.on('connect', function() {
-        socket.emit('send_cli_args');
+        socket.emit('send_app_args');
     });
 
     socket.on('cli_args', function(cliArgs) {
@@ -35,7 +35,7 @@ function getClientInfo(){
     return JSON.stringify(clientInfo, null, 2);
 }
 function getCliArgs(){
-    socket.emit('send_cli_args');
+    socket.emit('send_app_args');
     return JSON.stringify(args);
 }
 function checkArgs(args){
@@ -50,7 +50,7 @@ function setCliArgs(newArgs){
         newArgs = JSON.parse(newArgs);
         if(checkArgs(newArgs)){
             socket.emit('update_settings', newArgs);
-            socket.emit('send_cli_args');
+            socket.emit('send_app_args');
         }    
     } catch (error){
         console.log(error);

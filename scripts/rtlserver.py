@@ -63,7 +63,7 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.server_ping)
             self.flask_server.route(self.app_namespace)(page_app)
-            self.socketio.on('send_cli_args', namespace=self.app_namespace)(self.send_args_app)
+            self.socketio.on('send_app_args', namespace=self.app_namespace)(self.send_app_args))
             self.socketio.on('update_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             self.socketio.on('get_scanned_values', namespace=self.app_namespace)(self.get_scanned_values)
@@ -152,7 +152,7 @@ class FlaskServer:
                 {'args': self.rtl_sdr.args, 'status': status}, 
                 namespace=self.graph_namespace)
             
-    def send_args_app(self):
+    def send_app_args(self):
         self.socketio.emit(
             'cli_args', 
             {'args': self.rtl_sdr.args}, 
@@ -173,7 +173,7 @@ class FlaskServer:
             if self.rtl_sdr.dev_open:
                 self.rtl_sdr.close()
                 self.rtl_sdr.init_device(show_log=False)
-            self.send_args_app()
+            self.send_app_args()
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
