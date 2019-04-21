@@ -50,6 +50,10 @@ class FlaskServer:
                 'send_cli_args',
                 'update_settings',
                 'server_ping'))
+            @self.flask_server.route(self.routes[2], methods=['GET', 'POST'])
+            def scan_page(): return render_template('scan.html', 
+                async_mode=self.socketio.async_mode)
+            
 
 
         except Exception as e:

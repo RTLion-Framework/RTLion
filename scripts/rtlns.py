@@ -16,8 +16,8 @@ class RTLNs:
         self.routes = (
             self.index_namespace, 
             self.graph_namespace,
-            self.app_namespace,
-            self.scan_namespace
+            self.scan_namespace,
+            self.app_namespace
         )
 
     def get_routes(self):
