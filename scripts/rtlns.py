@@ -191,4 +191,4 @@ class RTLNs:
     def get_scanned_values(self, sensivity):
         self.get_dev_status()
         self.rtl_sdr.sensivity = int(sensivity)
-        self.send_data_thread(ns=2, parse_json=True)
+        self.send_data_thread(ns=3, parse_json=True)
