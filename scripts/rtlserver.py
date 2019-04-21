@@ -53,8 +53,14 @@ class FlaskServer:
             @self.flask_server.route(self.routes[2], methods=['GET', 'POST'])
             def scan_page(): return render_template('scan.html', 
                 async_mode=self.socketio.async_mode)
-            
-
+            @self.flask_server.route(self.routes[3], methods=['GET', 'POST'])
+            def app_page(): return render_template('app.html', 
+                async_mode=self.socketio.async_mode)
+            self.rtlNs.add_namespace(3, 
+                ('send_app_args',
+                'update_app_settings',
+                'get_fft_graph',
+                'get_scanned_values'))
 
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
@@ -100,37 +106,8 @@ class FlaskServer:
                 host=self.server_addr[0], 
                 port=int(self.server_addr[1]))
         except KeyboardInterrupt:
-            self.disconnect_request()
+            RTLNs(self.socketio, self.rtl_sdr, self.logcl).disconnect_request()
         except Exception as e:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
-            
-    def send_app_args(self):
-        self.socketio.emit(
-            'cli_args', 
-            {'args': self.rtl_sdr.args}, 
-            namespace=self.app_namespace)
-
-
-    def update_app_settings(self, args):
-        try:
-            self.rtl_sdr.set_args(args)
-            if self.rtl_sdr.dev_open:
-                self.rtl_sdr.close()
-                self.rtl_sdr.init_device(show_log=False)
-            self.send_app_args()
-        except:
-            self.logcl.log("Failed to update settings.", 'error')
-
-    def get_fft_graph(self):
-        self.get_dev_status()
-        self.socketio.emit(
-            'fft_data', 
-            {'data': self.rtl_sdr.get_fft_data()}, 
-            namespace=self.app_namespace)
-
-    def get_scanned_values(self, sensivity):
-        self.get_dev_status()
-        self.rtl_sdr.sensivity = int(sensivity)
-        self.send_data_thread(ns=2, parse_json=True)
-    
+                

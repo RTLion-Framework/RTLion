@@ -37,10 +37,13 @@ class RTLNs:
             self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
 
     def disconnect_request(self):
-        if self.rtl_sdr.dev_open:
-            self.rtl_sdr.close(True)
         self.logcl.log("Stopping server...")
-        self.socketio.stop()
+        try:
+            if self.rtl_sdr.dev_open:
+                self.rtl_sdr.close(True)
+            self.socketio.stop()
+        except:
+            self.logcl.log("Unable to stop server || close RTL-SDR device", 'error')
 
     def connect(self):
         self.socket_log("RTLion started.")
@@ -161,3 +164,31 @@ class RTLNs:
     def socket_log(self, msg):
         self.socketio.emit('log_message', {'msg': msg}, 
             namespace=self.graph_namespace)
+
+    def send_app_args(self):
+        self.socketio.emit(
+            'cli_args', 
+            {'args': self.rtl_sdr.args}, 
+            namespace=self.app_namespace)
+
+    def update_app_settings(self, args):
+        try:
+            self.rtl_sdr.set_args(args)
+            if self.rtl_sdr.dev_open:
+                self.rtl_sdr.close()
+                self.rtl_sdr.init_device(show_log=False)
+            self.send_app_args()
+        except:
+            self.logcl.log("Failed to update settings.", 'error')
+
+    def get_fft_graph(self):
+        self.get_dev_status()
+        self.socketio.emit(
+            'fft_data', 
+            {'data': self.rtl_sdr.get_fft_data()}, 
+            namespace=self.app_namespace)
+
+    def get_scanned_values(self, sensivity):
+        self.get_dev_status()
+        self.rtl_sdr.sensivity = int(sensivity)
+        self.send_data_thread(ns=2, parse_json=True)
