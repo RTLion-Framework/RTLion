@@ -48,7 +48,8 @@ class RTLSocket:
 
     def add_namespace(self, ns, methods):
         for method in methods:
-             self.socketio.on(method, namespace=self.routes[ns])(getattr(self, method))
+             self.socketio.on(method, namespace=self.routes[ns])(
+                 getattr(self, method))
 
     def get_dev_status(self):
         if not self.rtl_sdr.dev_open:
@@ -66,7 +67,8 @@ class RTLSocket:
                 self.rtl_sdr.close(True)
             self.socketio.stop()
         except:
-            self.logcl.log("Unable to stop server || close RTL-SDR device", 'error')
+            self.logcl.log("Unable to stop server || close RTL-SDR device", 
+                'error')
 
     def connect(self):
         self.logcl.slog("RTLion started.")
@@ -74,10 +76,12 @@ class RTLSocket:
     def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
             if(self.rtl_sdr.init_device()):
-                self.logcl.slog("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.logcl.slog("RTL-SDR device opened. [#" + \
+                str(self.rtl_sdr.dev_id) + "]")
                 self.create_fft_graph(freq)
             else:
-                self.logcl.slog("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.logcl.slog("Failed to open RTL-SDR device. [#" + \
+                    str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
             self.create_fft_graph(freq)
@@ -211,4 +215,3 @@ class RTLSocket:
         self.get_dev_status()
         self.rtl_sdr.sensivity = int(sensivity)
         self.send_data_thread(ns=3, parse_json=True)
-        
