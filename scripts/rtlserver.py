@@ -59,7 +59,7 @@ class FlaskServer:
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
             self.socketio.on('start_scan', namespace=self.graph_namespace)(self.start_scan)
-            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_args)
+            self.socketio.on('send_cli_args', namespace=self.graph_namespace)(self.send_cli_args)
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.ping_pong)
             self.flask_server.route(self.app_namespace)(page_app)
@@ -147,7 +147,7 @@ class FlaskServer:
         self.rtl_sdr.center_freq = int(freq)
         self.start_sdr(freq=-1)
 
-    def send_args(self, status=0):
+    def send_cli_args(self, status=0):
         self.socketio.emit(
                 'cli_args', 
                 {'args': self.rtl_sdr.args, 'status': status}, 
@@ -162,7 +162,7 @@ class FlaskServer:
     def update_settings(self, args):
         try:
             self.rtl_sdr.set_args(args)
-            self.send_args(status=1)
+            self.send_cli_args(status=1)
             self.logcl.log("Settings/arguments updated.")
             self.socket_log("Settings/arguments updated.")
         except:
