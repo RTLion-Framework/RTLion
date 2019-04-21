@@ -50,7 +50,7 @@ class FlaskServer:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace,  methods=['GET', 'POST'])(page_index)
-            self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.dev_status)
+            self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.get_dev_status)
             self.socketio.on('disconnect_request', namespace=self.index_namespace)(self.socketio_on_disconnect)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
             self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
@@ -85,7 +85,7 @@ class FlaskServer:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
 
-    def dev_status(self):
+    def get_dev_status(self):
         if not self.rtl_sdr.dev_open:
             if(self.rtl_sdr.init_device(init_dev=False, show_log=False)):
                 self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
@@ -179,14 +179,14 @@ class FlaskServer:
             self.logcl.log("Failed to update settings.", 'error')
 
     def get_fft_graph(self):
-        self.dev_status()
+        self.get_dev_status()
         self.socketio.emit(
             'fft_data', 
             {'data': self.rtl_sdr.get_fft_data()}, 
             namespace=self.app_namespace)
 
     def get_scanned_values(self, sensivity):
-        self.dev_status()
+        self.get_dev_status()
         self.rtl_sdr.sensivity = int(sensivity)
         self.send_data_thread(ns=2, parse_json=True)
     
