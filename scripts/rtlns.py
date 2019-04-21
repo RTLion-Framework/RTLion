@@ -19,9 +19,28 @@ class RTLNs:
             self.scan_namespace,
             self.app_namespace
         )
-
+    
     def get_routes(self):
         return self.routes
+    
+    def page_(self): 
+        return self.render_template('index.html', 
+            async_mode=self.socketio.async_mode)
+
+    def page_graph(self): return self.render_template('graph.html', 
+            async_mode=self.socketio.async_mode)
+
+    def page_scan(self): return self.render_template('scan.html', 
+            async_mode=self.socketio.async_mode)
+
+    def page_app(self): return self.render_template('app.html', 
+            async_mode=self.socketio.async_mode)
+
+    def add_templates(self, flask_server, render_template):
+        self.render_template = render_template
+        for route in self.routes: 
+            flask_server.route(route, methods=['GET', 'POST'])(getattr(self, 
+                "page_" + route.replace("/", "")))
 
     def add_namespace(self, ns, methods):
         for method in methods:
