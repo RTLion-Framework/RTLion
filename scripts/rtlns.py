@@ -17,8 +17,9 @@ class RTLNs:
             self.index_namespace, 
             self.graph_namespace,
             self.scan_namespace,
-            self.app_namespace
-        )
+            self.app_namespace)
+        self.logcl.socket = self.socketio
+        self.logcl.sock_ns = self.graph_namespace
     
     def get_routes(self):
         return self.routes
@@ -65,15 +66,15 @@ class RTLNs:
             self.logcl.log("Unable to stop server || close RTL-SDR device", 'error')
 
     def connect(self):
-        self.socket_log("RTLion started.")
+        self.logcl.slog("RTLion started.")
 
     def start_sdr(self, freq=None):
         if not self.rtl_sdr.dev_open:
             if(self.rtl_sdr.init_device()):
-                self.socket_log("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.logcl.slog("RTL-SDR device opened. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.create_fft_graph(freq)
             else:
-                self.socket_log("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
+                self.logcl.slog("Failed to open RTL-SDR device. [#" + str(self.rtl_sdr.dev_id) + "]")
                 self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
         else:
             self.create_fft_graph(freq)
@@ -81,7 +82,7 @@ class RTLNs:
     def stop_sdr(self):
         try:
             self.logcl.log("Stop reading samples from RTL-SDR.")
-            self.socket_log("Stop reading samples from RTL-SDR.")
+            self.logcl.slog("Stop reading samples from RTL-SDR.")
             self.socketio.emit('dev_status', 0, namespace=self.graph_namespace)
             self.c_read = False
             self.n_read = 0
@@ -118,7 +119,7 @@ class RTLNs:
             self.rtl_sdr.set_args(args)
             self.send_cli_args(status=1)
             self.logcl.log("Settings/arguments updated.")
-            self.socket_log("Settings/arguments updated.")
+            self.logcl.slog("Settings/arguments updated.")
         except:
             self.logcl.log("Failed to update settings.", 'error')
 
@@ -130,7 +131,7 @@ class RTLNs:
         self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
-            self.socket_log("Creating FFT graph from samples...")
+            self.logcl.slog("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
             self.logcl.log("Getting graph data with interval " + 
             str(self.interval) + " (" + str(self.n_read) + "x)")
@@ -179,10 +180,6 @@ class RTLNs:
                     'graph_data', 
                     None,
                     namespace=self.routes[ns])
-
-    def socket_log(self, msg):
-        self.socketio.emit('log_message', {'msg': msg}, 
-            namespace=self.graph_namespace)
 
     def send_app_args(self):
         self.socketio.emit(

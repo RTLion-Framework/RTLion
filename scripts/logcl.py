@@ -14,6 +14,8 @@ class LogCL:
         self.attr_gray = "\x1b[21m\x1b[90m"
         self.attr_gray_off = "\x1b[97m" + self.bold_attr 
         self.all_attr_off = '\x1b[0m'
+        self.socket = None
+        self.sock_ns = None
         
     def log(self, msg, level='info'):
         content = self.bold_attr + \
@@ -21,3 +23,7 @@ class LogCL:
         self.levels[level][1] + self.levels[level][0] + \
         self.all_attr_off + " " + msg
         print(content)
+
+    def slog(self, msg):
+        self.socket.emit('log_message', {'msg': msg}, 
+            namespace=self.sock_ns)
