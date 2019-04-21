@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import json
 from logcl import LogCL
 from rtlsocket import RTLSocket
 
