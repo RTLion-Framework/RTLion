@@ -4,7 +4,7 @@
 import sys
 import json
 
-class RTLNs:
+class RTLSocket:
     def __init__(self, socketio, rtl_sdr, logcl):
         self.socketio = socketio
         self.rtl_sdr = rtl_sdr

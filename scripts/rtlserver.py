@@ -4,7 +4,7 @@
 import sys
 import json
 from logcl import LogCL
-from rtlns import RTLNs
+from rtlsocket import RTLSocket
 
 class FlaskServer:
     def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):
@@ -25,17 +25,17 @@ class FlaskServer:
             sys.exit()
 
     def initialize_flask(self):
-        self.routes = RTLNs(None, None, self.logcl).get_routes()
+        self.routes = RTLSocket(None, None, self.logcl).get_routes()
         self.logcl.log("Initializing Flask server with routes: " + str(self.routes))
         try:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            self.rtlNs = RTLNs(self.socketio, self.rtl_sdr, self.logcl)
-            self.rtlNs.add_templates(self.flask_server, render_template)
-            self.rtlNs.add_namespace(0, 
+            self.rtlSocket = RTLSocket(self.socketio, self.rtl_sdr, self.logcl)
+            self.rtlSocket.add_templates(self.flask_server, render_template)
+            self.rtlSocket.add_namespace(0, 
                 ('get_dev_status',
                 'disconnect_request'))
-            self.rtlNs.add_namespace(1, 
+            self.rtlSocket.add_namespace(1, 
                 ('connect',
                 'disconnect_request',
                 'start_sdr',
@@ -45,7 +45,7 @@ class FlaskServer:
                 'send_cli_args',
                 'update_settings',
                 'server_ping'))
-            self.rtlNs.add_namespace(3, 
+            self.rtlSocket.add_namespace(3, 
                 ('send_app_args',
                 'update_app_settings',
                 'get_fft_graph',
@@ -61,7 +61,7 @@ class FlaskServer:
                 host=self.server_addr[0], 
                 port=int(self.server_addr[1]))
         except KeyboardInterrupt:
-            RTLNs(self.socketio, self.rtl_sdr, self.logcl).disconnect_request()
+            RTLSocket(self.socketio, self.rtl_sdr, self.logcl).disconnect_request()
         except Exception as e:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
