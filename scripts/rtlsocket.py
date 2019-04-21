@@ -28,13 +28,16 @@ class RTLSocket:
         return self.render_template('index.html', 
             async_mode=self.socketio.async_mode)
 
-    def page_graph(self): return self.render_template('graph.html', 
+    def page_graph(self): 
+        return self.render_template('graph.html', 
             async_mode=self.socketio.async_mode)
 
-    def page_scan(self): return self.render_template('scan.html', 
+    def page_scan(self): 
+        return self.render_template('scan.html', 
             async_mode=self.socketio.async_mode)
 
-    def page_app(self): return self.render_template('app.html', 
+    def page_app(self): 
+        return self.render_template('app.html', 
             async_mode=self.socketio.async_mode)
 
     def add_templates(self, flask_server, render_template):
@@ -208,3 +211,4 @@ class RTLSocket:
         self.get_dev_status()
         self.rtl_sdr.sensivity = int(sensivity)
         self.send_data_thread(ns=3, parse_json=True)
+        

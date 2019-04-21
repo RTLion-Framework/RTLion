@@ -99,8 +99,8 @@ class RTLSdr:
                 dbs.append(db)
                 plt.plot(freq, db, 
                     color='k', 
-                    marker='o', 
-                    markersize=5, 
+                    marker='x', 
+                    markersize=6, 
                     linestyle='None')
             return [freqs, dbs]
         except:

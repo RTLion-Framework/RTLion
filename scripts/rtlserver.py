@@ -64,4 +64,3 @@ class FlaskServer:
         except Exception as e:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
-                
