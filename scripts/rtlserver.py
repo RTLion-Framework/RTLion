@@ -53,7 +53,7 @@ class FlaskServer:
             self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.get_dev_status)
             self.socketio.on('disconnect_request', namespace=self.index_namespace)(self.disconnect_request)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
-            self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
+            self.socketio.on('connect', namespace=self.graph_namespace)(self.connect)
             self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
@@ -63,7 +63,7 @@ class FlaskServer:
             self.socketio.on('update_settings', namespace=self.graph_namespace)(self.update_settings)
             self.socketio.on('server_ping', namespace=self.graph_namespace)(self.server_ping)
             self.flask_server.route(self.app_namespace)(page_app)
-            self.socketio.on('send_app_args', namespace=self.app_namespace)(self.send_app_args))
+            self.socketio.on('send_app_args', namespace=self.app_namespace)(self.send_app_args)
             self.socketio.on('update_app_settings', namespace=self.app_namespace)(self.update_app_settings)
             self.socketio.on('get_fft_graph', namespace=self.app_namespace)(self.get_fft_graph)
             self.socketio.on('get_scanned_values', namespace=self.app_namespace)(self.get_scanned_values)
@@ -94,7 +94,7 @@ class FlaskServer:
         else:
             self.socketio.emit('dev_status', 1, namespace=self.index_namespace)
 
-    def socketio_on_connect(self):
+    def connect(self):
         self.socket_log("RTLion started.")
         
     def disconnect_request(self):
