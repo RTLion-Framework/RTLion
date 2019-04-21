@@ -51,10 +51,10 @@ class FlaskServer:
             self.socketio = SocketIO(self.flask_server, async_mode=None)
             self.flask_server.route(self.index_namespace,  methods=['GET', 'POST'])(page_index)
             self.socketio.on('get_dev_status', namespace=self.index_namespace)(self.get_dev_status)
-            self.socketio.on('disconnect_request', namespace=self.index_namespace)(self.socketio_on_disconnect)
+            self.socketio.on('disconnect_request', namespace=self.index_namespace)(self.disconnect_request)
             self.flask_server.route(self.graph_namespace, methods=['GET', 'POST'])(page_graph)
             self.socketio.on('connect', namespace=self.graph_namespace)(self.socketio_on_connect)
-            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.socketio_on_disconnect)
+            self.socketio.on('disconnect_request', namespace=self.graph_namespace)(self.disconnect_request)
             self.socketio.on('start_sdr', namespace=self.graph_namespace)(self.start_sdr)
             self.socketio.on('stop_sdr', namespace=self.graph_namespace)(self.stop_sdr)
             self.socketio.on('restart_sdr', namespace=self.graph_namespace)(self.restart_sdr)
@@ -80,7 +80,7 @@ class FlaskServer:
                 host=self.server_addr[0], 
                 port=int(self.server_addr[1]))
         except KeyboardInterrupt:
-            self.socketio_on_disconnect()
+            self.disconnect_request()
         except Exception as e:
             self.logcl.log("Failed to run Flask server.\n" + str(e), 'fatal')
             sys.exit()
@@ -97,7 +97,7 @@ class FlaskServer:
     def socketio_on_connect(self):
         self.socket_log("RTLion started.")
         
-    def socketio_on_disconnect(self):
+    def disconnect_request(self):
         if self.rtl_sdr.dev_open:
             self.rtl_sdr.close(True)
         self.logcl.log("Stopping server...")
