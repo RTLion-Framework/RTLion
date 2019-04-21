@@ -33,13 +33,6 @@ class FlaskServer:
             self.logcl.log("Flask & SocketIO not found.\n" + str(e), 'error')
             sys.exit()
 
-    def add_route(self, rule, func):
-        try:
-            self.flask_server.add_url_rule(rule, func.__name__, func)
-        except Exception as e:
-            self.logcl.log("Failed to add URL rule.\n" + str(e), 'error')
-            sys.exit()
-
     def initialize_flask(self):
         self.logcl.log("Initializing Flask server with routes: " + str(self.routes))
         try:
