@@ -157,9 +157,9 @@ class RTLSocket:
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
-            'fft_data', 
-            {'data': fft_data},
-            namespace=self.graph_namespace)
+                'fft_data', 
+                {'data': fft_data},
+                namespace=self.graph_namespace)
             self.socketio.sleep(self.interval)
             self.n_read-=1
             if self.n_read == 0: break
