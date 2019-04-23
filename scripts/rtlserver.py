@@ -54,9 +54,8 @@ class FlaskServer:
             sys.exit()
             
     def run(self):
-        self.logcl.log("Running server: http://" + \
-            self.server_addr[0] + \
-            ":" + self.server_addr[1])
+        self.logcl.log("Running server: http://" +
+            self.server_addr[0] + ":" + self.server_addr[1])
         try:
             self.socketio.run(self.flask_server, 
                 host=self.server_addr[0], 
