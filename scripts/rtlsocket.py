@@ -142,8 +142,10 @@ class RTLSocket:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
             self.logcl.slog("Creating FFT graph from samples...")
             self.logcl.log("Creating FFT graph from samples...")
-            self.logcl.log("Getting graph data with interval " + 
-            str(self.interval) + " (" + str(self.n_read) + "x)")
+            fft_log_msg = "Getting graph data with interval " + str(self.interval)
+            if self.n_read != -1:
+                fft_log_msg += " (x" + str(self.n_read) + ")"
+            self.logcl.log(fft_log_msg)
         if freq_change != None and int(freq_change) == -1:
             self.socketio.emit('dev_status', 1, namespace=self.graph_namespace)
             self.socketio.start_background_task(self.send_data_thread)
