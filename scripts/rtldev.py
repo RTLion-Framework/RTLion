@@ -17,6 +17,7 @@ class RTLSdr:
         self.dev = None
         self.dev_open = False
         self.sensivity = 3
+        self.stop_func = None
 
     def set_static_dir(self):
         full_path = os.path.realpath(__file__)
@@ -73,7 +74,12 @@ class RTLSdr:
 
     def read_samples(self, n_read=512*512):
         try:
-            return self.dev.read_samples(n_read)
+            if not self.dev.device_opened:
+                if not self.stop_func == None:
+                    self.dev_open = False
+                    self.stop_func()
+            else:
+                return self.dev.read_samples(n_read)
         except Exception as e:
             self.logcl.log("Failed to read samples from RTL-SDR.\n" + str(e), 'error')
 

@@ -99,6 +99,7 @@ class RTLSocket:
 
     def restart_sdr(self, new_freq):
         try:
+            self.rtl_sdr.stop_func = None
             self.c_read = False
             self.n_read = 0
             self.rtl_sdr.close()
@@ -134,6 +135,7 @@ class RTLSocket:
         self.socketio.emit('server_pong', namespace=self.graph_namespace)
 
     def create_fft_graph(self, freq_change):
+        self.rtl_sdr.stop_func = self.stop_sdr
         self.n_read = self.rtl_sdr.num_read
         self.interval = int(self.rtl_sdr.interval) / 1000.0
         if freq_change == None:
