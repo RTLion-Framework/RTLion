@@ -151,9 +151,9 @@ class RTLSocket:
             self.socketio.start_background_task(self.send_data_thread)
         else:
             self.c_read = True
-            self.socketio.start_background_task(self.rtlsdr_thread)
+            self.socketio.start_background_task(self.send_cont_data_thread)
 
-    def rtlsdr_thread(self):
+    def send_cont_data_thread(self):
         while self.c_read:
             fft_data = self.rtl_sdr.get_fft_data()
             self.socketio.emit(
