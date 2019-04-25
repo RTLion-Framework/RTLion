@@ -2,6 +2,22 @@ body {
     margin:0;
     padding:0
 }
-.app-img {
+.container {
+    position: relative;
+    width: 100%;
+}
+.container img {
     width: 40%;
+}
+.container .btn {
+    position: absolute;
+    top: 75%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
