@@ -68,6 +68,16 @@
 .info-button:hover{
     color: #5a5a5a;
 }
+.android-button{
+    background: #fff;
+}
+.android-button:before{
+    font-family: "FontAwesome";
+    content: "\f17b";
+}
+.android-button:hover{
+    color: #5a5a5a;
+}
 .project-desc {
     font-family: "UbuntuMono-R";
     font-weight: bold;

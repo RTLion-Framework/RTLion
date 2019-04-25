@@ -17,3 +17,8 @@ body {
     top: 85%;
     left: 13%;
 }
+.container .android-col {
+    position: absolute;
+    top: 85%;
+    left: 16%;
+}

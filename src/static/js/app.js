@@ -10,6 +10,7 @@ var socket;
 function fadeInAnim(){
     $('#imgAppBg').delay(300).animate({"opacity": "1"}, animSpeed);
     $("#btnAppGithub").delay(700).animate({"opacity": "1"}, animSpeed);
+    $("#btnDownloadAPK").delay(700).animate({"opacity": "1"}, animSpeed);
 }
 function initializePage(){
     fadeInAnim();
