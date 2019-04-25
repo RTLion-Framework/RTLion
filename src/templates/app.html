@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" charset="utf-8"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.js') }}" charset="utf-8"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/client.min.js') }}" charset="utf-8"></script>
@@ -12,13 +13,8 @@
         <div class="container">
                 <img src="{{ url_for('static', filename='img/rtlion_app.png') }}">
                 <div class="github-column">
-                        <div class="anim-button" id="btnAppGithub">
-                                <span class="anim-button-mask"></span>
-                                <span class="anim-button-text">Android App</span>
-                                <span class="anim-button-text anim-button-text--bis">Android App</span>
-                        </div>
+                    <a class="github-button sm-button" href="https://github.com/RTLion-Framework/RTLion-app" id="btnAppGithub"></a>
                 </div>
-                
         </div> 
         
     </body>

@@ -4,9 +4,18 @@ var appNamespace = '/app';
 var args;
 var clientJS;
 var clientInfo;
+var animSpeed = 400;
 var socket;
 
+function fadeInAnim(){
+    $("#btnAppGithub").delay(1000).animate({"opacity": "1"}, animSpeed);
+}
+function initializePage(){
+    fadeInAnim();
+}
+
 function documentReady(){
+    initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
                  ':' + location.port + appNamespace);
     
