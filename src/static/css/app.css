@@ -12,7 +12,7 @@ body {
 .container img {
     width: 40%;
 }
-.container .github-column {
+.container .gh-col {
     position: absolute;
     top: 85%;
     left: 13%;
