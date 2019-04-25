@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
         <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" charset="utf-8"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.js') }}" charset="utf-8"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/client.min.js') }}" charset="utf-8"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}" charset="utf-8"></script>
     </head>
     <body>
-        <img src="{{ url_for('static', filename='img/rtlion_app.png') }}">
+        <img class="app-img" src="{{ url_for('static', filename='img/rtlion_app.png') }}">
     </body>
 </html>
