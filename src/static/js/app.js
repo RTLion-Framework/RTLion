@@ -4,11 +4,12 @@ var appNamespace = '/app';
 var args;
 var clientJS;
 var clientInfo;
-var animSpeed = 400;
+var animSpeed = 500;
 var socket;
 
 function fadeInAnim(){
-    $("#btnAppGithub").delay(300).animate({"opacity": "1"}, animSpeed);
+    $('#imgAppBg').delay(300).animate({"opacity": "1"}, animSpeed);
+    $("#btnAppGithub").delay(700).animate({"opacity": "1"}, animSpeed);
 }
 function initializePage(){
     fadeInAnim();

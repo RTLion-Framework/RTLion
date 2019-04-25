@@ -2,6 +2,9 @@ body {
     margin:0;
     padding:0
 }
+.app-img{
+    opacity: 0;   
+}
 .container {
     position: relative;
     width: 100%;
@@ -11,6 +14,6 @@ body {
 }
 .container .github-column {
     position: absolute;
-    top: 75%;
-    left: 25%;
+    top: 85%;
+    left: 13%;
 }
