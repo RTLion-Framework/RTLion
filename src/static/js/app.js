@@ -12,12 +12,8 @@ function fadeInAnim(){
     $("#btnAppGithub").delay(700).animate({"opacity": "1"}, animSpeed);
     $("#btnDownloadAPK").delay(700).animate({"opacity": "1"}, animSpeed);
 }
-function initializePage(){
-    fadeInAnim();
-}
-
 function documentReady(){
-    initializePage();
+    fadeInAnim();
     socket = io.connect(location.protocol + '//' + document.domain + 
                  ':' + location.port + appNamespace);
     

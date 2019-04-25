@@ -14,11 +14,11 @@ body {
 }
 .container .gh-col {
     position: absolute;
-    top: 85%;
-    left: 13%;
+    top: 1%;
+    left: 1%;
 }
 .container .android-col {
     position: absolute;
-    top: 85%;
-    left: 16%;
+    top: 1%;
+    left: 6%;
 }
