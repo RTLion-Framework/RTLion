@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-from logcl import LogCL
+from src.logcl import LogCL
 
 def print_start_msg():
     g_attr = LogCL().attr_gray

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from logcl import LogCL
-from rtlsocket import RTLSocket
+from src.logcl import LogCL
+from src.rtlsocket import RTLSocket
 
 class FlaskServer:
     def __init__(self, rtl_sdr, server_addr = ('0.0.0.0', 8081)):

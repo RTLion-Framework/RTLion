@@ -5,7 +5,7 @@ import sys
 import os
 import base64
 import math
-from logcl import LogCL
+from src.logcl import LogCL
 
 class RTLSdr:
     def __init__(self, **args):
