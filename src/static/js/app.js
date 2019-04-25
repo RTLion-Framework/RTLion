@@ -8,7 +8,7 @@ var animSpeed = 400;
 var socket;
 
 function fadeInAnim(){
-    $("#btnAppGithub").delay(1000).animate({"opacity": "1"}, animSpeed);
+    $("#btnAppGithub").delay(300).animate({"opacity": "1"}, animSpeed);
 }
 function initializePage(){
     fadeInAnim();
