@@ -40,6 +40,9 @@ class RTLSocket:
         return self.render_template('app.html', 
             async_mode=self.socketio.async_mode)
 
+    def page_404(self, e):
+        return self.render_template('404.html'), 404
+
     def add_templates(self, flask_server, render_template):
         self.render_template = render_template
         for route in self.routes: 

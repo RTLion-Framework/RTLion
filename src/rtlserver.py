@@ -29,12 +29,12 @@ class FlaskServer:
         try:
             self.flask_server = Flask(__name__)
             self.socketio = SocketIO(self.flask_server, async_mode=None)
-            self.rtlSocket = RTLSocket(self.socketio, self.rtl_sdr, self.logcl)
-            self.rtlSocket.add_templates(self.flask_server, render_template)
-            self.rtlSocket.add_namespace(0, 
+            self.rtl_socket = RTLSocket(self.socketio, self.rtl_sdr, self.logcl)
+            self.rtl_socket.add_templates(self.flask_server, render_template)
+            self.rtl_socket.add_namespace(0, 
                 ('get_dev_status',
                 'disconnect_request'))
-            self.rtlSocket.add_namespace(1, 
+            self.rtl_socket.add_namespace(1, 
                 ('connect',
                 'disconnect_request',
                 'start_sdr',
@@ -44,11 +44,12 @@ class FlaskServer:
                 'send_cli_args',
                 'update_settings',
                 'server_ping'))
-            self.rtlSocket.add_namespace(3, 
+            self.rtl_socket.add_namespace(3, 
                 ('send_app_args',
                 'update_app_settings',
                 'get_fft_graph',
                 'get_scanned_values'))
+            self.flask_server.register_error_handler(404, self.rtl_socket.page_404)
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
