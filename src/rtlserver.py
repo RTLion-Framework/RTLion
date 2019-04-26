@@ -49,7 +49,8 @@ class FlaskServer:
                 'update_app_settings',
                 'get_fft_graph',
                 'get_scanned_values'))
-            self.flask_server.register_error_handler(404, self.rtl_socket.page_404)
+            self.flask_server.register_error_handler(404, self.rtl_socket.page_error)
+            self.flask_server.register_error_handler(500, self.rtl_socket.page_error)
         except Exception as e:
             self.logcl.log("Could not initialize Flask server.\n" + str(e), 'error')
             sys.exit()
