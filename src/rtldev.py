@@ -43,7 +43,6 @@ class RTLSdr:
             from rtlsdr import RtlSdr
         except:
             self.logcl.log("rtlsdr module not found.", "error")
-            sys.exit()
     
     def import_pylab(self):
         try:
