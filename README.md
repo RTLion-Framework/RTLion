@@ -1,5 +1,5 @@
 # RTLion Framework <a href="https://github.com/RTLion-Framework/RTLion/releases"><img src="https://img.shields.io/github/release/RTLion-Framework/RTLion.svg"/></a>
-![RTLion](https://user-images.githubusercontent.com/24392180/56960422-6444c280-6b59-11e9-8543-cb2f89dbcf70.png)
+![RTLion](https://user-images.githubusercontent.com/24392180/56960655-3a3fd000-6b5a-11e9-81cf-684da742370e.png)
 
 ### Multipurpose RTL-SDR Framework for RTL2832 based DVB-T receivers.
 
