@@ -50,7 +50,7 @@ class RTLSdr:
             import pylab as plt
             import numpy as np
         except:
-            self.logcl.log("(pylab || numpy) module not found.", "error")
+            self.logcl.log("matplotlib module not found.", "error")
             sys.exit()
 
     def init_device(self, init_dev=True, show_log=True):

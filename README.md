@@ -1,4 +1,4 @@
-![RTLion](https://user-images.githubusercontent.com/24392180/56960655-3a3fd000-6b5a-11e9-81cf-684da742370e.png)
+![RTLion](https://user-images.githubusercontent.com/24392180/57021451-ed7cf780-6c34-11e9-8522-84bcd39728d4.png)
 
 # RTLion Framework <a href="https://github.com/RTLion-Framework/RTLion/releases"><img src="https://img.shields.io/github/release/RTLion-Framework/RTLion.svg"/></a>
 
