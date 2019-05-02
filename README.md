@@ -27,3 +27,49 @@ Main purpose of the RTLion Framework is creating a framework for RTL2832 based D
 
 * [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/)
 * [Matplotlib](https://matplotlib.org/)
+
+### Clone the Repository
+
+```
+git clone https://github.com/RTLion-Framework/RTLion
+```
+
+### Package Installation
+Recommended installation:
+```
+pip2.7 install -r requirements.txt
+```
+Manual installation:
+```
+# [Install flask-socketio with pip]
+pip2.7 install flask-socketio
+# [Install matplotlib with your package manager]
+# [Ubuntu]
+sudo apt-get install python2-matplotlib
+# [Arch]
+trizen python2-matplotlib
+```
+## Usage
+### Command Line Arguments
+
+Command line arguments are not mandatory because it's possible to update settings at the Web interface. But still, RTLion server can be started with the command line arguments.
+
+```
+usage: RTLion.py [-h] [-d DEV] [-s SAMPRATE] [-f FREQ] [-g GAIN] [-n N] [-i I] [host:port]
+```
+Positional Arguments
+```
+[host:port] -> IP address/hostname and port number for server to listen on (default: 0.0.0.0:8081)
+```
+Optional Arguments
+```
+[-h, --help]                        -> show help message and exit
+[-d DEV, --dev DEV]                 -> device index (default: 0)
+[-s SAMPRATE, --samprate SAMPRATE]  -> sample rate (default: 2048000 Hz)
+[-f FREQ, --freq FREQ]              -> center frequency (Hz)
+[-g GAIN, --gain GAIN]              -> gain (0 for auto) (default: auto)
+[-n N, -num N]                      -> number of the reads (default: -1, inf.)
+[-i I, -interval I]                 -> interval between reads (default: 500ms)
+```
+
+

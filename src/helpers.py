@@ -47,7 +47,7 @@ def parse_cli_args():
 
     parser.add_argument("-g",
                         "--gain",
-                        help="gain (0 for auto) (default: ~1-3)",
+                        help="gain (0 for auto) (default: auto)",
                         default="auto")
 
     parser.add_argument("-n",
