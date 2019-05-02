@@ -14,3 +14,9 @@ Lack of a simple FFT visualizer tool for RTL-SDR was the main reason behind the 
 
 [pyrtlsdr](https://github.com/roger-/pyrtlsdr) is a wrapper library for [librtlsdr](https://github.com/librtlsdr) that aims turning RTL2832U devices into an Software Defined Radio. librtlsdr itself contains main functions for RTL-SDR and have derived tools as rtl_sdr, rtl_fm etc. (More info can be found at [wiki](https://osmocom.org/projects/rtl-sdr/wiki/Rtl-sdr))
 pyrlsdr is written in [Python2.7](https://pythonclock.org/) and wraps most of the functions of librtlsdr successfully in order to provide a _more Pythonic API_.
+
+RTLion project uses pyrtlsdr to communicate with the RTL-SDR device. Also it can be described as a framework due to the implementation of various features other than the frequency scanner. The common structure of the project is appropriate for adding new features too.
+RTLion Framework has a [Flask](https://flask-socketio.readthedocs.io/en/latest/)-[SocketIO](https://flask-socketio.readthedocs.io/en/latest/) based Web interface which houses it's features there. Web interface preferred to the command line interface for facilitating the usage and supporting remote operations.
+[Matplotlib](https://matplotlib.org/) used for creating graphs, more specifically `pylab` [psd](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.psd.html) (Power Spectral Density) method used for converting the complex samples (stored in a `numpy` array) to FFT graph. 
+
+Main purpose of the RTLion Framework is creating a framework for RTL2832 based DVB-T receivers and supporting various features such as spectral density visualizing and frequency scanning remotely. These features are provided on the Web interface and accessible via the RTLion server or [RTLion Android App](https://github.com/RTLion-Framework/RTLion-app) for RTL-SDR & IoT applications.
