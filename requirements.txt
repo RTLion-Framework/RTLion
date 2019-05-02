@@ -1,4 +1,2 @@
-flask~=1.0.2
 flask-socketio~=3.2.1
-numpy~=1.15.4
-matplotlib~=3.0.2
+matplotlib~=2.2.3

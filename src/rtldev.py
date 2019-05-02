@@ -49,8 +49,8 @@ class RTLSdr:
             global plt, np
             import pylab as plt
             import numpy as np
-        except:
-            self.logcl.log("matplotlib module not found.", "error")
+        except Exception as e:
+            self.logcl.log("matplotlib module not found.\n" + str(e), 'error')
             sys.exit()
 
     def init_device(self, init_dev=True, show_log=True):
