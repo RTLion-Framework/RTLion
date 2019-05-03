@@ -77,10 +77,20 @@ Basically, execute the main file `RTLion.py` using `Python2.7`. (_Command line a
 
 ![Starting RTLion Server](https://user-images.githubusercontent.com/24392180/57158647-9b7ed200-6dec-11e9-9466-7fb5a1690cd8.gif)
 
-### Creating FFT Graph
+### Power Spectrum 
 
 Web interface is accessible with using the RTLion server's host and port information.
-After selecting the `Power Spectrum (FFT Graph)` option, it's possible to update settings and create graph. Also center frequency can be changed real time via the range input element below the graph. 
+
+![RTLion Web Interface](https://user-images.githubusercontent.com/24392180/57164418-b22d2500-6dfc-11e9-8132-ea66dcb7998a.gif)
+
+After selecting the `Power Spectrum (FFT Graph)` option, it's possible to update settings and create graph. 
+
+![RTLion Graph Page](https://user-images.githubusercontent.com/24392180/57165174-05a07280-6dff-11e9-8fe8-4ff844cc03ee.gif)
+
+Also center frequency can be changed real time via the range input element below the graph. 
+
+![RTLion Power Spectrum](https://user-images.githubusercontent.com/24392180/57165414-b4dd4980-6dff-11e9-99ea-8664f0423e5e.gif)
+
 
 ### Frequency Scanner
 
