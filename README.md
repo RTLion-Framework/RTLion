@@ -81,19 +81,44 @@ Basically, execute the main file `RTLion.py` using `Python2.7`. (_Command line a
 
 Web interface is accessible with using the RTLion server's host and port information.
 
-![RTLion Web Interface](https://user-images.githubusercontent.com/24392180/57164418-b22d2500-6dfc-11e9-8132-ea66dcb7998a.gif)
+![RTLion Main Page](https://user-images.githubusercontent.com/24392180/57165876-05a17200-6e01-11e9-8a87-9be895356617.gif)
 
 After selecting the `Power Spectrum (FFT Graph)` option, it's possible to update settings and create graph. 
 
 ![RTLion Graph Page](https://user-images.githubusercontent.com/24392180/57165174-05a07280-6dff-11e9-8fe8-4ff844cc03ee.gif)
 
-Also center frequency can be changed real time via the range input element below the graph. 
+Also center frequency can be changed real time via the `range input` element below the graph. 
 
 ![RTLion Power Spectrum](https://user-images.githubusercontent.com/24392180/57165414-b4dd4980-6dff-11e9-99ea-8664f0423e5e.gif)
 
 
 ### Frequency Scanner
 
+Frequency scanner aims to find the peaks on a power spectrum for miscellaneous applications with using a sorting method. For doing that it takes 2 important arguments which can be listed as `frequency range` (min. - max.) and `sensitivity`.
+
+RTLion computes frequency range and step size values automatically if `center frequency` parameter is given within the command line. Otherwise, the user should enter the frequency range manually.
+
+![RTLion Frequency Scanner](https://user-images.githubusercontent.com/24392180/57167958-608a9780-6e08-11e9-9403-684a7d09ff61.gif)
+
+`Sensitivity` value determines the count of the frequencies that will selected from the sorted list and can be changed with the range input element. Increasing the sensitivity causes scanned values to increase so it's important to use this parameter correctly depending on what the main goal is. Also it's easy to sight scanned values since RTLion marks them with a `"x"` on the graph.
+
+![Scanning 80 MHz - 102 MHz](https://user-images.githubusercontent.com/24392180/57168107-06d69d00-6e09-11e9-8db0-3cbabdf43096.gif)
+
+![Scan Results of 80 MHz - 102 MHz](https://user-images.githubusercontent.com/24392180/57168165-561ccd80-6e09-11e9-8f8e-b7a3d8222d8b.gif)
+
+### Logs
+
+RTLion Framework provides logging with command line and Web interface.
+
+![Command Line Logging](https://user-images.githubusercontent.com/24392180/57168771-f96ee200-6e0b-11e9-8c72-9ea0840d55f7.gif)
+
+
+![Web Interface Logging](https://user-images.githubusercontent.com/24392180/57168608-1fe04d80-6e0b-11e9-8e19-6148a10f623d.gif)
+
+
+## Android Application
+
+## IoT
 
 ## Contribution
 
