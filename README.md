@@ -120,7 +120,17 @@ RTLion Framework provides logging with command line and Web interface.
 
 ## IoT
 
+## TODO(s)
+
+_Considerable for future versions._
+* Implement AM/FM modulation support
+* Fix step size calculation for not wide frequency ranges
+* Make more responsive web interface
+* 
+
 ## Contribution
+
+RTLion Project is open to contributions.[*](https://github.com/RTLion-Framework/RTLion/CONTRIBUTING.md)
 
 ## License
 
