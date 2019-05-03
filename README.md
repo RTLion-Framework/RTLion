@@ -71,5 +71,27 @@ Optional Arguments
 [-n N, -num N]                      -> number of the reads (default: -1, inf.)
 [-i I, -interval I]                 -> interval between reads (default: 500ms)
 ```
+### Starting RTLion Server
 
+Basically, execute the main file `RTLion.py` using `Python2.7`. (_Command line arguments are optional._)
+
+![Starting RTLion Server](https://user-images.githubusercontent.com/24392180/57158647-9b7ed200-6dec-11e9-9466-7fb5a1690cd8.gif)
+
+### Creating FFT Graph
+
+Web interface is accessible with using the RTLion server's host and port information.
+After selecting the `Power Spectrum (FFT Graph)` option, it's possible to update settings and create graph. Also center frequency can be changed real time via the range input element below the graph. 
+
+### Frequency Scanner
+
+
+## Contribution
+
+## License
+
+GNU General Public License v3. (see [gpl](https://www.gnu.org/licenses/gpl.txt))
+
+## Credit
+
+Copyright (C) 2019 by KeyLo99 https://www.github.com/KeyLo99
 
