@@ -118,15 +118,21 @@ RTLion Framework provides logging with command line and Web interface.
 
 ## Android Application
 
+It's possible to use RTLion Framework's features on a Android device via the mobile application.
+For more info, visit the [RTLion-app](https://github.com/RTLion-Framework/RTLion-app/) repository.
+
+![RTLion App Page](https://user-images.githubusercontent.com/24392180/57181488-1bfd0b80-6e9d-11e9-8f13-47424b5a02f4.png)
+
+
 ## IoT
 
 ## TODO(s)
 
 _Considerable for future versions._
-* Implement AM/FM modulation support
+* Implement modulation and audio support (AM/FM)
 * Fix step size calculation for not wide frequency ranges
 * Make more responsive web interface
-* 
+* Fix Flask-SocketIO configuration for Python3+ compatibility
 
 ## Contribution
 
@@ -138,5 +144,6 @@ GNU General Public License v3. (see [gpl](https://www.gnu.org/licenses/gpl.txt))
 
 ## Credit
 
-Copyright (C) 2019 by KeyLo99 https://www.github.com/KeyLo99
+Copyright (C) 2019 by KeyLo99 
+https://www.github.com/KeyLo99
 
