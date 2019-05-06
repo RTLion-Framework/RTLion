@@ -26,7 +26,7 @@ Main purpose of the RTLion Framework is creating a framework for RTL2832 based D
 ### Dependencies
 
 * [pyrtlsdr](https://pypi.org/project/pyrtlsdr/)
-  * _[librtlsdr](https://github.com/librtlsdr/librtlsdr) must be installed for pyrtlsdr to access RTL-SDR device._
+  * _[librtlsdr](https://github.com/librtlsdr/librtlsdr)_
 * [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/)
 * [Matplotlib](https://matplotlib.org/)
 
