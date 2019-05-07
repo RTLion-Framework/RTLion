@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.7
 # -*- coding: utf-8 -*-
 
 from src.rtlserver import FlaskServer

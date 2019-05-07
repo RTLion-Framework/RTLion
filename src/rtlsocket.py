@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.7
 # -*- coding: utf-8 -*-
 
 import sys
@@ -41,7 +41,7 @@ class RTLSocket:
             async_mode=self.socketio.async_mode)
 
     def page_error(self, e):
-        error_code = str(e).split(":")[0]
+        error_code = str(e).split(" ")[0].strip()
         return self.render_template(error_code + '.html'), int(error_code)
 
     def add_templates(self, flask_server, render_template):
