@@ -125,7 +125,7 @@ RTLion Framework provides logging with command line and Web interface.
 It's possible to use RTLion Framework's features on a Android device via the mobile application.
 For more info, visit the [RTLion-app](https://github.com/RTLion-Framework/RTLion-app/) repository.
 
-![RTLion App Page](https://user-images.githubusercontent.com/24392180/57368786-af338b00-7194-11e9-9d09-903e68d596e3.png)
+![RTLion App Page](https://user-images.githubusercontent.com/24392180/57368986-28cb7900-7195-11e9-870e-658581bc09f9.png)
 
 
 ## RTLion with Docker
