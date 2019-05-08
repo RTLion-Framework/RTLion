@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.7
 # -*- coding: utf-8 -*-
 
 import sys
@@ -120,7 +120,8 @@ class RTLSdr:
             plt.ylabel('Relative power (dB)')
             plt.savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
             plt.clf()
-            encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb").read())
+            encoded = base64.b64encode(open(self.static_dir + '/img/fft.png', "rb"). \
+                    read()).decode("utf-8")
             return encoded if not scan else [encoded, max_freqs]
         except Exception as e:
             self.logcl.log("Failed to get graph data.\n" + str(e), 'error')
