@@ -13,9 +13,9 @@
 Lack of a simple FFT visualizer tool for RTL-SDR was the main reason behind the [rtl_map](https://github.com/KeyLo99/rtl_map) project which was released at [January 30](https://www.rtl-sdr.com/rtl_map-a-simple-fft-visualizer-for-rtl-sdr/) and caught attention of RTL-SDR enthusiasts. Another purpose of that project was creating a `Frequency Scanner` tool that will provide FFT-based power (dB) scanning. So I decided to postpone that feature with a [todo](https://github.com/KeyLo99/rtl_map#todos) and dive into the other RTL-SDR related libraries such as [pyrtlsdr](https://github.com/roger-/pyrtlsdr) for learning new stuff and also for creating that scanning tool.
 
 [pyrtlsdr](https://github.com/roger-/pyrtlsdr) is a wrapper library for [librtlsdr](https://github.com/librtlsdr) that aims turning RTL2832U devices into an `Software Defined Radio`. librtlsdr itself contains main functions for RTL-SDR and have derived tools as `rtl_sdr`, `rtl_fm` etc. (More info can be found at [wiki](https://osmocom.org/projects/rtl-sdr/wiki/Rtl-sdr))
-pyrlsdr is written in [Python2.7](https://pythonclock.org/) and wraps most of the functions of librtlsdr successfully in order to provide a _more Pythonic API_.
+pyrlsdr is written in Python and wraps most of the functions of librtlsdr successfully in order to provide a _more Pythonic API_. `RTLion` project uses pyrtlsdr to communicate with the RTL-SDR device. 
 
-`RTLion` project uses pyrtlsdr to communicate with the RTL-SDR device. (main reason for the need of Python2.7) Also it can be described as a framework due to the implementation of various features other than the frequency scanner. The common structure of the project is appropriate for adding new features too.
+`RTLion` project can be described as a framework due to the implementation of various features other than the frequency scanner. The common structure of the project is appropriate for adding new features too.
 `RTLion Framework` has a [Flask](https://flask-socketio.readthedocs.io/en/latest/)-[SocketIO](https://flask-socketio.readthedocs.io/en/latest/) based Web interface which houses it's features there. Web interface preferred to the command line interface for facilitating the usage and supporting remote operations.
 [Matplotlib](https://matplotlib.org/) used for creating graphs, more specifically `pylab` [psd](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.psd.html) (Power Spectral Density) method mostly used for converting the complex samples (stored in a `numpy` array) to FFT graphs.
 
@@ -41,17 +41,17 @@ git clone https://github.com/RTLion-Framework/RTLion
 ### Package Installation
 Recommended installation:
 ```
-pip2.7 install -r requirements.txt
+pip3.7 install -r requirements.txt
 ```
 Manual installation:
 ```
 # [Install flask-socketio with pip]
-pip2.7 install flask-socketio
+pip3.7 install flask-socketio
 # [Install matplotlib with your package manager]
 # [Ubuntu]
-sudo apt-get install python2-matplotlib
+sudo apt-get install python-matplotlib
 # [Arch]
-trizen python2-matplotlib
+trizen python-matplotlib
 ```
 ## Usage
 ### Command Line Arguments
@@ -77,9 +77,9 @@ Optional Arguments
 ```
 ### Starting RTLion Server
 
-Basically, execute the main file `RTLion.py` using `Python2.7`. (_Command line arguments are optional._)
+Basically, execute the main file `RTLion.py` using `Python3.7`. (_Command line arguments are optional._)
 
-![Starting RTLion Server](https://user-images.githubusercontent.com/24392180/57158647-9b7ed200-6dec-11e9-9466-7fb5a1690cd8.gif)
+![Starting RTLion Server](https://user-images.githubusercontent.com/24392180/57334572-cd63a180-7128-11e9-8a9b-291b065d5f25.gif)
 
 ### Power Spectrum 
 
@@ -136,7 +136,6 @@ _Considerable for future versions._
 * Implement modulation and audio support (AM/FM)
 * Fix step size calculation for not wide frequency ranges
 * Make more responsive web interface
-* Fix Flask-SocketIO configuration for Python3+ compatibility
 
 ## Contribution
 
