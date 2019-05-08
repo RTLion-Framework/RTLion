@@ -16,6 +16,7 @@ RUN apk --no-cache --update-cache add \
     libusb-dev \
     make \
     cmake
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 ADD https://api.github.com/repos/radiowitness/librtlsdr/git/refs/heads/master version.json
 RUN git clone -b master https://github.com/radiowitness/librtlsdr.git /app/librtlsdr
 RUN mkdir /app/librtlsdr/build
