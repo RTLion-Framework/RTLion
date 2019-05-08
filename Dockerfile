@@ -16,7 +16,6 @@ RUN apk --no-cache --update-cache add \
     python-dev \
     py-pip \
     build-base \
-    wget \
     freetype-dev \
     libpng-dev \
     openblas-dev \
