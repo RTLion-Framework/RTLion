@@ -128,7 +128,37 @@ For more info, visit the [RTLion-app](https://github.com/RTLion-Framework/RTLion
 ![RTLion App Page](https://user-images.githubusercontent.com/24392180/57181488-1bfd0b80-6e9d-11e9-8f13-47424b5a02f4.png)
 
 
+## RTLion with Docker
+
+[Dockerfile](https://github.com/KeyLo99/RTLion/blob/master/Dockerfile) provided in the repository for using the RTLion Framework with Docker. Usable with the IoT applications.
+
+### Building the Image
+
+Image can be built on the directory after cloning the repository.
+
+```
+docker build -t rtlion .
+```
+
+### Running the Container
+
+```
+docker run -d --name rtlionfw -p 8081:8081 --privileged -v /dev/bus/usb:/dev/bus/usb rtlion
+```
+
+`docker ps` output:
+
+![Docker ps](https://user-images.githubusercontent.com/24392180/57368369-abebcf80-7193-11e9-8581-0806c5a91f5d.jpg)
+
+### Stopping & Removing the Container
+
+```
+docker stop rtlionfw
+docker rm rtlionfw
+```
+
 ## IoT
+
 
 ## TODO(s)
 
@@ -136,6 +166,7 @@ _Considerable for future versions._
 * Implement modulation and audio support (AM/FM)
 * Fix step size calculation for not wide frequency ranges
 * Make more responsive web interface
+* Minimalize the Dockerfile for a lighter build
 
 ## Contribution
 
