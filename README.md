@@ -159,6 +159,13 @@ docker rm rtlionfw
 
 ## IoT
 
+At the IoT side of the project, it's possible to run RTLion server on a device like Raspberry Pi with the RTL-SDR plugged in and access the RTLion Framework remotely. It's also possible to diversify the concept. 
+
+### Version 1.0
+
+### Accessing Server
+
+### Mobile Applicaton
 
 ## TODO(s)
 
