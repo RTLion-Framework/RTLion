@@ -4,9 +4,6 @@
         <title>RTLion Framework [Scanner]</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css') }}">
-        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" charset="utf-8"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.js') }}" charset="utf-8"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/scan.js') }}" charset="utf-8"></script>
     </head>
     <body>
         <div class="row">
@@ -52,5 +49,8 @@
                 <img class="resp-img" id="imgFreqScan">
             </div>
         </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/socket.io.js') }}" charset="utf-8"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/scan.js') }}" charset="utf-8"></script>
     </body>
 </html>
