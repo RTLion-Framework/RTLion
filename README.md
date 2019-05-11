@@ -177,6 +177,7 @@ _Considerable for future versions._
 * Fix step size calculation for not wide frequency ranges
 * Make more responsive web interface
 * Minimalize the Dockerfile for a lighter build
+* Add new features to graphs (saving as png, txt)
 
 ## Contribution
 
