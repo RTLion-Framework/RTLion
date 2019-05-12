@@ -130,7 +130,7 @@ For more info, visit the [RTLion-app](https://github.com/RTLion-Framework/RTLion
 
 ## RTLion with Docker
 
-[Dockerfile](https://github.com/KeyLo99/RTLion/blob/master/Dockerfile) provided in the repository for using the RTLion Framework with Docker. Usable with the IoT applications.
+[Dockerfile](https://github.com/RTLion-Framework/RTLion/blob/master/Dockerfile) provided in the repository for using the RTLion Framework with Docker. Usable with the IoT applications.
 
 ### Building the Image
 
