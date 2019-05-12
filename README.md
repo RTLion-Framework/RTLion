@@ -223,6 +223,7 @@ _Considerable for future versions._
 * Make more responsive web interface
 * Minimalize the Dockerfile for a lighter build
 * Add new features to graphs (saving as png, txt)
+* Improve the IoT side of the project
 
 ## Contribution
 
