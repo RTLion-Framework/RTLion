@@ -195,10 +195,25 @@ Of course this prototype design can be improved due to the existence of other Ra
 
 ### Accessing the Server
 
-After [starting the RTLion server](https://github.com/RTLion-Framework/RTLion#starting-rtlion-server) on Raspberry Pi, connection can be made from the Web interface or the [mobile application](https://github.com/RTLion-Framework/RTLion-app#iot) and access the RTL-SDR functions.
+After [starting the RTLion server](https://github.com/RTLion-Framework/RTLion#starting-rtlion-server) on Raspberry Pi, connection can be made from the Web interface or the [mobile application](https://github.com/RTLion-Framework/RTLion-app#iot) and the RTL-SDR functions can be accessed.
 
 ![Starting RTLion Server on RPI](https://user-images.githubusercontent.com/24392180/57583800-e7143880-74dc-11e9-9a12-0479344b0514.png)
 
+#### DVB Driver Issue
+
+librtlsdr can't access the RTL-SDR device when the Linux kernel DVB driver is loaded and shows the warning message below.
+
+```
+Kernel driver is active, or device is claimed by second instance of librtlsdr. In the first case, please either detach or blacklist the kernel module (dvb_usb_rtl28xxu), or enable automatic detaching at compile time.
+```
+
+Unloading driver solves the issue temporarily.
+
+```
+sudo rmmod dvb_usb_rtl28xxu rtl2832
+```
+
+Visit [blacklist_dvb_usb_rtl28xxu](https://www.reddit.com/r/RTLSDR/wiki/blacklist_dvb_usb_rtl28xxu) for more info and permanent solution.
 
 ## TODO(s)
 
