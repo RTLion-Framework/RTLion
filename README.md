@@ -197,6 +197,8 @@ Of course this prototype design can be improved due to the existence of other Ra
 
 After [starting the RTLion server](https://github.com/RTLion-Framework/RTLion#starting-rtlion-server) on Raspberry Pi, connection can be made from the Web interface or the [mobile application](https://github.com/RTLion-Framework/RTLion-app#iot) and access the RTL-SDR functions.
 
+![Starting RTLion Server on RPI](https://user-images.githubusercontent.com/24392180/57583800-e7143880-74dc-11e9-9a12-0479344b0514.png)
+
 
 ## TODO(s)
 
