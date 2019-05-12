@@ -165,21 +165,33 @@ At the IoT side of the project, it's possible to run RTLion server (with or with
 
 ### Version 1.0
 
-This version is designed to be portable with Raspberry Pi 3 model B, RTL-SDR (RTL2832U / 820T2) and external power supply. RTL-DR is half embedded inside the case and other half is outside for the antenna connection. Device can be powered by the power bank below the case.
+Prototype v1 is designed to be portable with Raspberry Pi 3 model B, RTL-SDR (RTL2832U / 820T2) and external power supply. RTL-SDR is half embedded inside the case and other half is outside for the antenna connection.
 
-![1](https://user-images.githubusercontent.com/24392180/57582137-4c5a3080-74c1-11e9-92d8-b4746f9a5efd.png)
+![RTLion - IoT Prototype](https://user-images.githubusercontent.com/24392180/57582137-4c5a3080-74c1-11e9-92d8-b4746f9a5efd.png)
 
-![2](https://user-images.githubusercontent.com/24392180/57582148-81668300-74c1-11e9-9c32-df8ffb3efd5f.png)
+It's possible to disconnect RTL-SDR with unplugging the USB from Raspberry Pi.
 
-![4](https://user-images.githubusercontent.com/24392180/57582244-a4456700-74c2-11e9-8735-7a97b8f89629.png)
+![RTLion - IoT USB Bus](https://user-images.githubusercontent.com/24392180/57582148-81668300-74c1-11e9-9c32-df8ffb3efd5f.png)
 
-![5](https://user-images.githubusercontent.com/24392180/57582280-fb4b3c00-74c2-11e9-9448-6b611b1dfdd5.png)
+![RTLion - IoT RTL-SDR](https://user-images.githubusercontent.com/24392180/57582244-a4456700-74c2-11e9-8735-7a97b8f89629.png)
 
-![6](https://user-images.githubusercontent.com/24392180/57582307-3f3e4100-74c3-11e9-8ed4-5c87c740f480.png)
+RTL-SDR antenna connection is shown below.
 
-![7](https://user-images.githubusercontent.com/24392180/57582327-a52ac880-74c3-11e9-97a3-dae6cf27ce28.jpg)
+![RTLion - IoT Antenna](https://user-images.githubusercontent.com/24392180/57582307-3f3e4100-74c3-11e9-8ed4-5c87c740f480.png)
 
-![8](https://user-images.githubusercontent.com/24392180/57582360-17031200-74c4-11e9-983e-dcedaa370456.png)
+Device can be powered by the power bank below the case. It shows the battery status with the LED indicator.
+
+![RTLion - IoT Power](https://user-images.githubusercontent.com/24392180/57582280-fb4b3c00-74c2-11e9-9448-6b611b1dfdd5.png)
+
+### Inner Design of Version 1.0
+
+The case contains a fan for cooling the Raspberry Pi and a female USB port for outer devices which leads to a USB connector. This USB adapter connection is required for embedding the RTL-SDR circuit inside the case and getting rid of redundant design of connecting RTL-SDR to the Raspberry Pi's USB port.
+
+![RTLion - IoT Design I](https://user-images.githubusercontent.com/24392180/57582327-a52ac880-74c3-11e9-97a3-dae6cf27ce28.jpg)
+
+![RTLion - IoT Design II](https://user-images.githubusercontent.com/24392180/57582360-17031200-74c4-11e9-983e-dcedaa370456.png)
+
+Of course this prototype design can be improved due to the existence of other Raspberry Pi versions such as Zero.
 
 ### Accessing the Server
 
