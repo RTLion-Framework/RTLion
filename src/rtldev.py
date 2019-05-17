@@ -46,11 +46,15 @@ class RTLSdr:
     
     def import_pylab(self):
         try:
-            global plt, np
+            global plt, np, peakutils
             import pylab as plt
             import numpy as np
+            import peakutils
         except Exception as e:
-            self.logcl.log("matplotlib module not found.\n" + str(e), 'error')
+            if 'peak' in str(e):
+                self.logcl.log("peakutils module not found.\n" + str(e), 'error')
+            else:
+                self.logcl.log("matplotlib module not found.\n" + str(e), 'error')
             sys.exit()
 
     def init_device(self, init_dev=True, show_log=True):
@@ -117,8 +121,7 @@ class RTLSdr:
                     Fc=int(self.center_freq)/1e6, color='k')    
             if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)
 
-            import peakutils
-            indexes = peakutils.indexes(Y, thres=1/10, min_dist=30)
+            indexes = peakutils.indexes(Y, thres=(11-1)/10, min_dist=30)
             for index in indexes:
                 freq = F[index]
                 db = 10 * math.log10(Y[index])
