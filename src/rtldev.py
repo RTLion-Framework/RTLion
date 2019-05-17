@@ -114,8 +114,20 @@ class RTLSdr:
     def get_fft_data(self, scan=False):
         try:
             [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
-                    Fc=int(self.center_freq)/1e6, color='k')
-            if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)  
+                    Fc=int(self.center_freq)/1e6, color='k')    
+            if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)
+
+            import peakutils
+            indexes = peakutils.indexes(Y, thres=1/10, min_dist=30)
+            for index in indexes:
+                freq = F[index]
+                db = 10 * math.log10(Y[index])
+                plt.plot(freq, db, 
+                    color='k', 
+                    marker='x', 
+                    markersize=6, 
+                    linestyle='None')
+
             plt.xlabel('Frequency (MHz)')
             plt.ylabel('Relative power (dB)')
             plt.savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
