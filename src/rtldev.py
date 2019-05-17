@@ -96,7 +96,7 @@ class RTLSdr:
         except Exception as e:
             self.logcl.log("Failed to close RTL-SDR device.\n" + str(e), 'error')
             
-    def find_max_freqs(self, plt, Y, F, n):
+    def find_peaks(self, plt, Y, F, n):
         try:
             freqs = []
             dbs = []
@@ -119,8 +119,7 @@ class RTLSdr:
         try:
             [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')    
-            if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)
-
+            if scan: max_freqs = self.find_peaks(plt, Y, F, n=self.sensivity)
             plt.xlabel('Frequency (MHz)')
             plt.ylabel('Relative power (dB)')
             plt.savefig(self.static_dir + '/img/fft.png', bbox_inches='tight', pad_inches = 0)
