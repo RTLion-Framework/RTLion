@@ -28,7 +28,7 @@ function initializePage(){
     $('#inpSampRate').keypress(inputKeyPress);
     $('#rngScanSensivity').attr('min', 1);
     $('#rngScanSensivity').attr('max', 10);
-    $('#rngScanSensivity').val(3);
+    $('#rngScanSensivity').val(5);
     $('#rngScanSensivity').on('input', rngScanSensivity_input);
 }
 function formStartScan_submit(event){
