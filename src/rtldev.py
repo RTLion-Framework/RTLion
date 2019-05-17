@@ -100,7 +100,7 @@ class RTLSdr:
         try:
             freqs = []
             dbs = []
-            indexes = peakutils.indexes(Y, thres=(11-(n))/10, min_dist=25)
+            indexes = peakutils.indexes(Y, thres=abs(11-(n))/10, min_dist=20)
             for index in indexes:
                 freq = F[index]
                 db = 10 * math.log10(Y[index])
