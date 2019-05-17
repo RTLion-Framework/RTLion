@@ -128,18 +128,6 @@ function updateProgress(){
         $('#lgScanResults').text('Scan Results [%100]');
     }
 }
-function calcThreshold(){
-    var dbSum = 0;
-    for(var i = 0; i < dbRes.length; i++){
-        dbSum += parseInt(dbRes[i]);
-    }
-    var dbAvg = dbSum/dbRes.length;
-    $('#divScanResults').text("");
-    for (var i = 0; i < freqRes.length; i++){
-        if(Math.abs(dbRes[i]) > Math.abs(dbAvg/2))
-            $('#divScanResults').append(freqRes[i] + "<br>");
-    }
-}
 function documentReady(){
     initializePage();
     socket = io.connect(location.protocol + '//' + document.domain + 
@@ -180,7 +168,6 @@ function documentReady(){
             socket.emit('restart_sdr', currentFreq);
         }else{
             socket.emit('stop_sdr');
-            calcThreshold();
         }
     });
 
