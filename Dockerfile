@@ -23,5 +23,5 @@ RUN mkdir /app/librtlsdr/build
 RUN cmake /app/librtlsdr/ -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON
 RUN make
 RUN make install
-RUN pip install numpy flask-socketio pyrtlsdr matplotlib
+RUN pip install numpy flask-socketio pyrtlsdr matplotlib peakutils
 CMD ["python", "RTLion.py"]
