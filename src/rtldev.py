@@ -98,12 +98,12 @@ class RTLSdr:
             
     def find_max_freqs(self, plt, Y, F, n):
         try:
-            Y_sorted = Y[np.argsort(Y)[-n:]]
             freqs = []
             dbs = []
-            for y_val in Y_sorted:
-                freq = F[np.where(Y == y_val)[0][0]]
-                db = 10 * math.log10(y_val)
+            indexes = peakutils.indexes(Y, thres=(11-(n))/10, min_dist=30)
+            for index in indexes:
+                freq = F[index]
+                db = 10 * math.log10(Y[index])
                 freqs.append(freq)
                 dbs.append(db)
                 plt.plot(freq, db, 
@@ -120,16 +120,6 @@ class RTLSdr:
             [Y, F] = plt.psd(self.read_samples(), NFFT=1024, Fs=int(self.sample_rate)/1e6, \
                     Fc=int(self.center_freq)/1e6, color='k')    
             if scan: max_freqs = self.find_max_freqs(plt, Y, F, n=self.sensivity)
-
-            indexes = peakutils.indexes(Y, thres=(11-1)/10, min_dist=30)
-            for index in indexes:
-                freq = F[index]
-                db = 10 * math.log10(Y[index])
-                plt.plot(freq, db, 
-                    color='k', 
-                    marker='x', 
-                    markersize=6, 
-                    linestyle='None')
 
             plt.xlabel('Frequency (MHz)')
             plt.ylabel('Relative power (dB)')
