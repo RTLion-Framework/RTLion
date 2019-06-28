@@ -224,6 +224,8 @@ _Considerable for future versions._
 * Minimalize the Dockerfile for a lighter build
 * Add new features to graphs (saving as png, txt)
 * Improve the IoT side of the project (use rtl-sdr v3)
+* Support custom delay between new frequencies when scanning
+* Scanning in background
 
 ## Contribution
 
