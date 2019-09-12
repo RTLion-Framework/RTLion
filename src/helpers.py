@@ -15,7 +15,7 @@ def print_start_msg():
                   .-      -      """ + g_attr + """ Multipurpose RTL-SDR Framework.""" + g_attr_off + """
                    -`     -      """ + g_attr + """ Created for RTL2832 based DVB-T receivers.""" + g_attr_off + """
                     /     `-     """ + g_attr + """ https://github.com/RTLion-Framework""" + g_attr_off + """
-                    `/     :     """ + g_attr + """ Copyright (C) 2019 by KeyLo99""" + g_attr_off + """
+                    `/     :     """ + g_attr + """ Copyright (C) 2019 by orhun""" + g_attr_off + """
                      .:    :     
 .`      ``            :.   `: 
  `...    `..         .:o-.  /
